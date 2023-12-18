@@ -1,0 +1,94 @@
+/* -------------------------------Header-------------------------- */
+.bg-header {
+  background-color: #374f82;
+}
+.logo {
+  cursor: auto;
+  margin-left: 30px;
+  width: 240px;
+  height: 72px;
+  border-radius: 10px;
+}
+
+.dateheader {
+  color: #d5b263;
+  text-align: end;
+  padding-right: 59px;
+  font-weight: bold;
+  font-size: large;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-style: italic;
+  height: 5px;
+}
+
+/* ----------------------LOGIN-------------------------- */
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.submit_button {
+  padding: 8px;
+  background-color: rgb(70, 101, 169);
+  border-radius: .3rem;
+  cursor: pointer;
+  color: azure;
+  border-color: 2px solid rgb(105, 27, 129);
+}
+
+.submit_button:hover {
+  background-color: #9ac3ef;
+  
+}
+.textcolor {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+.formHeaderColour{
+  background: #9ac3ef !important;
+}
+/* ----------------------------------footer--------------------------------- */
+.custom-footer {
+  position: absolute;
+  bottom: 0;
+  color: #d5b263;
+  font-weight: bold;
+  font-size: large;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-style: italic;
+  display: block;
+  padding: 0 !important;
+}
+
+/* -------------------------titles------------------------- */
+.cardModal{
+  transition: transform 0.3s;
+}
+.cardModal:hover {
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* ------------------------------breadcrumb-------------------------------- */
+.myStyle {
+  --bs-breadcrumb-divider: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E");
+  font-family: "breadcrumb";
+  text-decoration: none;
+}
+.myStyle .breadcrumb .breadcrumb-item a,
+.bread {
+  text-decoration: none;
+}
+/* -----------------------Admin------------------------------- */
+.icons{
+  top: 75%;
+}
+/* -----------------------view-topics------------------------- */
+.disabled.cursor-opacity{
+  cursor: not-allowed ;
+color: white !important;
+
+border-radius: 6px;
+}
