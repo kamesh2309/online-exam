@@ -11,14 +11,14 @@ const Header = () => {
   
   return (
     <div>
-      <div className="row ">
+      <div className="row">
         <nav className="navbar navbar expand-lg bg-header">
           <div className="col-4">
             <img src={myimg} alt="Logo" className="logo"></img>
           </div>
           <div className="col-4"></div>
-          <div className="col-4 ">
-            <p className="dateheader ">{getDate()}</p>
+          <div className="col-4">
+            <p className="dateheader">{getDate()}</p>
           </div>
         </nav>
       </div>
