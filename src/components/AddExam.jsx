@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const AddExam = () => {
-  const { id  } = useParams();
+  const { id, fD } = useParams();
   const navigate = useNavigate();
   const [examName, setExamName] = useState("Add-Exam");
   const [formDatas, setFormData] = useState({
@@ -19,8 +19,10 @@ const AddExam = () => {
     answersMust: "N",
     enableNegativeMark: "N",
     negativeMarkValue: "",
+    fromDate: fD || "",
   });
   const setValues = (e) => {
+    // setFormData({[e.currentTarget.name]:e.currentTarget.value}); 
     setFormData(e.currentTarget.value);
   };
   const goToAnotherPage = (flags) => {
@@ -28,7 +30,6 @@ const AddExam = () => {
   };
   const handler = (e) => {
     e.preventDefault();
-
     const data = new FormData(e.target);
     const formData = new URLSearchParams();
     for (const [key, value] of data) {
@@ -68,8 +69,8 @@ const AddExam = () => {
       setExamName("Edit-Exam");
       async function fetchData() {
         const response = await fetch(
-          "https://localhost:8443/exammodule/control/show-exams?editExamId=" +id
-        );
+          "https://localhost:8443/exammodule/control/show-exams?editExamId=" + id
+          , { credentials: "include" });
         const data = await response.json();
         if (data.examList && data.examList.length > 0) {
           console.log("i am in")
@@ -83,7 +84,7 @@ const AddExam = () => {
           );
         }
       }
-      
+
       fetchData();
     }
   }, []);
@@ -126,6 +127,7 @@ const AddExam = () => {
                     placeholder={id}
                     disabled={true}
                   />
+
                 </div>
                 <div className="form-group">
                   <label>Exam Name</label>
@@ -149,6 +151,7 @@ const AddExam = () => {
                     onChange={setValues}
                   />
                 </div>
+                <div className="row"> <input type="hidden" name="fromDate" value={formDatas.fromDate} /></div>
                 <div className="row">
                   <div className="col-6 form-group">
                     <label>Creation Date</label>

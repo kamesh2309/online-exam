@@ -14,13 +14,13 @@ const App = () => {
       <Route path="/" element={<Login/>} />
       <Route path="/admin" element={<Admin/>} />
       <Route path="/add-exam" element={<AddExam/>} />
-      <Route path="/add-exam/:id" element={<AddExam/>} />
+      <Route path="/edit-exam/:id/:fD" element={<AddExam/>} />
       <Route path="/admin/view-exam-topic/:id/:value/:noq" element={<ViewTopics/>} />
       <Route path="/admin/view-exam-topic/add-topic/:id/:value/:noq" element={<AddTopic/>} />
       <Route path="/admin/view-exam-topic/edit-topic/:id/:value/:noq/:tId" element={<AddTopic/>} />
       <Route path="/admin/view-exam-topic/view-question/:id/:value/:noq/:tId" element={<ViewQuestion/>} />
       <Route path="/admin/view-exam-topic/add-question/:id/:value/:noq/:tId" element={<AddQuestion/>} />
-      <Route path="/admin/view-exam-topic/edit-question/:id/:value/:noq/:tId/:qId" element={<AddQuestion/>} />
+      <Route path="/admin/view-exam-topic/edit-question/:id/:value/:noq/:tId/:qId/:fD" element={<AddQuestion/>} />
 
       </Routes>
     </div>

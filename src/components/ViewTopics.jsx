@@ -9,14 +9,14 @@ const ViewTopics = () => {
     async function fetchData() {
       try {
         const response = await fetch(
-          "https://localhost:8443/exammodule/control/show-topic?showExamId=" +id
+          "https://localhost:8443/exammodule/control/show-topic?showExamId=" + id
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const formData = await response.json();
         setTopicData(formData.resultMap);
-         
+
         formData.questionsPerExam >= 100 ? setdisable(true) : setdisable(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -24,6 +24,20 @@ const ViewTopics = () => {
     }
     fetchData();
   }, []);
+  async function deleteTopicId(ID) {
+
+    try {
+      const response = await fetch(
+        `https://localhost:8443/exammodule/control/examMaster?deleteTopicId=${ID}`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const deleteData = await response.json();
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
 
   return (
     <div>
@@ -46,11 +60,10 @@ const ViewTopics = () => {
           </ol>
         </nav>
         <button
-          className={`${
-            disable
-              ? "disabled btn btn-outline-info  "
-              : "btn btn-outline-info btn-fw-bold"
-          }`}
+          className={`${disable
+            ? "disabled btn btn-outline-info  "
+            : "btn btn-outline-info btn-fw-bold"
+            }`}
         >
           <Link
             to={`/admin/view-exam-topic/add-topic/${id}/${value}/${noq}`}
@@ -136,15 +149,11 @@ const ViewTopics = () => {
                               </Link>
                             </td>
                             <td>
-                              <Link
-                                to=""
-                                className="justify-content-center d-flex"
-                              >
+                              <button onClick={() => { deleteTopicId(values.topicId) }} className="px-4 deleteLink">
                                 <i
-                                  className="bi bi-trash2-fill text-danger"
-                                  title="Delete"
+                                  className="bi bi-trash-fill text-danger" title="Delete"
                                 ></i>
-                              </Link>
+                              </button>
                             </td>
                           </tr>
                         ))}

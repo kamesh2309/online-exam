@@ -5,20 +5,21 @@ const ViewQuestion = () => {
   const { id, value, noq, tId } = useParams();
   const [questionData, setquestionData] = useState([]);
   const [disable, setdisable] = useState(false);
+  const [showDelete, setShowDelete] = useState(false)
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(
           "https://localhost:8443/exammodule/control/show-question?showTopicId=" +
-            tId
+          tId
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const formData = await response.json();
-        console.log("formData...",formData)
+
         setquestionData(formData.resultMap);
-        console.log("i am resultMap..",questionData)
+        console.log("i am resultMap..", questionData)
 
         formData.questionsPerTopic >= 100
           ? setdisable(true)
@@ -28,7 +29,24 @@ const ViewQuestion = () => {
       }
     }
     fetchData();
-  }, []);
+  }, [showDelete]);
+
+  async function deleteExamId(ID) {
+
+    try {
+      const response = await fetch(
+        `https://localhost:8443/exammodule/control/add-question?deleteQuestionId=${ID}`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const deleteData = await response.json();
+      setShowDelete(true)
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
 
   return (
     <div>
@@ -59,11 +77,10 @@ const ViewQuestion = () => {
           </ol>
         </nav>
         <button
-          className={`${
-            disable
-              ? "disabled btn btn-outline-info"
-              : "btn btn-outline-info btn-fw-bold"
-          }`}
+          className={`${disable
+            ? "disabled btn btn-outline-info"
+            : "btn btn-outline-info btn-fw-bold"
+            }`}
         >
           <Link
             to={`/admin/view-exam-topic/add-question/${id}/${value}/${noq}/${tId}`}
@@ -81,14 +98,14 @@ const ViewQuestion = () => {
           <table className="table table-striped table-borderless fst-italic border border-3">
             <thead className="formHeaderColour ">
               <tr>
-              <th scope="col">Exam-Name</th>
+                <th scope="col">Exam-Name</th>
                 <th scope="col">Topic-Id</th>
                 <th scope="col">Topic-Name</th>
               </tr>
             </thead>
             <tbody>
               <tr className="align-middle">
-              <th scope="row">{value}</th>
+                <th scope="row">{value}</th>
                 <th scope="row">{tId}</th>
                 <td className="fw-bold">{""}</td>
               </tr>
@@ -110,10 +127,10 @@ const ViewQuestion = () => {
                           <tr className="align-middle" key={key}>
                             <th scope="row">{values.questionId}</th>
                             <th>{values.questionType}</th>
-                            
-                          <td>
+
+                            <td>
                               <Link
-                                to={`/admin/view-exam-topic/edit-question/${id}/${value}/${noq}/${values.topicId}/${values.questionId}`}
+                                to={`/admin/view-exam-topic/edit-question/${id}/${value}/${noq}/${values.topicId}/${values.questionId}/${value.fromDate}`}
                                 className=" justify-content-center d-flex"
                               >
                                 <i
@@ -134,15 +151,11 @@ const ViewQuestion = () => {
                               </Link>
                             </td>
                             <td>
-                              <Link
-                                to=""
-                                className="justify-content-center d-flex"
-                              >
+                              <button onClick={() => { deleteExamId(values.questionId) }} className="px-4 deleteLink">
                                 <i
-                                  className="bi bi-trash2-fill text-danger"
-                                  title="Delete"
+                                  className="bi bi-trash-fill text-danger " title="Delete"
                                 ></i>
-                              </Link>
+                              </button>
                             </td>
                           </tr>
                         ))}

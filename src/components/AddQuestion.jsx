@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const AddQuestion = () => {
-  const { id, value, noq, tId, qId } = useParams();
+  const { id, value, noq, tId, qId, fD } = useParams();
   const [titleName, setTitleName] = useState("Add-Question");
   const [formDatas, setFormData] = useState({
     questionId: qId || "",
@@ -17,6 +17,7 @@ const AddQuestion = () => {
     difficultyLevel: "",
     answerValue: "",
     negativeMarkValue: "",
+    fromDate: fD || "",
   });
   const setValues = (e) => {
     const { name, value } = e.currentTarget;
@@ -28,11 +29,11 @@ const AddQuestion = () => {
   const goToAnotherPage = (flags) => {
     flags
       ? navigate(
-          `/admin/view-exam-topic/view-question/${id}/${value}/${noq}/${tId}`
-        )
+        `/admin/view-exam-topic/view-question/${id}/${value}/${noq}/${tId}`
+      )
       : navigate(
-          `/admin/view-exam-topic/add-question/${id}/${value}/${noq}/${tId}`
-        );
+        `/admin/view-exam-topic/add-question/${id}/${value}/${noq}/${tId}`
+      );
   };
   const onSubmit = (e) => {
     e.preventDefault();
@@ -231,6 +232,7 @@ const AddQuestion = () => {
                   placeholder="Enter NumAnswers"
                 />
               </div>
+              <div className="row"> <input type="hidden" name="fromDate" value={formDatas.fromDate} /></div>
               <div className="form-group">
                 <label>QuestionType</label>
                 <select

@@ -6,10 +6,12 @@ const AddTopic = () => {
   const { id, value, noq, tId } = useParams();
   const [titleName, setTitleName] = useState("Add-Topic");
   const [topicName, setTopicName] = useState("");
+  const [topicFromDate, setTopicFromDate] = useState("");
   const [formDatas, setFormData] = useState({
     topicId: tId || "",
     percentage: "",
     topicPassPercentage: "",
+
   });
 
   const setValues = (e) => {
@@ -71,6 +73,8 @@ const AddTopic = () => {
         const data = await response.json();
 
         setFormData(data.examTopicMapping);
+        setTopicFromDate(data.fromDate);
+        console.log(data.fromDate,"data.fromDate");
 
         setTopicName(data.topicName);
       }
@@ -172,6 +176,7 @@ const AddTopic = () => {
                   placeholder="Enter Topic Pass Percentage.."
                 />
               </div>
+              <input type="hidden" name="fromDate" value={topicFromDate} />
               <input type="hidden" name="questionsPerExam" value={noq} />
               <div className="form-group d-flex mx-4">
                 <div className="mx-4">

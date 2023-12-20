@@ -85,6 +85,10 @@
 .icons{
   top: 75%;
 }
+.deleteLink{
+border: none;
+  background-color: transparent !important;
+}
 /* -----------------------view-topics------------------------- */
 .disabled.cursor-opacity{
   cursor: not-allowed ;
