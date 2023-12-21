@@ -2,6 +2,7 @@
 .bg-header {
   background-color: #374f82;
 }
+
 .logo {
   cursor: auto;
   margin-left: 30px;
@@ -42,14 +43,17 @@
 
 .submit_button:hover {
   background-color: #9ac3ef;
-  
+
 }
+
 .textcolor {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
-.formHeaderColour{
+
+.formHeaderColour {
   background: #9ac3ef !important;
 }
+
 /* ----------------------------------footer--------------------------------- */
 .custom-footer {
   position: absolute;
@@ -64,11 +68,12 @@
 }
 
 /* -------------------------titles------------------------- */
-.cardModal{
-  transition: transform 0.3s;
+.cardModal {
+  transition: transform 0.3s;
 }
+
 .cardModal:hover {
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 /* ------------------------------breadcrumb-------------------------------- */
@@ -77,22 +82,53 @@
   font-family: "breadcrumb";
   text-decoration: none;
 }
+
 .myStyle .breadcrumb .breadcrumb-item a,
 .bread {
   text-decoration: none;
 }
+
 /* -----------------------Admin------------------------------- */
-.icons{
+.icons {
   top: 75%;
 }
-.deleteLink{
-border: none;
+
+.deleteLink {
+  border: none;
   background-color: transparent !important;
 }
-/* -----------------------view-topics------------------------- */
-.disabled.cursor-opacity{
-  cursor: not-allowed ;
-color: white !important;
 
-border-radius: 6px;
+/* -----------------------view-topics------------------------- */
+.disabled.cursor-opacity {
+  cursor: not-allowed;
+  color: white !important;
+
+  border-radius: 6px;
+}
+
+/* -------------------Questions------------------------- */
+.quesAnswer.list-unstyled {
+  padding-left: 15rem;
+}
+
+.ansQuestion {
+  padding-left: 10rem;
+}
+
+.boxSize {
+  padding-right: 30px !important;
+}
+
+.questionbg-color {
+   border: 3px solid #374f82 !important;
+  border-radius: 20px !important;
+  background-color: #f0f0f5 !important;
+
+}
+.questiontext-color{
+  color: #374f82;
+  font-weight: bold;
+  font-size: large;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-style: italic;
 }

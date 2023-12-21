@@ -7,6 +7,7 @@ import ViewTopics from "./components/ViewTopics";
 import AddTopic from "./components/AddTopic";
 import AddQuestion from "./components/AddQuestion";
 import ViewQuestion from "./components/ViewQuestion";
+import Question from "./components/Question";
 const App = () => {
   return (
     <div>
@@ -21,6 +22,7 @@ const App = () => {
       <Route path="/admin/view-exam-topic/view-question/:id/:value/:noq/:tId" element={<ViewQuestion/>} />
       <Route path="/admin/view-exam-topic/add-question/:id/:value/:noq/:tId" element={<AddQuestion/>} />
       <Route path="/admin/view-exam-topic/edit-question/:id/:value/:noq/:tId/:qId/:fD" element={<AddQuestion/>} />
+      <Route path="/admin/view-exam-topic/question/:id/:value/:noq/:tId/:qId" element={<Question/>} />
 
       </Routes>
     </div>

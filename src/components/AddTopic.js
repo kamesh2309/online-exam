@@ -69,7 +69,7 @@ const AddTopic = () => {
       async function fetchData() {
         const response = await fetch(
           `https://localhost:8443/exammodule/control/show-topic?editTopicId=${tId}&showExamId=${id}`
-        );
+          , { credentials: "include" } );
         const data = await response.json();
 
         setFormData(data.examTopicMapping);

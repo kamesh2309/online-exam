@@ -18,7 +18,18 @@ const AddQuestion = () => {
     answerValue: "",
     negativeMarkValue: "",
     fromDate: fD || "",
+    questionType:'QT_SC'
+    
   });
+  const [selectedQuestionType, setSelectedQuestionType] = useState(
+    formDatas.questionType
+  );
+  const onQuestionTypeChange = (e) => {
+    const newQuestionType = e.target.value;
+    setSelectedQuestionType(newQuestionType);
+    setValues(e); // i am Handle changes in the form data beacuse on change the values can change (^-^)
+  };
+
   const setValues = (e) => {
     const { name, value } = e.currentTarget;
 
@@ -76,10 +87,12 @@ const AddQuestion = () => {
       async function fetchData() {
         const response = await fetch(
           `https://localhost:8443/exammodule/control/show-question?editQuestionId=${qId}`
-        );
+          , { credentials: "include" }  );
         const data = await response.json();
-        console.log("editQuestionMap", data.editQuestionMap);
+       
         setFormData(data.editQuestionMap);
+        setSelectedQuestionType(data.editQuestionMap.questionType);
+        console.log("object",selectedQuestionType)
       }
       fetchData();
     }
@@ -117,7 +130,7 @@ const AddQuestion = () => {
               </Link>
             </li>
             <li className="breadcrumb-item">
-              <Link to="">{titleName}</Link>
+              <Link to="#">{titleName}</Link>
             </li>
           </ol>
         </nav>
@@ -136,7 +149,6 @@ const AddQuestion = () => {
                 <input type="hidden" name="questionId" value={qId} />
                 <input type="text" className="form-control" disabled={true} placeholder={qId} />
               </div>
-
               <div className="form-group">
                 <label>Question Detail</label>
                 <textarea
@@ -148,66 +160,107 @@ const AddQuestion = () => {
                   placeholder="Question Detail.."
                 />
               </div>
-
               <div className="form-group">
-                <label>Option A</label>
-                <textarea
+                <label>QuestionType</label>
+                <select
                   type="text"
+                  name="questionType"
                   className="form-control"
-                  name="optionA"
-                  onChange={setValues}
-                  value={formDatas.optionA}
-                  placeholder="Enter Option A"
-                />
+                  value={selectedQuestionType}
+                  onChange={onQuestionTypeChange}
+                >
+                  <option value="QT_SC">Single Choice</option>
+                  <option value="QT_MC">Multiple Choice</option>
+                  <option value="QT_TF">True or False</option>
+                  <option value="QT_FIB">Fill in the Blanks</option>
+                  <option value="QT_DA">Detailed Answer</option>
+                </select>
               </div>
 
-              <div className="form-group">
-                <label>Option B</label>
-                <textarea
-                  type="text"
-                  className="form-control"
-                  name="optionB"
-                  onChange={setValues}
-                  value={formDatas.optionB}
-                  placeholder="Enter Option B"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Option C</label>
-                <textarea
-                  type="text"
-                  className="form-control"
-                  name="optionC"
-                  onChange={setValues}
-                  value={formDatas.optionC}
-                  placeholder="Enter Option c"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Option D</label>
-                <textarea
-                  type="text"
-                  className="form-control"
-                  name="optionD"
-                  onChange={setValues}
-                  value={formDatas.optionD}
-                  placeholder="Enter Option D"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Option E</label>
-                <textarea
-                  type="text"
-                  className="form-control"
-                  name="optionE"
-                  onChange={setValues}
-                  value={formDatas.optionE}
-                  placeholder="Enter Option E"
-                />
-              </div>
+              {selectedQuestionType === "QT_SC" || selectedQuestionType === "QT_MC" ? (
+                <>
+                  <div className="form-group">
+                    <label>Option A</label>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      name="optionA"
+                      onChange={setValues}
+                      value={formDatas.optionA}
+                      placeholder="Enter Option A"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Option B</label>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      name="optionB"
+                      onChange={setValues}
+                      value={formDatas.optionB}
+                      placeholder="Enter Option B"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Option C</label>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      name="optionC"
+                      onChange={setValues}
+                      value={formDatas.optionC}
+                      placeholder="Enter Option c"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Option D</label>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      name="optionD"
+                      onChange={setValues}
+                      value={formDatas.optionD}
+                      placeholder="Enter Option D"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Option E</label>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      name="optionE"
+                      onChange={setValues}
+                      value={formDatas.optionE}
+                      placeholder="Enter Option E"
+                    />
+                  </div>
+                </>
+              ) : selectedQuestionType === "QT_TF" ? (
+                <>
+                  <div className="form-group">
+                    <label>Option A</label>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      name="optionA"
+                      onChange={setValues}
+                      value={formDatas.optionA}
+                      placeholder="Enter Option A"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Option B</label>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      name="optionB"
+                      onChange={setValues}
+                      value={formDatas.optionB}
+                      placeholder="Enter Option B"
+                    />
+                  </div>
+                </>
+              ) : null}
 
               <div className="form-group">
                 <label>Answer</label>
@@ -233,21 +286,6 @@ const AddQuestion = () => {
                 />
               </div>
               <div className="row"> <input type="hidden" name="fromDate" value={formDatas.fromDate} /></div>
-              <div className="form-group">
-                <label>QuestionType</label>
-                <select
-                  type="text"
-                  name="questionType"
-                  className="form-control"
-                >
-                  <option value="QT_SC">Single Choice</option>
-                  <option value="QT_MC">Multiple Choice</option>
-                  <option value="QT_TF">True or False</option>
-                  <option value="QT_FIB">Fill in the Blanks</option>
-                  <option value="QT_DA">Detailed Answer</option>
-                </select>
-              </div>
-
               <div className="form-group">
                 <label>DifficultyLevel</label>
                 <input

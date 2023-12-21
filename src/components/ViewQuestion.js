@@ -5,13 +5,13 @@ const ViewQuestion = () => {
   const { id, value, noq, tId } = useParams();
   const [questionData, setquestionData] = useState([]);
   const [disable, setdisable] = useState(false);
-  const [showDelete, setShowDelete] = useState(false)
+
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(
           "https://localhost:8443/exammodule/control/show-question?showTopicId=" +
-          tId
+          tId, { credentials: "include" }
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -29,20 +29,22 @@ const ViewQuestion = () => {
       }
     }
     fetchData();
-  }, [showDelete]);
+  }, []);
 
   async function deleteExamId(ID) {
 
     try {
       const response = await fetch(
-        `https://localhost:8443/exammodule/control/add-question?deleteQuestionId=${ID}`);
+        `https://localhost:8443/exammodule/control/add-question?deleteQuestionId=${ID}`, { credentials: "include" });
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
       const deleteData = await response.json();
-      setShowDelete(true)
+      if (deleteData.successDelete === "success") {
+        window.location.reload();
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -141,7 +143,7 @@ const ViewQuestion = () => {
                             </td>
                             <td>
                               <Link
-                                to={`/admin/view-exam-topic/view-exam/${id}/${value}/${noq}/${values.topicId}`}
+                                to={`/admin/view-exam-topic/question/${id}/${value}/${noq}/${values.topicId}/${values.questionId}`}
                                 className="justify-content-center d-flex"
                               >
                                 <i

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Admin = () => {
   const [examData, setExamData] = useState([]);
-  const[showDelete,setShowDelete]=useState(false)
+ 
 
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const Admin = () => {
       }
     }
     fetchData();
-  }, [showDelete]);
+  }, []);
   async function deleteExamId(ID) {
     
     try {
@@ -38,7 +38,9 @@ const Admin = () => {
       }
 
       const deleteData = await response.json();
-      setShowDelete(true)
+      if(deleteData.successDelete==="success"){
+        window.location.reload();
+      }
 
      } catch (error) {
       console.error("Error fetching data:", error);

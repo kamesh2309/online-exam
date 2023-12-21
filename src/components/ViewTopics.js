@@ -10,7 +10,7 @@ const ViewTopics = () => {
       try {
         const response = await fetch(
           "https://localhost:8443/exammodule/control/show-topic?showExamId=" + id
-        );
+          , { credentials: "include" } );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -28,12 +28,15 @@ const ViewTopics = () => {
 
     try {
       const response = await fetch(
-        `https://localhost:8443/exammodule/control/examMaster?deleteTopicId=${ID}`);
+        `https://localhost:8443/exammodule/control/add-topic?deleteTopicId=${ID}&deleteExamId=${id}`, { credentials: "include" });
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const deleteData = await response.json();
+      if(deleteData.successDelete==="success"){
+        window.location.reload();
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -79,7 +82,7 @@ const ViewTopics = () => {
       <div className="row  justify-content-center mt-2 text-center textcolor ">
         <div className="col-md-11">
           <table className="table table-striped table-borderless fst-italic border border-3">
-            <thead className="formHeaderColour ">
+            <thead style={{backgroundColor:"red"}}className="formHeaderColour">
               <tr>
                 <th scope="col">Exam-Id</th>
                 <th scope="col">Exam-Name</th>
