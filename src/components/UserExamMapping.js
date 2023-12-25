@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const UserExamMapping = () => {
-    const { eId } = useParams();
+    const { id, value, noq, pId } = useParams();
     const navigate = useNavigate();
     const goToAnotherPage = (flags) => {
         flags ? navigate("/admin") : navigate("/admin/user-exam-mapping");
@@ -39,6 +39,7 @@ const UserExamMapping = () => {
             });
     };
     useEffect(() => {
+
         async function fetchData() {
             try {
                 const response = await fetch(
@@ -51,7 +52,7 @@ const UserExamMapping = () => {
                 const data = await response.json();
                 const dropDown = document.getElementById('myDropdown');
                 dropDown.innerHTML = "";
-                 if (data.resultMap) {
+                if (data.resultMap) {
 
                     Object.entries(data.resultMap).map(([key, value]) => {
                         const option = document.createElement('option');
@@ -71,9 +72,7 @@ const UserExamMapping = () => {
             }
         }
         fetchData();
-        console.log("i am exam ID value..."+eId)
-        if (eId === undefined) {
-            console.log("object... i am enter")
+        if (id === undefined) {
             async function fetchdata1() {
                 try {
                     const response = await fetch("https://localhost:8443/exammodule/control/show-exams",
@@ -86,7 +85,7 @@ const UserExamMapping = () => {
                     dropDown.innerHTML = "";
                     console.log(data.examMap)
                     if (data.examMap) {
-                      Object.entries(data.examMap).map(([key, value]) => {
+                        Object.entries(data.examMap).map(([key, value]) => {
                             const option = document.createElement('option');
                             option.value = value.examId;
                             option.text = value.examName;
@@ -103,7 +102,7 @@ const UserExamMapping = () => {
         else {
             async function fetchdata2() {
                 try {
-                    const response = await fetch(`https://localhost:8443/exammodule/control/show-exams?editExamId=${eId}`,
+                    const response = await fetch(`https://localhost:8443/exammodule/control/show-exams?editExamId=${id}`,
                         { credentials: "include" })
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -129,8 +128,6 @@ const UserExamMapping = () => {
         }
     }, []);
 
-
-
     return (
         <div>
             <div className="row">
@@ -145,11 +142,34 @@ const UserExamMapping = () => {
                                     Admin
                                 </Link>
                             </li>
-                            <li className="breadcrumb-item">
-                                <Link to="#" >
-                                    Add-User
+                            {pId !== undefined ? (<><li className="breadcrumb-item">
+                                <Link to={`/admin/view-exam-topic/view-exam-user/${id}/${value}/${noq}`} className="text-muted" >
+                                    view-exam-user
                                 </Link>
                             </li>
+                                <li className="breadcrumb-item">
+                                    <Link to="#" >
+                                        Edit-User
+                                    </Link>
+                                </li>
+                            </>
+                            )
+                                : (id !== undefined ? <><li className="breadcrumb-item">
+                                    <Link to={`/admin/view-exam-topic/${id}/${value}/${noq}`} className="text-muted">
+                                        Topics
+                                    </Link>
+                                </li>
+                                    <li className="breadcrumb-item">
+                                        <Link to="#" >
+                                            Add-User
+                                        </Link>
+                                    </li>
+                                </> : <li className="breadcrumb-item">
+                                    <Link to="#" >
+                                        Add-User
+                                    </Link>
+                                </li>
+                                )}
                         </ol>
                     </nav>
                 </div>

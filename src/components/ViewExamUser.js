@@ -89,7 +89,7 @@ const ViewExamUser = () => {
                                                     <th scope="col">Student-Id</th>
                                                     <th scope="col">FirstName</th>
                                                     <th scope="col">LastName</th>
-                                                    <th scope="col">Edit</th>
+                                                    {/* <th scope="col">Edit</th> */}
                                                     <th scope="col">View</th>
                                                     <th scope="col">Delete</th>
                                                 </tr>
@@ -100,11 +100,11 @@ const ViewExamUser = () => {
                                                         <th scope="row">{values.partyId}</th>
                                                         <th scope="row">{values.firstName}</th>
                                                         <th scope="row">{values.lastName}</th>
-                                                        <td>
-                                                            <Link to={"#"} className="justify-content-center d-flex">
+                                                        {/* <td>
+                                                            <Link to={`/admin/view-exam-topic/view-exam-user/edit-user-exam-mapping/${id}/${value}/${noq}/${values.partyId}`} className="justify-content-center d-flex">
                                                                 <i className="bi bi-pen-fill text-dark" title="Edit"></i>
                                                             </Link>
-                                                        </td>
+                                                        </td> */}
                                                         <td>
                                                             <Link to={`/admin/view-exam-topic/view-exam-user/view-user-exam-details/${id}/${value}/${noq}/${values.partyId}/${values.firstName}/${values.lastName}`} className="justify-content-center d-flex">
                                                                 <i className=" bi bi-folder-symlink-fill text-info" title="View"></i>

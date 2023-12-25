@@ -79,7 +79,7 @@ const ViewTopics = () => {
           <button
             type="button"
             className=" btn btn-outline-info fw-bold border-2 me-5" >
-            <Link to={`/admin/user-exam-mapping/${id}`} className="bread text-dark fst-italic  ">
+            <Link to={`/admin/view-exam-topic/user-exam-mapping/${id}/${value}/${noq}`} className="bread text-dark fst-italic  ">
               Add-User
             </Link>
           </button>

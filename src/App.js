@@ -16,22 +16,23 @@ const App = () => {
   return (
     <div>
       <Routes>
-      <Route path="/" element={<Login/>} />
-      <Route path="/registers" element={<Registers/>} />
-      <Route path="/admin" element={<Admin/>} />
-      <Route path="/admin/user-exam-mapping" element={<UserExamMapping/>} />
-      <Route path="/admin/user-exam-mapping/:eId" element={<UserExamMapping/>} />
-      <Route path="/add-exam" element={<AddExam/>} />
-      <Route path="/edit-exam/:id/:fD" element={<AddExam/>} />
-      <Route path="/admin/view-exam-topic/:id/:value/:noq" element={<ViewTopics/>} />
-      <Route path="/admin/view-exam-topic/view-exam-user/:id/:value/:noq" element={<ViewExamUser/>} />
-      <Route path="/admin/view-exam-topic/view-exam-user/view-user-exam-details/:id/:value/:noq/:pId/:fName/:lName" element={<ExamUserDetails/>} />
-      <Route path="/admin/view-exam-topic/add-topic/:id/:value/:noq" element={<AddTopic/>} />
-      <Route path="/admin/view-exam-topic/edit-topic/:id/:value/:noq/:tId" element={<AddTopic/>} />
-      <Route path="/admin/view-exam-topic/view-question/:id/:value/:noq/:tId" element={<ViewQuestion/>} />
-      <Route path="/admin/view-exam-topic/add-question/:id/:value/:noq/:tId" element={<AddQuestion/>} />
-      <Route path="/admin/view-exam-topic/edit-question/:id/:value/:noq/:tId/:qId/:fD" element={<AddQuestion/>} />
-      <Route path="/admin/view-exam-topic/question/:id/:value/:noq/:tId/:qId" element={<Question/>} />
+        <Route path="/" element={<Login />} />
+        <Route path="/registers" element={<Registers />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/user-exam-mapping" element={<UserExamMapping />} />
+        <Route path="/admin/view-exam-topic/user-exam-mapping/:id/:value/:noq" element={<UserExamMapping />} />
+        <Route path="/add-exam" element={<AddExam />} />
+        <Route path="/edit-exam/:id/:fD" element={<AddExam />} />
+        <Route path="/admin/view-exam-topic/:id/:value/:noq" element={<ViewTopics />} />
+        <Route path="/admin/view-exam-topic/view-exam-user/:id/:value/:noq" element={<ViewExamUser />} />
+        {/* <Route path="/admin/view-exam-topic/view-exam-user/edit-user-exam-mapping/:id/:value/:noq/:pId" element={<UserExamMapping />} /> */}
+        <Route path="/admin/view-exam-topic/view-exam-user/view-user-exam-details/:id/:value/:noq/:pId/:fName/:lName" element={<ExamUserDetails />} />
+        <Route path="/admin/view-exam-topic/add-topic/:id/:value/:noq" element={<AddTopic />} />
+        <Route path="/admin/view-exam-topic/edit-topic/:id/:value/:noq/:tId" element={<AddTopic />} />
+        <Route path="/admin/view-exam-topic/view-question/:id/:value/:noq/:tId" element={<ViewQuestion />} />
+        <Route path="/admin/view-exam-topic/add-question/:id/:value/:noq/:tId" element={<AddQuestion />} />
+        <Route path="/admin/view-exam-topic/edit-question/:id/:value/:noq/:tId/:qId/:fD" element={<AddQuestion />} />
+        <Route path="/admin/view-exam-topic/question/:id/:value/:noq/:tId/:qId" element={<Question />} />
 
       </Routes>
     </div>
