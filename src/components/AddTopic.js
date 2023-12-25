@@ -68,14 +68,12 @@ const AddTopic = () => {
       setTitleName("Edit-Topic");
       async function fetchData() {
         const response = await fetch(
-          `https://localhost:8443/exammodule/control/show-topic?editTopicId=${tId}&showExamId=${id}`
-          , { credentials: "include" } );
+        `https://localhost:8443/exammodule/control/show-topic?editTopicId=${tId}&showExamId=${id}`
+          , {credentials: "include"});
         const data = await response.json();
 
         setFormData(data.examTopicMapping);
         setTopicFromDate(data.fromDate);
-        console.log(data.fromDate,"data.fromDate");
-
         setTopicName(data.topicName);
       }
       fetchData();
@@ -100,8 +98,7 @@ const AddTopic = () => {
             <li className="breadcrumb-item">
               <Link
                 to={`/admin/view-exam-topic/${id}/${value}/${noq}`}
-                className="text-muted"
-              >
+                className="text-muted">
                 View-topics
               </Link>
             </li>

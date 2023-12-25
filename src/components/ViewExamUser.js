@@ -21,6 +21,23 @@ const ViewExamUser = () => {
         fetchData();
     }, []
     )
+    async function deleteUserExamId(examId, partyId) {
+
+        try {
+            const response = await fetch(
+                `https://localhost:8443/exammodule/control/add-user-exam-mapping?deleteExamId=${examId}&deletePartyId=${partyId}`, { credentials: "include" });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const deleteData = await response.json();
+            if (deleteData.successDelete === "success") {
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
     return (
         <div>
             <nav className="myStyle">
@@ -55,9 +72,7 @@ const ViewExamUser = () => {
                             <tr>
                                 <th scope="col">Exam-Id</th>
                                 <th scope="col">Exam-Name</th>
-
                             </tr>
-
                         </thead>
                         <tbody>
                             <tr className="align-middle">
@@ -91,12 +106,12 @@ const ViewExamUser = () => {
                                                             </Link>
                                                         </td>
                                                         <td>
-                                                            <Link to={"#"} className="justify-content-center d-flex">
+                                                            <Link to={`/admin/view-exam-topic/view-exam-user/view-user-exam-details/${id}/${value}/${noq}/${values.partyId}/${values.firstName}/${values.lastName}`} className="justify-content-center d-flex">
                                                                 <i className=" bi bi-folder-symlink-fill text-info" title="View"></i>
                                                             </Link>
                                                         </td>
                                                         <td>
-                                                            <button className="px-4 deleteLink">
+                                                            <button className="px-4 deleteLink" onClick={() => { deleteUserExamId(id, values.partyId) }}>
                                                                 <i className="bi bi-trash-fill text-danger" title="Delete"></i>
                                                             </button>
                                                         </td>
@@ -105,7 +120,7 @@ const ViewExamUser = () => {
                                             </tbody>
                                         </table>
 
-                                    ) : (<p>No Exam To Be Added For This Topic</p>)}
+                                    ) : (<p>No User To Be Added For This Exam</p>)}
                                 </td>
                             </tr>
                         </tbody>

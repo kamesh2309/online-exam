@@ -22,15 +22,22 @@ const Question = () => {
 
     useEffect(() => {
         async function fetchData() {
+            try {
             const response = await fetch(
                 `https://localhost:8443/exammodule/control/show-question?editQuestionId=${qId}`
                 , { credentials: "include" });
-            const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
             console.log("object", data)
             setFormData(data.editQuestionMap);
             console.log("object", formDatas)
-
-        }
+            }catch(error){
+                console.error("Error fetching data:", error);
+            }
+        
+    }
         fetchData();
 
     }, []);

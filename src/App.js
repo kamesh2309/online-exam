@@ -11,6 +11,7 @@ import Question from "./components/Question";
 import UserExamMapping from "./components/UserExamMapping";
 import Registers from "./components/Registers";
 import ViewExamUser from "./components/ViewExamUser";
+import ExamUserDetails from "./components/ExamUserDetails";
 const App = () => {
   return (
     <div>
@@ -24,6 +25,7 @@ const App = () => {
       <Route path="/edit-exam/:id/:fD" element={<AddExam/>} />
       <Route path="/admin/view-exam-topic/:id/:value/:noq" element={<ViewTopics/>} />
       <Route path="/admin/view-exam-topic/view-exam-user/:id/:value/:noq" element={<ViewExamUser/>} />
+      <Route path="/admin/view-exam-topic/view-exam-user/view-user-exam-details/:id/:value/:noq/:pId/:fName/:lName" element={<ExamUserDetails/>} />
       <Route path="/admin/view-exam-topic/add-topic/:id/:value/:noq" element={<AddTopic/>} />
       <Route path="/admin/view-exam-topic/edit-topic/:id/:value/:noq/:tId" element={<AddTopic/>} />
       <Route path="/admin/view-exam-topic/view-question/:id/:value/:noq/:tId" element={<ViewQuestion/>} />
