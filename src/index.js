@@ -17,11 +17,11 @@ root.render(
   <div className="container-fluid">
     <div className="row">
       <Header />
-      <React.StrictMode>
+      {/* <React.StrictMode> */}
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </React.StrictMode>
+      {/* </React.StrictMode> */}
       <Footer/>
     </div>
   </div>

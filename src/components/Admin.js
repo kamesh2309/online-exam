@@ -4,14 +4,16 @@ import { Link } from "react-router-dom";
 
 const Admin = () => {
   const [examData, setExamData] = useState([]);
- 
+
 
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(
-          "https://localhost:8443/exammodule/control/show-exams"
+          "https://localhost:8443/exammodule/control/show-exams", {
+          credentials: "include",
+        }
         );
 
         if (!response.ok) {
@@ -19,7 +21,7 @@ const Admin = () => {
         }
 
         const formData = await response.json();
-       
+
         setExamData(formData.examMap);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -28,21 +30,26 @@ const Admin = () => {
     fetchData();
   }, []);
   async function deleteExamId(ID) {
-    
+
     try {
       const response = await fetch(
-        `https://localhost:8443/exammodule/control/examMaster?deleteExamId=${ID}`);
+        `https://localhost:8443/exammodule/control/examMaster?deleteExamId=${ID}`,
+        {
+          credentials: "include",
+        }
+
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
       const deleteData = await response.json();
-      if(deleteData.successDelete==="success"){
+      if (deleteData.successDelete === "success") {
         window.location.reload();
       }
 
-     } catch (error) {
+    } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
@@ -64,14 +71,22 @@ const Admin = () => {
               </li>
             </ol>
           </nav>
-          <div>
+          <div className="d-flex justify-content-between">
             <button
               type="button"
               className=" btn btn-outline-info fw-bold border-2 " >
               <Link to="/add-exam" className="bread text-dark fst-italic">
-                AddExam
+                Add-Exam
               </Link>
             </button>
+            <button
+              type="button"
+              className=" btn btn-outline-info fw-bold border-2 me-5" >
+              <Link to="/admin/user-exam-mapping" className="bread text-dark fst-italic  ">
+                Add-User
+              </Link>
+            </button>
+
           </div>
         </div>
         <div className="row justify-content-center pt-4 ">

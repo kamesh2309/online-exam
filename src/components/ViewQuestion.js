@@ -4,7 +4,6 @@ import { Link, useParams } from "react-router-dom";
 const ViewQuestion = () => {
   const { id, value, noq, tId } = useParams();
   const [questionData, setquestionData] = useState([]);
-  const [disable, setdisable] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -20,10 +19,6 @@ const ViewQuestion = () => {
 
         setquestionData(formData.resultMap);
         console.log("i am resultMap..", questionData)
-
-        formData.questionsPerTopic >= 100
-          ? setdisable(true)
-          : setdisable(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -79,11 +74,7 @@ const ViewQuestion = () => {
           </ol>
         </nav>
         <button
-          className={`${disable
-            ? "disabled btn btn-outline-info"
-            : "btn btn-outline-info btn-fw-bold"
-            }`}
-        >
+          className="btn btn-outline-info fw-bold border-2">
           <Link
             to={`/admin/view-exam-topic/add-question/${id}/${value}/${noq}/${tId}`}
             className="bread text-dark fst-italic"

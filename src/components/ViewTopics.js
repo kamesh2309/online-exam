@@ -10,7 +10,7 @@ const ViewTopics = () => {
       try {
         const response = await fetch(
           "https://localhost:8443/exammodule/control/show-topic?showExamId=" + id
-          , { credentials: "include" } );
+          , { credentials: "include" });
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -34,7 +34,7 @@ const ViewTopics = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const deleteData = await response.json();
-      if(deleteData.successDelete==="success"){
+      if (deleteData.successDelete === "success") {
         window.location.reload();
       }
     } catch (error) {
@@ -62,19 +62,28 @@ const ViewTopics = () => {
             </li>
           </ol>
         </nav>
-        <button
-          className={`${disable
-            ? "disabled btn btn-outline-info  "
-            : "btn btn-outline-info btn-fw-bold"
-            }`}
-        >
-          <Link
-            to={`/admin/view-exam-topic/add-topic/${id}/${value}/${noq}`}
-            className="bread text-dark fst-italic"
+        <div className="d-flex justify-content-between">
+          <button
+            className={`${disable
+              ? "disabled btn btn-outline-info  "
+              : "btn btn-outline-info fw-bold border-2"
+              }`}
           >
-            Add Topic
-          </Link>
-        </button>
+            <Link
+              to={`/admin/view-exam-topic/add-topic/${id}/${value}/${noq}`}
+              className="bread text-dark fst-italic"
+            >
+              Add Topic
+            </Link>
+          </button>
+          <button
+            type="button"
+            className=" btn btn-outline-info fw-bold border-2 me-5" >
+            <Link to={`/admin/user-exam-mapping/${id}`} className="bread text-dark fst-italic  ">
+              Add-User
+            </Link>
+          </button>
+        </div>
       </div>
       <h4 className="textcolor fst-italic table fw-bold text-dark text-center ">
         List of Topics
@@ -82,11 +91,12 @@ const ViewTopics = () => {
       <div className="row  justify-content-center mt-2 text-center textcolor ">
         <div className="col-md-11">
           <table className="table table-striped table-borderless fst-italic border border-3">
-            <thead style={{backgroundColor:"red"}}className="formHeaderColour">
+            <thead style={{ backgroundColor: "red" }} className="formHeaderColour">
               <tr>
                 <th scope="col">Exam-Id</th>
                 <th scope="col">Exam-Name</th>
                 <th scope="col">Questions-Per-Exam</th>
+                <th scope="col">Exam-Per-User</th>
               </tr>
             </thead>
             <tbody>
@@ -94,6 +104,13 @@ const ViewTopics = () => {
                 <th scope="row">{id}</th>
                 <td className="fw-bold">{value}</td>
                 <td className="fw-bold">{noq}</td>
+                <td>
+                  <Link to={`/admin/view-exam-topic/view-exam-user/${id}/${value}/${noq}`}>
+                    <i
+                      className="bi bi-people-fill text-primary"
+                      title="viewExamUser"></i>
+                  </Link>
+                </td>
               </tr>
               <tr>
                 <td colSpan="4">

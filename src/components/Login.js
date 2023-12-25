@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const goToAnotherPage = (flags) => {
@@ -111,6 +111,7 @@ const Login = () => {
               value="Login"
             />
           </div>
+          <span>If you are new here...?<Link to={`/registers`}>Register</Link></span>
         </form>
       </div>
       {/* <div className="col-md-4">
