@@ -1,41 +1,65 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { ValidEmail, ValidPassword, ValidName } from './RegexValidation';
+import useStateRef from 'react-usestateref';
+import { RegistersValidation } from './RegistersValidation';
 
 const Registers = () => {
+    const [hasError, setHasError, refHasError] = useStateRef(true);
     const navigate = useNavigate();
     const goToAnotherPage = (flags) => {
         flags ? navigate("/") : navigate("/registers");
-      };
+    };
     const onSumbit = (e => {
         e.preventDefault();
+        document.getElementById("errorufname").innerHTML = "";
+        document.getElementById("errorulname").innerHTML = "";
+        document.getElementById("erroremail").innerHTML = "";
+        document.getElementById("errorpassword").innerHTML = "";
+        document.getElementById("errorrepassword").innerHTML = "";
+
         const formData = new FormData(e.target);
         const formDataValues = new URLSearchParams();
         for (const [field, value] of formData) {
-
             formDataValues.append(field, value);
         }
-
-        fetch("https://localhost:8443/exammodule/control/add-user", {
-            method: "POST",
-            credentials: "include",
-            body: formDataValues,
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                Accept: "application/json",
-            },
-        }).then((response) => {
-            return response.json();
-        }).then((data) => {
-             Object.entries(data.resultMap).map(([key, value]) => {
-                if (value === "success") {
-                    goToAnotherPage(true);
-                }
-            });
-
-            return data;
+        const value = Object.fromEntries(formData.entries())
+        Object.entries(value).map(([key, value]) => {
+            RegistersValidation(key, value, setHasError);
         })
 
-    })
+        const password = formData.get("currentPassword");
+        const rePassword = formData.get("currentPasswordVerify");
+        if (password !== rePassword) {
+            document.getElementById("errorrepassword").classList.remove("d-none");
+            document.getElementById("errorrepassword").classList.add("d-block");
+            document.getElementById("errorrepassword").innerHTML =
+                "PASSWORD AND RE-ENTER-PASSWORD NOT SAME";
+            setHasError(false);
+
+        }
+        console.log(refHasError.current, "hi i'm hasError")
+
+        if (refHasError.current) {
+            fetch("https://localhost:8443/exammodule/control/add-user", {
+                method: "POST",
+                credentials: "include",
+                body: formDataValues,
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    Accept: "application/json",
+                },
+            }).then((response) => {
+                return response.json();
+            }).then((data) => {
+                console.log(data.success,"")
+                if (data.success === "success") {
+                    goToAnotherPage(true);
+                }
+               return data;
+            })
+        }
+        })
     return (
         <div>
             <div className="row">
@@ -65,32 +89,39 @@ const Registers = () => {
                             <div className='row '>
                                 <div className="col-md-6">
                                     <label className="form-label">First Name</label>
+                                    <p className="d-none text-danger" id="errorufname"></p>
                                     <input type="text" name="firstName" className="form-control" />
                                 </div>
                                 <div className="col-md-6">
                                     <label className="form-label">LastName</label>
+                                    <p className="d-none text-danger" id="errorulname"></p>
+
                                     <input type="text" name="lastName" className="form-control" />
                                 </div>
                             </div>
                             <div >
-                                <label class="form-label">UserId</label>
+                                <label className="form-label">UserId</label>
+                                <p className="d-none text-danger" id="erroremail"></p>
+
                                 <div >
-                                    <input type="email" name='userLoginId' class="form-control" />
+                                    <input type="email" name='userLoginId' className="form-control" />
                                 </div>
                             </div>
                             <div>
-                                <input type='hidden' name="roleTypeId" value="Student"/>
+                                <input type='hidden' name="roleTypeId" value="Student" />
                             </div>
                             <div >
-                                <label class="form-label">Password</label>
+                                <label className="form-label">Password</label>
+                                <p className="d-none text-danger" id="errorpassword"></p>
                                 <div >
-                                    <input type="password" name='currentPassword' class="form-control" />
+                                    <input type="password" name='currentPassword' className="form-control" />
                                 </div>
                             </div>
                             <div >
-                                <label class="form-label">ReEnter-Password</label>
+                                <label className="form-label">ReEnter-Password</label>
+                                <p className="d-none text-danger" id="errorrepassword"></p>
                                 <div >
-                                    <input type="password" name='currentPasswordVerify' class="form-control" />
+                                    <input type="password" name='currentPasswordVerify' className="form-control" />
                                 </div>
                             </div>
                             <div className="form-group d-flex mb-3">
@@ -99,7 +130,6 @@ const Registers = () => {
                                         Submit
                                     </button>
                                 </div>
-
                             </div>
 
 

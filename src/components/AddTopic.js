@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import useStateRef from "react-usestateref";
+import { AddTopicValidation } from "./AddTopicValidation";
 
 const AddTopic = () => {
   const { id, value, noq, tId } = useParams();
   const [titleName, setTitleName] = useState("Add-Topic");
   const [topicName, setTopicName] = useState("");
+  const [hasError, setHasError, refHasError] = useStateRef(true);
   const [topicFromDate, setTopicFromDate] = useState("");
   const [formDatas, setFormData] = useState({
     topicId: tId || "",
@@ -33,43 +36,50 @@ const AddTopic = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    document.getElementById("errorTopicName").innerHTML = "";
+    document.getElementById("errorpercentage").innerHTML = "";
+    document.getElementById("errorTopicPassPercentage").innerHTML = "";
+
     const data = new FormData(e.target);
     const formData = new URLSearchParams();
     for (const [key, value] of data) {
-      console.log(`key..${key},value..${value}`);
       formData.append(key, value);
     }
-    fetch("https://localhost:8443/exammodule/control/add-topic", {
-      method: "POST",
-      credentials: "include",
-      body: formData,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
+    const value = Object.fromEntries(data.entries())
+    Object.entries(value).map(([key, value]) => {
+      AddTopicValidation(key, value, setHasError);
     })
-      .then((response) => {
-        return response.json();
+    if (refHasError.current) {
+      fetch("https://localhost:8443/exammodule/control/add-topic", {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
       })
-      .then((data) => {
-        if (data.resultMap === "success") {
-          goToAnotherPage(true);
-        }
-
-        console.log(data);
-        return data;
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      });
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          if (data.resultMap === "success") {
+            goToAnotherPage(true);
+          }
+          return data;
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+        });
+    }
   };
   useEffect(() => {
     if (tId != null) {
       setTitleName("Edit-Topic");
       async function fetchData() {
         const response = await fetch(
-        `https://localhost:8443/exammodule/control/show-topic?editTopicId=${tId}&showExamId=${id}`
-          , {credentials: "include"});
+          `https://localhost:8443/exammodule/control/show-topic?editTopicId=${tId}&showExamId=${id}`
+          , { credentials: "include" });
         const data = await response.json();
 
         setFormData(data.examTopicMapping);
@@ -141,6 +151,7 @@ const AddTopic = () => {
 
               <div className="form-group">
                 <label>Topic Name</label>
+                <p className="d-none text-danger" id="errorTopicName"></p>
                 <input
                   type="text"
                   className="form-control"
@@ -153,6 +164,8 @@ const AddTopic = () => {
 
               <div className="form-group">
                 <label>Percentage</label>
+                <p className="d-none text-danger" id="errorpercentage"></p>
+
                 <input
                   type="text"
                   className="form-control"
@@ -164,6 +177,7 @@ const AddTopic = () => {
               </div>
               <div className="form-group">
                 <label>Topic Pass Percentage</label>
+                <p className="d-none text-danger" id="errorTopicPassPercentage"></p>
                 <input
                   type="text"
                   className="form-control"
@@ -181,11 +195,7 @@ const AddTopic = () => {
                     Submit
                   </button>
                 </div>
-                <div className="mx-0">
-                  <button type="reset" className="btn btn-outline-warning">
-                    Reset
-                  </button>
-                </div>
+
               </div>
             </form>
           </div>

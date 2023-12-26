@@ -1,43 +1,55 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import useStateRef from 'react-usestateref';
+import { UserExamMappingValidation } from './UserExamMappingValidation';
 
 const UserExamMapping = () => {
     const { id, value, noq, pId } = useParams();
+    const [hasError, setHasError, refHasError] = useStateRef(true);
     const navigate = useNavigate();
     const goToAnotherPage = (flags) => {
         flags ? navigate("/admin") : navigate("/admin/user-exam-mapping");
     };
     const handler = (e) => {
         e.preventDefault();
+        document.getElementById("errorallowattemp").innerHTML = "";
+        document.getElementById("errornoofattemp").innerHTML = "";
+        document.getElementById("errortimeoutday").innerHTML = "";
+        document.getElementById("errormaxsplit").innerHTML = "";
         const data = new FormData(e.target);
         const formData = new URLSearchParams();
         for (const [key, value] of data) {
-            console.log(`key..${key},value..${value}`);
             formData.append(key, value);
         }
-
-        fetch("https://localhost:8443/exammodule/control/add-user-exam-mapping", {
-            method: "POST",
-            credentials: "include",
-            body: formData,
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                Accept: "application/json",
-            },
+        const value = Object.fromEntries(data.entries())
+        Object.entries(value).map(([key, value]) => {
+            UserExamMappingValidation(key, value, setHasError);
         })
-            .then((response) => {
-                return response.json();
+        if (refHasError.current) {
+            fetch("https://localhost:8443/exammodule/control/add-user-exam-mapping", {
+                method: "POST",
+                credentials: "include",
+                body: formData,
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    Accept: "application/json",
+                },
             })
-            .then((data) => {
-                if (data.resultMap === "success") {
-                    goToAnotherPage(true);
-                }
-                return data;
-            })
-            .catch((error) => {
-                console.error("Fetch error:", error);
-            });
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data.resultMap === "success") {
+                        goToAnotherPage(true);
+                    }
+                    return data;
+                })
+                .catch((error) => {
+                    console.error("Fetch error:", error);
+                });
+        }
     };
+
     useEffect(() => {
 
         async function fetchData() {
@@ -193,11 +205,13 @@ const UserExamMapping = () => {
                                     </select></div>
                                 <div className="form-group">
                                     <label >Allowed Attempts</label>
+                                    <p className="d-none text-danger" id="errorallowattemp"></p>
                                     <input type="text" name="allowedAttempts" className="form-control" /></div>
                                 <div className="row">
                                     <div className="col-6">
                                         <div className="form-group">
                                             <label >No Of Attempts</label>
+                                            <p className="d-none text-danger" id="errornoofattemp"></p>
                                             <input type="text" name="noOfAttempts" className="form-control" />
                                         </div>
                                     </div>
@@ -212,6 +226,7 @@ const UserExamMapping = () => {
                                     <div className="col-sm-6">
                                         <div className="form-group">
                                             <label >timeoutDays</label>
+                                            <p className="d-none text-danger" id="errortimeoutday"></p>
                                             <input type="text" name="timeoutDays" className="form-control" />
                                         </div>
                                     </div>
@@ -241,6 +256,7 @@ const UserExamMapping = () => {
                                 </div>
                                 <div className="form-group ">
                                     <label>Max Split Attempts</label>
+                                    <p className="d-none text-danger" id="errormaxsplit"></p>
                                     <input type="text" name="maxSplitAttempts" className="form-control" />
                                 </div>
                                 <div className="form-group d-flex">

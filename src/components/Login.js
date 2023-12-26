@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
+
 const Login = () => {
   const navigate = useNavigate();
   const goToAnotherPage = (flags) => {
-    flags ? navigate("/admin") : navigate("/add-exam");
+    flags ? navigate("/admin") : navigate("/user");
   };
   const onSumbit = (e) => {
     e.preventDefault();
@@ -13,13 +14,13 @@ const Login = () => {
     const formDataValues = new URLSearchParams();
     for (const [field, value] of formData) {
       formDataValues.append(field, value);
-      
+
     }
     const userName = formData.get("uname");
     const password = formData.get("upass");
 
     if ((userName && password) !== "") {
-      
+
       const data = fetch("https://localhost:8443/exammodule/control/logins", {
         method: "POST",
         credentials: "include",
@@ -30,11 +31,11 @@ const Login = () => {
         },
       })
         .then((response) => {
-          
+
           return response.json();
         })
         .then((data) => {
-         
+
           Object.entries(data.resultMap).map(([key, value]) => {
             document.getElementById(key).innerHTML = value;
             if (key === "flag") document.getElementById("sumbit").reset();
@@ -49,7 +50,7 @@ const Login = () => {
         .catch((error) => {
           console.error("Fetch error:", error);
         });
-     
+
       document.getElementById("erroruname").classList.add("d-none");
       document.getElementById("erroruname").classList.remove("d-block");
       document.getElementById("errorupass").classList.add("d-none");

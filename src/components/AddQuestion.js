@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import useStateRef from "react-usestateref";
+import { AddQuestionValidation } from "./AddQuestionValidation";
 
 const AddQuestion = () => {
   const { id, value, noq, tId, qId, fD } = useParams();
+  const [hasError, setHasError, refHasError] = useStateRef(true);
   const [titleName, setTitleName] = useState("Add-Question");
   const [formDatas, setFormData] = useState({
     questionId: qId || "",
@@ -18,8 +21,8 @@ const AddQuestion = () => {
     answerValue: "",
     negativeMarkValue: "",
     fromDate: fD || "",
-    questionType:'QT_SC'
-    
+    questionType: 'QT_SC'
+
   });
   const [selectedQuestionType, setSelectedQuestionType] = useState(
     formDatas.questionType
@@ -49,37 +52,51 @@ const AddQuestion = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
+    document.getElementById("errorOptionC").innerHTML = "";
+    document.getElementById("errorOptionD").innerHTML = "";
+    document.getElementById("errorOptionE").innerHTML = "";
+    document.getElementById("errorOptionA").innerHTML = "";
+    document.getElementById("errorOptionB").innerHTML = "";
+    document.getElementById("errorAnswer").innerHTML = "";
+    document.getElementById("errorNumAnswer").innerHTML = "";
+    document.getElementById("errorDiffculty").innerHTML = "";
+    document.getElementById("errorAnswerValue").innerHTML = "";
+    document.getElementById("errorNegativeMark").innerHTML = "";
+    document.getElementById("errorQuestionDetail").innerHTML = "";
     const data = new FormData(e.target);
     const formData = new URLSearchParams();
     for (const [key, value] of data) {
-      console.log(`key..${key},value..${value}`);
       formData.append(key, value);
     }
-    fetch("https://localhost:8443/exammodule/control/add-question", {
-      method: "POST",
-      credentials: "include",
-      body: formData,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
+    const value = Object.fromEntries(data.entries())
+    Object.entries(value).map(([key, value]) => {
+      AddQuestionValidation(key, value, setHasError);
     })
-      .then((response) => {
-        return response.json();
+    if (refHasError.current) {
+      fetch("https://localhost:8443/exammodule/control/add-question", {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
       })
-      .then((data) => {
-        console.log(data.resultMap, "i am data ");
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data.resultMap, "i am data ");
 
-        if (data.success === "success") {
-          goToAnotherPage(true);
-        }
-
-        console.log(data);
-        return data;
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      });
+          if (data.success === "success") {
+            goToAnotherPage(true);
+          }
+          return data;
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+        });
+    }
   };
   useEffect(() => {
     if (qId != null) {
@@ -87,12 +104,12 @@ const AddQuestion = () => {
       async function fetchData() {
         const response = await fetch(
           `https://localhost:8443/exammodule/control/show-question?editQuestionId=${qId}`
-          , { credentials: "include" }  );
+          , { credentials: "include" });
         const data = await response.json();
-       
+
         setFormData(data.editQuestionMap);
         setSelectedQuestionType(data.editQuestionMap.questionType);
-        console.log("object",selectedQuestionType)
+        console.log("object", selectedQuestionType)
       }
       fetchData();
     }
@@ -151,6 +168,7 @@ const AddQuestion = () => {
               </div>
               <div className="form-group">
                 <label>Question Detail</label>
+                <p className="d-none text-danger" id="errorQuestionDetail"></p>
                 <textarea
                   type="text"
                   className="form-control"
@@ -181,6 +199,7 @@ const AddQuestion = () => {
                 <>
                   <div className="form-group">
                     <label>Option A</label>
+                    <p className="d-none text-danger" id="errorOptionA"></p>
                     <textarea
                       type="text"
                       className="form-control"
@@ -192,6 +211,7 @@ const AddQuestion = () => {
                   </div>
                   <div className="form-group">
                     <label>Option B</label>
+                    <p className="d-none text-danger" id="errorOptionB"></p>
                     <textarea
                       type="text"
                       className="form-control"
@@ -203,6 +223,7 @@ const AddQuestion = () => {
                   </div>
                   <div className="form-group">
                     <label>Option C</label>
+                    <p className="d-none text-danger" id="errorOptionC"></p>
                     <textarea
                       type="text"
                       className="form-control"
@@ -214,6 +235,7 @@ const AddQuestion = () => {
                   </div>
                   <div className="form-group">
                     <label>Option D</label>
+                    <p className="d-none text-danger" id="errorOptionD"></p>
                     <textarea
                       type="text"
                       className="form-control"
@@ -225,6 +247,7 @@ const AddQuestion = () => {
                   </div>
                   <div className="form-group">
                     <label>Option E</label>
+                    <p className="d-none text-danger" id="errorOptionE"></p>
                     <textarea
                       type="text"
                       className="form-control"
@@ -238,6 +261,7 @@ const AddQuestion = () => {
               ) : selectedQuestionType === "QT_TF" ? (
                 <>
                   <div className="form-group">
+                    <p className="d-none text-danger" id="errorOptionA"></p>
                     <label>Option A</label>
                     <textarea
                       type="text"
@@ -249,6 +273,7 @@ const AddQuestion = () => {
                     />
                   </div>
                   <div className="form-group">
+                    <p className="d-none text-danger" id="errorOptionB"></p>
                     <label>Option B</label>
                     <textarea
                       type="text"
@@ -264,6 +289,7 @@ const AddQuestion = () => {
 
               <div className="form-group">
                 <label>Answer</label>
+                <p className="d-none text-danger" id="errorAnswer"></p>
                 <input
                   type="text"
                   className="form-control"
@@ -276,6 +302,7 @@ const AddQuestion = () => {
 
               <div className="form-group">
                 <label>NumAnswers</label>
+                <p className="d-none text-danger" id="errorNumAnswer"></p>
                 <input
                   type="text"
                   className="form-control"
@@ -288,6 +315,7 @@ const AddQuestion = () => {
               <div className="row"> <input type="hidden" name="fromDate" value={formDatas.fromDate} /></div>
               <div className="form-group">
                 <label>DifficultyLevel</label>
+                <p className="d-none text-danger" id="errorDiffculty"></p>
                 <input
                   type="text"
                   className="form-control"
@@ -300,6 +328,7 @@ const AddQuestion = () => {
 
               <div className="form-group">
                 <label>AnswerValue</label>
+                <p className="d-none text-danger" id="errorAnswerValue"></p>
                 <input
                   type="text"
                   className="form-control"
@@ -318,6 +347,7 @@ const AddQuestion = () => {
 
               <div className="form-group">
                 <label>NegativeMarkValue</label>
+                <p className="d-none text-danger" id="errorNegativeMark"></p>
                 <input
                   type="Text"
                   className="form-control"
@@ -332,11 +362,6 @@ const AddQuestion = () => {
                 <div className="mx-4">
                   <button type="submit" className="btn btn-outline-success">
                     Submit
-                  </button>
-                </div>
-                <div className="mx-0">
-                  <button type="reset" className="btn btn-outline-warning">
-                    Reset
                   </button>
                 </div>
               </div>

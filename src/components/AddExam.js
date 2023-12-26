@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import useStateRef from "react-usestateref";
+import { AddExamValidator } from "./AddExamValidator";
 
 const AddExam = () => {
   const { id, fD } = useParams();
   const navigate = useNavigate();
+  const [hasError, setHasError, refHasError] = useStateRef(true);
   const [examName, setExamName] = useState("Add-Exam");
   const [formDatas, setFormData] = useState({
     examId: id || "",
@@ -22,47 +25,61 @@ const AddExam = () => {
     fromDate: fD || "",
   });
   const setValues = (e) => {
-    // setFormData({[e.currentTarget.name]:e.currentTarget.value}); 
-    setFormData(e.currentTarget.value);
+    setFormData({ [e.currentTarget.name]: e.currentTarget.value });
+    //setFormData(e.currentTarget.value);
   };
   const goToAnotherPage = (flags) => {
     flags ? navigate("/admin") : navigate("/add-exam");
   };
   const handler = (e) => {
     e.preventDefault();
-    const data = new FormData(e.target);
+
+    document.getElementById("errorExamname").innerHTML = "";
+    document.getElementById("errornoofques").innerHTML = "";
+    document.getElementById("errornmark").innerHTML = "";
+    document.getElementById("errorpasspercent").innerHTML = "";
+    document.getElementById("errorduration").innerHTML = "";
+
+    const data = new FormData(e.target);    
     const formData = new URLSearchParams();
     for (const [key, value] of data) {
-      console.log(`key..${key},value..${value}`);
+      console.log("object",key,value)
       formData.append(key, value);
     }
+    const value = Object.fromEntries(data.entries())
+        Object.entries(value).map(([key, value]) => {
+          AddExamValidator(key, value, setHasError);
+        })
 
-    fetch("https://localhost:8443/exammodule/control/examMaster", {
-      method: "POST",
-      credentials: "include",
-      body: formData,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
-    })
-      .then((response) => {
-        return response.json();
+    if (refHasError.current) {
+
+      fetch("https://localhost:8443/exammodule/control/examMaster", {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
       })
-      .then((data) => {
-        console.log(data.resultMap, "i am data ");
-        Object.entries(data.resultMap).map(([key, value]) => {
-          if (value === "success") {
-            goToAnotherPage(true);
-          }
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data.resultMap, "i am data ");
+          Object.entries(data.resultMap).map(([key, value]) => {
+            if (value === "success") {
+              goToAnotherPage(true);
+            }
+          });
+
+          return data;
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
         });
-
-        return data;
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      });
-  };
+    };
+  }
 
   useEffect(() => {
     if (id != null) {
@@ -73,7 +90,7 @@ const AddExam = () => {
           , { credentials: "include" });
         const data = await response.json();
         if (data.examList && data.examList.length > 0) {
-          console.log("i am in")
+
           setFormData((prevFormData) => ({
             ...prevFormData,
             ...data.examList[0],
@@ -131,6 +148,7 @@ const AddExam = () => {
                 </div>
                 <div className="form-group">
                   <label>Exam Name</label>
+                  <p className="d-none text-danger" id="errorExamname"></p>
                   <input
                     type="text"
                     className="form-control"
@@ -177,7 +195,8 @@ const AddExam = () => {
                 <div className="row">
                   <div className="col-sm-6 form-group">
                     <label>No Of Questions</label>
-                    <input
+                    <p className="d-none text-danger" id="errornoofques"></p>
+                   <input
                       type="text"
                       name="noOfQuestions"
                       placeholder="Enter Number of Question"
@@ -188,6 +207,7 @@ const AddExam = () => {
                   </div>
                   <div className="col-sm-6 form-group">
                     <label>Duration Minutes</label>
+                    <p className="d-none text-danger" id="errorduration"></p>
                     <input
                       type="text"
                       name="durationMinutes"
@@ -200,6 +220,7 @@ const AddExam = () => {
                 </div>
                 <div className="form-group">
                   <label>Pass Percentage</label>
+                  <p className="d-none text-danger" id="errorpasspercent"></p>
                   <input
                     type="text"
                     name="passPercentage"
@@ -245,7 +266,8 @@ const AddExam = () => {
                 </div>
                 <div className="form-group">
                   <label htmlFor="negativeMarkValue">Negative Mark Value</label>
-                  <input
+                  <p className="d-none text-danger" id="errornmark"></p>
+                   <input
                     type="text"
                     name="negativeMarkValue"
                     className="form-control"
@@ -259,11 +281,7 @@ const AddExam = () => {
                       Submit
                     </button>
                   </div>
-                  <div className="mx-0">
-                    <button type="reset" className="btn btn-outline-warning">
-                      Reset
-                    </button>
-                  </div>
+                 
                 </div>
               </form>
             </div>
