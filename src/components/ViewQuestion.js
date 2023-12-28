@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-
+import { PORT, PROTOCOL } from './ExamConstants';
 const ViewQuestion = () => {
   const { id, value, noq, tId } = useParams();
   const [questionData, setquestionData] = useState([]);
-
+  const [topicName, setTopicName] = useState();
+  const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(
-          "https://localhost:8443/exammodule/control/show-question?showTopicId=" +
-          tId, { credentials: "include" }
+          `${url}/exammodule/control/show-question?showTopicId=${tId}`, { credentials: "include" }
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const formData = await response.json();
-
+        setTopicName(formData.topicName);
         setquestionData(formData.resultMap);
-        console.log("i am resultMap..", questionData)
+        
+       
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -30,7 +31,7 @@ const ViewQuestion = () => {
 
     try {
       const response = await fetch(
-        `https://localhost:8443/exammodule/control/add-question?deleteQuestionId=${ID}`, { credentials: "include" });
+        `${url}/exammodule/control/add-question?deleteQuestionId=${ID}`, { credentials: "include" });
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -100,7 +101,7 @@ const ViewQuestion = () => {
               <tr className="align-middle">
                 <th scope="row">{value}</th>
                 <th scope="row">{tId}</th>
-                <td className="fw-bold">{""}</td>
+                <td className="fw-bold">{topicName}</td>
               </tr>
               <tr>
                 <td colSpan="4">

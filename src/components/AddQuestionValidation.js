@@ -8,14 +8,15 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                 document.getElementById("errorQuestionDetail").classList.remove("d-none");
                 document.getElementById("errorQuestionDetail").classList.add("d-block");
                 document.getElementById("errorQuestionDetail").innerHTML =
-                    "PLEASE ENTER YOUR Question-Detail";
+                    "Please enter your question detail";
                 setHasError(false);
             }
             else {
                 if (!ValidName.test(value)) {
                     document.getElementById("errorQuestionDetail").classList.remove("d-none");
                     document.getElementById("errorQuestionDetail").classList.add("d-block");
-                    document.getElementById("errorQuestionDetail").innerHTML = "ENTER VALID Question-Detail";
+                    document.getElementById("errorQuestionDetail").innerHTML =
+                     "Enter valid question detail";
                     setHasError(false);
                 }
             }
@@ -26,7 +27,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                 document.getElementById("errorOptionA").classList.remove("d-none");
                 document.getElementById("errorOptionA").classList.add("d-block");
                 document.getElementById("errorOptionA").innerHTML =
-                    "PLEASE ENTER YOUR Option_A";
+                    "Please enter your option a";
                 setHasError(false);
             }
             else {
@@ -34,7 +35,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                     document.getElementById("errorOptionA").classList.remove("d-none");
                     document.getElementById("errorOptionA").classList.add("d-block");
                     document.getElementById("errorOptionA").innerHTML =
-                        "ENTER VALID  Option_A";
+                        "Enter valid  option a";
                     setHasError(false);
                 }
             }
@@ -45,7 +46,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                 document.getElementById("errorOptionB").classList.remove("d-none");
                 document.getElementById("errorOptionB").classList.add("d-block");
                 document.getElementById("errorOptionB").innerHTML =
-                    "PLEASE ENTER Option_B";
+                    "Please enter option b";
                 setHasError(false);
             }
             else {
@@ -53,7 +54,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                     document.getElementById("errorOptionB").classList.remove("d-none");
                     document.getElementById("errorOptionB").classList.add("d-block");
                     document.getElementById("errorOptionB").innerHTML =
-                        "ENTER VALID Option_B";
+                        "Enter valid option b";
                     setHasError(false);
                 }
             }
@@ -64,7 +65,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                 document.getElementById("errorOptionC").classList.remove("d-none");
                 document.getElementById("errorOptionC").classList.add("d-block");
                 document.getElementById("errorOptionC").innerHTML =
-                    "PLEASE ENTER YOUR Option_C";
+                    "Please enter your option c";
                 setHasError(false);
             }
             else {
@@ -72,7 +73,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                     document.getElementById("errorOptionC").classList.remove("d-none");
                     document.getElementById("errorOptionC").classList.add("d-block");
                     document.getElementById("errorOptionC").innerHTML =
-                        "ENTER VALID Option_C";
+                        "Enter valid option c";
                     setHasError(false);
                 }
             }
@@ -83,7 +84,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                 document.getElementById("errorOptionD").classList.remove("d-none");
                 document.getElementById("errorOptionD").classList.add("d-block");
                 document.getElementById("errorOptionD").innerHTML =
-                    "PLEASE ENTER YOUR Option_D";
+                    "Please enter your option d";
                 setHasError(false);
             }
             else {
@@ -91,7 +92,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                     document.getElementById("errorOptionD").classList.remove("d-none");
                     document.getElementById("errorOptionD").classList.add("d-block");
                     document.getElementById("errorOptionD").innerHTML =
-                        "ENTER VALID Option_D";
+                        "Enter valid option d";
                     setHasError(false);
                 }
             }
@@ -102,7 +103,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                 document.getElementById("errorOptionE").classList.remove("d-none");
                 document.getElementById("errorOptionE").classList.add("d-block");
                 document.getElementById("errorOptionE").innerHTML =
-                    "PLEASE ENTER YOUR Option_E";
+                    "Please enter your option e";
                 setHasError(false);
             }
             else {
@@ -110,7 +111,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                     document.getElementById("errorOptionE").classList.remove("d-none");
                     document.getElementById("errorOptionE").classList.add("d-block");
                     document.getElementById("errorOptionE").innerHTML =
-                        "ENTER VALID Option_E";
+                        "Enter valid option e";
                     setHasError(false);
                 }
             }
@@ -121,7 +122,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                 document.getElementById("errorAnswer").classList.remove("d-none");
                 document.getElementById("errorAnswer").classList.add("d-block");
                 document.getElementById("errorAnswer").innerHTML =
-                    "PLEASE ENTER YOUR Answer";
+                    "Please enter your answer";
                 setHasError(false);
             }
             else {
@@ -129,7 +130,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                     document.getElementById("errorAnswer").classList.remove("d-none");
                     document.getElementById("errorAnswer").classList.add("d-block");
                     document.getElementById("errorAnswer").innerHTML =
-                        "ENTER VALID Answer";
+                        "Enter valid answer";
                     setHasError(false);
                 }
             }
@@ -140,7 +141,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                 document.getElementById("errorNumAnswer").classList.remove("d-none");
                 document.getElementById("errorNumAnswer").classList.add("d-block");
                 document.getElementById("errorNumAnswer").innerHTML =
-                    "PLEASE ENTER Num_Answers";
+                    "Please enter num answers";
                 setHasError(false);
             }
             else {
@@ -148,7 +149,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                     document.getElementById("errorNumAnswer").classList.remove("d-none");
                     document.getElementById("errorNumAnswer").classList.add("d-block");
                     document.getElementById("errorNumAnswer").innerHTML =
-                        "ENTER VALID Num_Answers";
+                        "Enter valid num answers";
                     setHasError(false);
                 }
             }
@@ -158,7 +159,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                 document.getElementById("errorAnswerValue").classList.remove("d-none");
                 document.getElementById("errorAnswerValue").classList.add("d-block");
                 document.getElementById("errorAnswerValue").innerHTML =
-                    "ENTER VALID Answer_Value";
+                    "Enter valid answer value";
                 setHasError(false);
             }
 
@@ -168,7 +169,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                 document.getElementById("errorDiffculty").classList.remove("d-none");
                 document.getElementById("errorDiffculty").classList.add("d-block");
                 document.getElementById("errorDiffculty").innerHTML =
-                    "ENTER VALID Difficulty_Level";
+                    "Enter valid difficulty level";
                 setHasError(false);
             }
 
@@ -178,7 +179,7 @@ export const AddQuestionValidation = (key, value, setHasError) => {
                 document.getElementById("errorNegativeMark").classList.remove("d-none");
                 document.getElementById("errorNegativeMark").classList.add("d-block");
                 document.getElementById("errorNegativeMark").innerHTML =
-                    "ENTER VALID Negative_MarkValue";
+                    "Enter valid negative markvalue";
                 setHasError(false);
             }
 

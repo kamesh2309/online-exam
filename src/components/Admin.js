@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link } from "react-router-dom";
+import { PORT, PROTOCOL } from "./ExamConstants";
 
 const Admin = () => {
   const [examData, setExamData] = useState([]);
 
-
+  const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(
-          "https://localhost:8443/exammodule/control/show-exams", {
+          `${url}/exammodule/control/show-exams`, {
           credentials: "include",
         }
         );
@@ -33,7 +34,7 @@ const Admin = () => {
 
     try {
       const response = await fetch(
-        `https://localhost:8443/exammodule/control/examMaster?deleteExamId=${ID}`,
+        `${url}/exammodule/control/examMaster?deleteExamId=${ID}`,
         {
           credentials: "include",
         }

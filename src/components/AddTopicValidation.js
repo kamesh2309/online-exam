@@ -7,14 +7,15 @@ export const AddTopicValidation = (key, value, setHasError) => {
                 document.getElementById("errorTopicName").classList.remove("d-none");
                 document.getElementById("errorTopicName").classList.add("d-block");
                 document.getElementById("errorTopicName").innerHTML =
-                    "PLEASE ENTER YOUR Topic-Name";
+                    "Please enter your topic name";
                 setHasError(false);
             }
             else {
                 if (!ValidName.test(value)) {
                     document.getElementById("errorTopicName").classList.remove("d-none");
                     document.getElementById("errorTopicName").classList.add("d-block");
-                    document.getElementById("errorTopicName").innerHTML = "ENTER VALID Topic-Name";
+                    document.getElementById("errorTopicName").innerHTML = 
+                    "Enter valid topic name";
                     setHasError(false);
                 }
             }
@@ -25,7 +26,7 @@ export const AddTopicValidation = (key, value, setHasError) => {
                 document.getElementById("errorpercentage").classList.remove("d-none");
                 document.getElementById("errorpercentage").classList.add("d-block");
                 document.getElementById("errorpercentage").innerHTML =
-                    "PLEASE ENTER YOUR Percentage";
+                    "Please enter your percentage";
                 setHasError(false);
             }
             else {
@@ -33,7 +34,7 @@ export const AddTopicValidation = (key, value, setHasError) => {
                     document.getElementById("errorpercentage").classList.remove("d-none");
                     document.getElementById("errorpercentage").classList.add("d-block");
                     document.getElementById("errorpercentage").innerHTML =
-                        "ENTER VALID  Percentage";
+                        "Enter valid  percentage";
                     setHasError(false);
                 }
             }
@@ -44,7 +45,7 @@ export const AddTopicValidation = (key, value, setHasError) => {
                 document.getElementById("errorTopicPassPercentage").classList.remove("d-none");
                 document.getElementById("errorTopicPassPercentage").classList.add("d-block");
                 document.getElementById("errorTopicPassPercentage").innerHTML =
-                    "PLEASE ENTER Topic_Pass_Percentage";
+                    "Please enter topic pass percentage";
                 setHasError(false);
             }
             else {
@@ -52,7 +53,7 @@ export const AddTopicValidation = (key, value, setHasError) => {
                     document.getElementById("errorTopicPassPercentage").classList.remove("d-none");
                     document.getElementById("errorTopicPassPercentage").classList.add("d-block");
                     document.getElementById("errorTopicPassPercentage").innerHTML =
-                        "ENTER VALID Topic_Pass_Percentage";
+                        "Enter valid topic pass percentage";
                     setHasError(false);
                 }
             }

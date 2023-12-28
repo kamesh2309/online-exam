@@ -1,27 +1,33 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import useStateRef from "react-usestateref";
+import { PORT, PROTOCOL } from "./ExamConstants";
 
-const Login = () => {
+const Login = (props) => {
+  const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
+  const [partyId, setPartyId, refPartyId] = useStateRef();
   const navigate = useNavigate();
+
   const goToAnotherPage = (flags) => {
-    flags ? navigate("/admin") : navigate("/user");
+    flags ? navigate("/admin") : navigate(`/user/${refPartyId.current}`);
   };
   const onSumbit = (e) => {
     e.preventDefault();
     document.getElementById("error_user").innerHTML = "";
     document.getElementById("error_password").innerHTML = "";
-
+    
     const formData = new FormData(e.target);
-    const formDataValues = new URLSearchParams();
-    for (const [field, value] of formData) {
-      formDataValues.append(field, value);
-
-    }
     const userName = formData.get("uname");
     const password = formData.get("upass");
 
-    if ((userName && password) !== "") {
+     if ((userName && password) !== "") {
+     
+      const formDataValues = new URLSearchParams();
+      for (const [field, value] of formData) {
+        formDataValues.append(field, value);
+      }
 
-      const data = fetch("https://localhost:8443/exammodule/control/logins", {
+      const data = fetch(`${url}/exammodule/control/logins`, {
         method: "POST",
         credentials: "include",
         body: formDataValues,
@@ -35,13 +41,14 @@ const Login = () => {
           return response.json();
         })
         .then((data) => {
-
+          setPartyId(data.partyId);
           Object.entries(data.resultMap).map(([key, value]) => {
             document.getElementById(key).innerHTML = value;
-            if (key === "flag") document.getElementById("sumbit").reset();
+
             if (key === "flag") {
+              document.getElementById("sumbit").reset();
               const flags = value;
-              flags ? goToAnotherPage(flags) : goToAnotherPage(flags);
+               goToAnotherPage(flags);
             }
           });
 
@@ -56,7 +63,7 @@ const Login = () => {
       document.getElementById("errorupass").classList.add("d-none");
       document.getElementById("errorupass").classList.remove("d-block");
 
-      // document.getElementById("sumbit").reset();
+
     } else {
       if (userName == "") {
         document.getElementById("erroruname").classList.remove("d-none");
@@ -70,7 +77,6 @@ const Login = () => {
   };
   return (
     <div className="row justify-content-center p-4">
-      {/* <div className="col-md-4" >  </div> */}
       <div className="col-md-4">
         <form id="sumbit" onSubmit={onSumbit} className="textcolor">
           <div className="mb-3 ">
@@ -85,7 +91,7 @@ const Login = () => {
               <span className="text-danger" id="error_user"></span>
             </div>
             <p className="d-none text-danger" id="erroruname">
-              required field not be empty
+              Required field not be empty
             </p>
             <input type="text" className="form-control border-3" name="uname" />
           </div>
@@ -97,7 +103,7 @@ const Login = () => {
               <span className="text-danger" id="error_password"></span>
             </div>
             <p className="d-none text-danger" id="errorupass">
-              required field not be empty
+              Required field not be empty
             </p>
             <input
               type="password"
@@ -112,11 +118,9 @@ const Login = () => {
               value="Login"
             />
           </div>
-          <span>If you are new here...?<Link to={`/registers`}>Register</Link></span>
+          <span>If you are Student...?<Link to={`/registers`}>Register</Link></span>
         </form>
       </div>
-      {/* <div className="col-md-4">
-                </div> */}
     </div>
   );
 };

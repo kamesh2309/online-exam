@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import useStateRef from 'react-usestateref';
 import { UserExamMappingValidation } from './UserExamMappingValidation';
+import { PORT, PROTOCOL } from './ExamConstants';
 
 const UserExamMapping = () => {
     const { id, value, noq, pId } = useParams();
     const [hasError, setHasError, refHasError] = useStateRef(true);
     const navigate = useNavigate();
+    const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
     const goToAnotherPage = (flags) => {
         flags ? navigate("/admin") : navigate("/admin/user-exam-mapping");
     };
@@ -19,14 +21,13 @@ const UserExamMapping = () => {
         const data = new FormData(e.target);
         const formData = new URLSearchParams();
         for (const [key, value] of data) {
+            UserExamMappingValidation(key, value, setHasError);
             formData.append(key, value);
         }
-        const value = Object.fromEntries(data.entries())
-        Object.entries(value).map(([key, value]) => {
-            UserExamMappingValidation(key, value, setHasError);
-        })
+       
+    
         if (refHasError.current) {
-            fetch("https://localhost:8443/exammodule/control/add-user-exam-mapping", {
+            fetch(`${url}/exammodule/control/add-user-exam-mapping`, {
                 method: "POST",
                 credentials: "include",
                 body: formData,
@@ -55,7 +56,7 @@ const UserExamMapping = () => {
         async function fetchData() {
             try {
                 const response = await fetch(
-                    "https://localhost:8443/exammodule/control/add-mapping",
+                    `${url}/exammodule/control/add-mapping`,
                     { credentials: "include" }
                 );
                 if (!response.ok) {
@@ -69,7 +70,7 @@ const UserExamMapping = () => {
                     Object.entries(data.resultMap).map(([key, value]) => {
                         const option = document.createElement('option');
                         option.value = value.partyId;
-                        option.text = value.firstName + " " + value.lastName;
+                        option.text =value.partyId+" - "+value.firstName + " " + value.lastName;
                         dropDown.appendChild(option);
                     });
                     // data.resultMap.forEach(value=>{
@@ -87,7 +88,7 @@ const UserExamMapping = () => {
         if (id === undefined) {
             async function fetchdata1() {
                 try {
-                    const response = await fetch("https://localhost:8443/exammodule/control/show-exams",
+                    const response = await fetch(`${url}/exammodule/control/show-exams`,
                         { credentials: "include" })
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -114,7 +115,7 @@ const UserExamMapping = () => {
         else {
             async function fetchdata2() {
                 try {
-                    const response = await fetch(`https://localhost:8443/exammodule/control/show-exams?editExamId=${id}`,
+                    const response = await fetch(`${url}/exammodule/control/show-exams?editExamId=${id}`,
                         { credentials: "include" })
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -198,6 +199,7 @@ const UserExamMapping = () => {
                                 <div className="form-group">
                                     <label>Party Id</label>
                                     <select type="text" className="form-control " id='myDropdown' name='partyId'>
+                                        
                                     </select></div>
                                 <div className="form-group">
                                     <label >Exam Id</label>

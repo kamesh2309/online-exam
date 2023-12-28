@@ -8,14 +8,14 @@ export const AddExamValidator = (key, value, setHasError) => {
         document.getElementById("errorExamname").classList.remove("d-none");
         document.getElementById("errorExamname").classList.add("d-block");
         document.getElementById("errorExamname").innerHTML =
-          "PLEASE ENTER YOUR Exam-Name";
+          "please enter your exam-name";
         setHasError(false);
       }
       else {
         if (!ValidName.test(value)) {
           document.getElementById("errorExamname").classList.remove("d-none");
           document.getElementById("errorExamname").classList.add("d-block");
-          document.getElementById("errorExamname").innerHTML = "ENTER VALID Exam-Name";
+          document.getElementById("errorExamname").innerHTML = "enter valid exam-name";
           setHasError(false);
         }
       }
@@ -26,7 +26,7 @@ export const AddExamValidator = (key, value, setHasError) => {
         document.getElementById("errornoofques").classList.remove("d-none");
         document.getElementById("errornoofques").classList.add("d-block");
         document.getElementById("errornoofques").innerHTML =
-          "PLEASE ENTER YOUR No-Of-Questions";
+          "Please enter your no of questions";
         setHasError(false);
       }
       else {
@@ -34,7 +34,7 @@ export const AddExamValidator = (key, value, setHasError) => {
           document.getElementById("errornoofques").classList.remove("d-none");
           document.getElementById("errornoofques").classList.add("d-block");
           document.getElementById("errornoofques").innerHTML =
-            "ENTER VALID  No-Of-Questions";
+            "Enter valid  no of questions";
           setHasError(false);
         }
       }
@@ -45,7 +45,7 @@ export const AddExamValidator = (key, value, setHasError) => {
         document.getElementById("errorduration").classList.remove("d-none");
         document.getElementById("errorduration").classList.add("d-block");
         document.getElementById("errorduration").innerHTML =
-          "PLEASE ENTER Duration-Minutes";
+          "Please enter duration minutes";
         setHasError(false);
       }
       else {
@@ -53,7 +53,7 @@ export const AddExamValidator = (key, value, setHasError) => {
           document.getElementById("errorduration").classList.remove("d-none");
           document.getElementById("errorduration").classList.add("d-block");
           document.getElementById("errorduration").innerHTML =
-            "ENTER VALID Duration-Minutes";
+            "Enter valid duration minutes";
           setHasError(false);
         }
       }
@@ -64,7 +64,7 @@ export const AddExamValidator = (key, value, setHasError) => {
         document.getElementById("errorpasspercent").classList.remove("d-none");
         document.getElementById("errorpasspercent").classList.add("d-block");
         document.getElementById("errorpasspercent").innerHTML =
-          "PLEASE ENTER YOUR Pass-Percentage";
+          "Please enter your pass percentage";
         setHasError(false);
       }
       else {
@@ -72,7 +72,7 @@ export const AddExamValidator = (key, value, setHasError) => {
           document.getElementById("errorpasspercent").classList.remove("d-none");
           document.getElementById("errorpasspercent").classList.add("d-block");
           document.getElementById("errorpasspercent").innerHTML =
-            "ENTER VALID Pass-Percentage";
+            "Enter valid pass percentage";
           setHasError(false);
         }
       }
@@ -83,7 +83,7 @@ export const AddExamValidator = (key, value, setHasError) => {
         document.getElementById("errornmark").classList.remove("d-none");
         document.getElementById("errornmark").classList.add("d-block");
         document.getElementById("errornmark").innerHTML =
-          "PLEASE ENTER YOUR Negative-Mark-Value";
+          "Please enter your negative mark value";
         setHasError(false);
       }
       else {
@@ -91,7 +91,7 @@ export const AddExamValidator = (key, value, setHasError) => {
           document.getElementById("errornmark").classList.remove("d-none");
           document.getElementById("errornmark").classList.add("d-block");
           document.getElementById("errornmark").innerHTML =
-            "ENTER VALID Negative-Mark-Value";
+            "Enter valid negative mark value";
           setHasError(false);
         }
       }

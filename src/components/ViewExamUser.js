@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-
+import { PORT, PROTOCOL } from './ExamConstants';
 const ViewExamUser = () => {
     const [userExam, setUserExam] = useState([]);
     const { id, value, noq } = useParams();
+    const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
     useEffect(() => {
         async function fetchData() {
             try {
                 const response = await fetch(
-                    "https://localhost:8443/exammodule/control/add-mapping?showExamId=" + id,
+                    `${url}/exammodule/control/add-mapping?showExamId=${id}`,
                     { credentials: "include" }
                 );
                 const data = await response.json();
@@ -25,7 +26,7 @@ const ViewExamUser = () => {
 
         try {
             const response = await fetch(
-                `https://localhost:8443/exammodule/control/add-user-exam-mapping?deleteExamId=${examId}&deletePartyId=${partyId}`, { credentials: "include" });
+                `${url}/exammodule/control/add-user-exam-mapping?deleteExamId=${examId}&deletePartyId=${partyId}`, { credentials: "include" });
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

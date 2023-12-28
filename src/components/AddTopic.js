@@ -3,9 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import useStateRef from "react-usestateref";
 import { AddTopicValidation } from "./AddTopicValidation";
+import { PORT, PROTOCOL } from "./ExamConstants";
 
 const AddTopic = () => {
   const { id, value, noq, tId } = useParams();
+  const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
   const [titleName, setTitleName] = useState("Add-Topic");
   const [topicName, setTopicName] = useState("");
   const [hasError, setHasError, refHasError] = useStateRef(true);
@@ -43,14 +45,13 @@ const AddTopic = () => {
     const data = new FormData(e.target);
     const formData = new URLSearchParams();
     for (const [key, value] of data) {
+      AddTopicValidation(key, value, setHasError);
       formData.append(key, value);
     }
-    const value = Object.fromEntries(data.entries())
-    Object.entries(value).map(([key, value]) => {
-      AddTopicValidation(key, value, setHasError);
-    })
+    // const value = Object.fromEntries(data.entries())
+   
     if (refHasError.current) {
-      fetch("https://localhost:8443/exammodule/control/add-topic", {
+      fetch(`${url}/exammodule/control/add-topic`, {
         method: "POST",
         credentials: "include",
         body: formData,
@@ -78,7 +79,7 @@ const AddTopic = () => {
       setTitleName("Edit-Topic");
       async function fetchData() {
         const response = await fetch(
-          `https://localhost:8443/exammodule/control/show-topic?editTopicId=${tId}&showExamId=${id}`
+          `${url}/exammodule/control/show-topic?editTopicId=${tId}&showExamId=${id}`
           , { credentials: "include" });
         const data = await response.json();
 

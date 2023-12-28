@@ -14,7 +14,6 @@ const ExamUserDetails = () => {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
-                console.log(data.userExam)
                 setUserExamValue(data.userExam)
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -61,44 +60,44 @@ const ExamUserDetails = () => {
                         <div className='col-12 row my-4 justify-content-center'>
                             <div className='col-6'>
                                 <label className=" col-form-label ps-3 questiontext-color">Exam-Name</label>
-                                <input type="text" readonly className="form-control-plaintext border mx-3 ps-3" value={value} />
+                                <input type="text" readOnly className="form-control-plaintext border mx-3 ps-3" value={value} />
                             </div>
                             <div className='col-6'>
                                 <label className="col-form-label ps-3 questiontext-color">Exam-Id</label>
-                                <input type="text" readonly className="form-control-plaintext border ps-3 mx-3 " value={userExamValues.examId} />
+                                <input type="text" readOnly className="form-control-plaintext border ps-3 mx-3 " value={userExamValues.examId} />
                             </div>
 
                         </div>
                         <div className='col-12 row my-4 justify-content-center'>
                             <div className='col-6'>
                                 <label className=" col-form-label ps-3 questiontext-color">First-Name</label>
-                                <input type="text" readonly className="form-control-plaintext border mx-3 ps-3" value={fName} />
+                                <input type="text" readOnly className="form-control-plaintext border mx-3 ps-3" value={fName} />
                             </div>
                             <div className='col-6'>
                                 <label className="col-form-label ps-3 questiontext-color">Last-Name</label>
-                                <input type="text" readonly className="form-control-plaintext border ps-3 mx-3 " value={lName} />
+                                <input type="text" readOnly className="form-control-plaintext border ps-3 mx-3 " value={lName} />
                             </div>
 
                         </div>
                         <div className='col-12 row my-4 justify-content-center'>
                             <div className='col-6'>
                                 <label className=" col-form-label ps-3 questiontext-color">Allowed Attempts</label>
-                                <input type="text" readonly className="form-control-plaintext border mx-3 ps-3" value={userExamValues.allowedAttempts} />
+                                <input type="text" readOnly className="form-control-plaintext border mx-3 ps-3" value={userExamValues.allowedAttempts} />
                             </div>
                             <div className='col-6'>
                                 <label className="col-form-label ps-3 questiontext-color">Last Performance Date</label>
-                                <input type="text" readonly className="form-control-plaintext border ps-3 mx-3 " value={userExamValues.lastPerformanceDate} />
+                                <input type="text" readOnly className="form-control-plaintext border ps-3 mx-3 " value={userExamValues.lastPerformanceDate} />
                             </div>
 
                         </div>
                         <div className='col-12 row my-4 justify-content-center'>
                             <div className='col-6'>
                                 <label className="col-form-label ps-3 questiontext-color">No Of Attempts</label>
-                                <input type="text" readonly className="form-control-plaintext border ps-3 mx-3 " value={userExamValues.noOfAttempts} />
+                                <input type="text" readOnly className="form-control-plaintext border ps-3 mx-3 " value={userExamValues.noOfAttempts} />
                             </div>
                             <div className='col-6'>
                                 <label className=" col-form-label ps-3 questiontext-color">Timeout Days</label>
-                                <input type="text" readonly className="form-control-plaintext border mx-3 ps-3" value={userExamValues.timeoutDays} />
+                                <input type="text" readOnly className="form-control-plaintext border mx-3 ps-3" value={userExamValues.timeoutDays} />
                             </div>
                         </div>
                     </Paper>

@@ -20,16 +20,14 @@ const Registers = () => {
 
         const formData = new FormData(e.target);
         const formDataValues = new URLSearchParams();
-        for (const [field, value] of formData) {
-            formDataValues.append(field, value);
-        }
-        const value = Object.fromEntries(formData.entries())
-        Object.entries(value).map(([key, value]) => {
+        for (const [key, value] of formData) {
             RegistersValidation(key, value, setHasError);
-        })
+            formDataValues.append(key, value);
+        }
 
         const password = formData.get("currentPassword");
         const rePassword = formData.get("currentPasswordVerify");
+
         if (password !== rePassword) {
             document.getElementById("errorrepassword").classList.remove("d-none");
             document.getElementById("errorrepassword").classList.add("d-block");
@@ -38,7 +36,7 @@ const Registers = () => {
             setHasError(false);
 
         }
-        console.log(refHasError.current, "hi i'm hasError")
+
 
         if (refHasError.current) {
             fetch("https://localhost:8443/exammodule/control/add-user", {
@@ -52,14 +50,13 @@ const Registers = () => {
             }).then((response) => {
                 return response.json();
             }).then((data) => {
-                console.log(data.success,"")
                 if (data.success === "success") {
                     goToAnotherPage(true);
                 }
-               return data;
+                return data;
             })
         }
-        })
+    })
     return (
         <div>
             <div className="row">
@@ -110,17 +107,17 @@ const Registers = () => {
                             <div>
                                 <input type='hidden' name="roleTypeId" value="Student" />
                             </div>
-                            <div >
+                            <div>
                                 <label className="form-label">Password</label>
                                 <p className="d-none text-danger" id="errorpassword"></p>
                                 <div >
                                     <input type="password" name='currentPassword' className="form-control" />
                                 </div>
                             </div>
-                            <div >
+                            <div>
                                 <label className="form-label">ReEnter-Password</label>
                                 <p className="d-none text-danger" id="errorrepassword"></p>
-                                <div >
+                                <div>
                                     <input type="password" name='currentPasswordVerify' className="form-control" />
                                 </div>
                             </div>
@@ -131,8 +128,6 @@ const Registers = () => {
                                     </button>
                                 </div>
                             </div>
-
-
                         </form>
                     </div>
                 </div>

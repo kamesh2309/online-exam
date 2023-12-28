@@ -132,3 +132,8 @@
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-style: italic;
 }
+
+/* ---------------------user Admin------------------- */
+.view-icon{
+  right: 40%;
+}

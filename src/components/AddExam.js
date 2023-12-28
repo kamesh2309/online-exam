@@ -3,8 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import useStateRef from "react-usestateref";
 import { AddExamValidator } from "./AddExamValidator";
+import { PORT, PROTOCOL } from "./ExamConstants";
 
 const AddExam = () => {
+  const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
   const { id, fD } = useParams();
   const navigate = useNavigate();
   const [hasError, setHasError, refHasError] = useStateRef(true);
@@ -26,7 +28,6 @@ const AddExam = () => {
   });
   const setValues = (e) => {
     setFormData({ [e.currentTarget.name]: e.currentTarget.value });
-    //setFormData(e.currentTarget.value);
   };
   const goToAnotherPage = (flags) => {
     flags ? navigate("/admin") : navigate("/add-exam");
@@ -43,17 +44,13 @@ const AddExam = () => {
     const data = new FormData(e.target);    
     const formData = new URLSearchParams();
     for (const [key, value] of data) {
-      console.log("object",key,value)
+      AddExamValidator(key, value, setHasError);
       formData.append(key, value);
     }
-    const value = Object.fromEntries(data.entries())
-        Object.entries(value).map(([key, value]) => {
-          AddExamValidator(key, value, setHasError);
-        })
 
     if (refHasError.current) {
 
-      fetch("https://localhost:8443/exammodule/control/examMaster", {
+      fetch(`${url}/exammodule/control/examMaster`, {
         method: "POST",
         credentials: "include",
         body: formData,
@@ -66,7 +63,6 @@ const AddExam = () => {
           return response.json();
         })
         .then((data) => {
-          console.log(data.resultMap, "i am data ");
           Object.entries(data.resultMap).map(([key, value]) => {
             if (value === "success") {
               goToAnotherPage(true);
@@ -85,8 +81,7 @@ const AddExam = () => {
     if (id != null) {
       setExamName("Edit-Exam");
       async function fetchData() {
-        const response = await fetch(
-          "https://localhost:8443/exammodule/control/show-exams?editExamId=" + id
+        const response = await fetch(`${url}/exammodule/control/show-exams?editExamId=${id}`
           , { credentials: "include" });
         const data = await response.json();
         if (data.examList && data.examList.length > 0) {

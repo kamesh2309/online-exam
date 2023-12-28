@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Paper } from '@mui/material';
+import { PORT, PROTOCOL } from './ExamConstants';
 
 const Question = () => {
     const { id, value, noq, tId, qId } = useParams();
+    const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
     const [formDatas, setFormData] = useState({
         questionDetail: "",
         optionA: "",
@@ -24,7 +26,7 @@ const Question = () => {
         async function fetchData() {
             try {
             const response = await fetch(
-                `https://localhost:8443/exammodule/control/show-question?editQuestionId=${qId}`
+                `${url}/exammodule/control/show-question?editQuestionId=${qId}`
                 , { credentials: "include" });
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);

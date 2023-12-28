@@ -7,7 +7,7 @@ export const UserExamMappingValidation = (key, value, setHasError) => {
                 document.getElementById("errorallowattemp").classList.remove("d-none");
                 document.getElementById("errorallowattemp").classList.add("d-block");
                 document.getElementById("errorallowattemp").innerHTML =
-                    "PLEASE ENTER YOUR Allowed_Attempts";
+                    "Please enter your allowed attempts";
                 setHasError(false);
             }
             else {
@@ -15,7 +15,7 @@ export const UserExamMappingValidation = (key, value, setHasError) => {
                     document.getElementById("errorallowattemp").classList.remove("d-none");
                     document.getElementById("errorallowattemp").classList.add("d-block");
                     document.getElementById("errorallowattemp").innerHTML =
-                        "ENTER VALID  Allowed_Attempts";
+                        "Enter valid  allowed attempts";
                     setHasError(false);
                 }
             }
@@ -25,7 +25,7 @@ export const UserExamMappingValidation = (key, value, setHasError) => {
                 document.getElementById("errornoofattemp").classList.remove("d-none");
                 document.getElementById("errornoofattemp").classList.add("d-block");
                 document.getElementById("errornoofattemp").innerHTML =
-                    "PLEASE ENTER YOUR No_Of_Attempts";
+                    "Please enter your no of attempts";
                 setHasError(false);
             }
             else {
@@ -33,7 +33,7 @@ export const UserExamMappingValidation = (key, value, setHasError) => {
                     document.getElementById("errornoofattemp").classList.remove("d-none");
                     document.getElementById("errornoofattemp").classList.add("d-block");
                     document.getElementById("errornoofattemp").innerHTML =
-                        "ENTER VALID YOUR USER_NAME";
+                        "Enter valid your no of attempts";
                     setHasError(false);
                 }
             }
@@ -43,7 +43,7 @@ export const UserExamMappingValidation = (key, value, setHasError) => {
                 document.getElementById("errortimeoutday").classList.remove("d-none");
                 document.getElementById("errortimeoutday").classList.add("d-block");
                 document.getElementById("errortimeoutday").innerHTML =
-                    "PLEASE ENTER YOUR Time_Out_Days";
+                    "Please enter your time out days";
                 setHasError(false);
             }
             else {
@@ -51,7 +51,7 @@ export const UserExamMappingValidation = (key, value, setHasError) => {
                     document.getElementById("errortimeoutday").classList.remove("d-none");
                     document.getElementById("errortimeoutday").classList.add("d-block");
                     document.getElementById("errortimeoutday").innerHTML =
-                        "ENTER VALID  Time_Out_Days";
+                        "Enter valid  time out days";
                     setHasError(false);
                 }
             }
@@ -61,7 +61,7 @@ export const UserExamMappingValidation = (key, value, setHasError) => {
                 document.getElementById("errormaxsplit").classList.remove("d-none");
                 document.getElementById("errormaxsplit").classList.add("d-block");
                 document.getElementById("errormaxsplit").innerHTML =
-                    "PLEASE ENTER YOUR Max_Split_Attempts";
+                    "Please enter your max split attempts";
                 setHasError(false);
             }
             else {
@@ -69,7 +69,7 @@ export const UserExamMappingValidation = (key, value, setHasError) => {
                     document.getElementById("errormaxsplit").classList.remove("d-none");
                     document.getElementById("errormaxsplit").classList.add("d-block");
                     document.getElementById("errormaxsplit").innerHTML =
-                        "ENTER VALID Max_Split_Attempts";
+                        "Enter valid max split attempts";
                     setHasError(false);
                 }
             }

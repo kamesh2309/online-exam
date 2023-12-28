@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useStateRef from "react-usestateref";
 import { AddQuestionValidation } from "./AddQuestionValidation";
+import { PORT, PROTOCOL } from "./ExamConstants";
 
 const AddQuestion = () => {
+  const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
   const { id, value, noq, tId, qId, fD } = useParams();
   const [hasError, setHasError, refHasError] = useStateRef(true);
   const [titleName, setTitleName] = useState("Add-Question");
@@ -51,12 +53,17 @@ const AddQuestion = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-
-    document.getElementById("errorOptionC").innerHTML = "";
-    document.getElementById("errorOptionD").innerHTML = "";
-    document.getElementById("errorOptionE").innerHTML = "";
-    document.getElementById("errorOptionA").innerHTML = "";
-    document.getElementById("errorOptionB").innerHTML = "";
+    if (selectedQuestionType === "QT_SC" || selectedQuestionType === "QT_MC") {
+      document.getElementById("errorOptionA").innerHTML = "";
+      document.getElementById("errorOptionB").innerHTML = "";
+      document.getElementById("errorOptionC").innerHTML = "";
+      document.getElementById("errorOptionD").innerHTML = "";
+      document.getElementById("errorOptionE").innerHTML = "";
+    }
+    else if (selectedQuestionType === "QT_TF") {
+      document.getElementById("errorOptionA").innerHTML = "";
+      document.getElementById("errorOptionB").innerHTML = "";
+    }
     document.getElementById("errorAnswer").innerHTML = "";
     document.getElementById("errorNumAnswer").innerHTML = "";
     document.getElementById("errorDiffculty").innerHTML = "";
@@ -66,14 +73,13 @@ const AddQuestion = () => {
     const data = new FormData(e.target);
     const formData = new URLSearchParams();
     for (const [key, value] of data) {
+      AddQuestionValidation(key, value, setHasError);
       formData.append(key, value);
     }
-    const value = Object.fromEntries(data.entries())
-    Object.entries(value).map(([key, value]) => {
-      AddQuestionValidation(key, value, setHasError);
-    })
+    //const value = Object.fromEntries(data.entries())
+
     if (refHasError.current) {
-      fetch("https://localhost:8443/exammodule/control/add-question", {
+      fetch(`${url}/exammodule/control/add-question`, {
         method: "POST",
         credentials: "include",
         body: formData,
@@ -86,8 +92,6 @@ const AddQuestion = () => {
           return response.json();
         })
         .then((data) => {
-          console.log(data.resultMap, "i am data ");
-
           if (data.success === "success") {
             goToAnotherPage(true);
           }
@@ -103,13 +107,12 @@ const AddQuestion = () => {
       setTitleName("Edit-Topic");
       async function fetchData() {
         const response = await fetch(
-          `https://localhost:8443/exammodule/control/show-question?editQuestionId=${qId}`
+          `${url}/exammodule/control/show-question?editQuestionId=${qId}`
           , { credentials: "include" });
         const data = await response.json();
 
         setFormData(data.editQuestionMap);
         setSelectedQuestionType(data.editQuestionMap.questionType);
-        console.log("object", selectedQuestionType)
       }
       fetchData();
     }

@@ -13,6 +13,7 @@ import Registers from "./components/Registers";
 import ViewExamUser from "./components/ViewExamUser";
 import ExamUserDetails from "./components/ExamUserDetails";
 import UserPage from "./components/userModule/UserPage";
+
 const App = () => {
   return (
     <div>
@@ -20,7 +21,7 @@ const App = () => {
         <Route path="/" element={<Login />} />
         <Route path="/registers" element={<Registers />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/user" element={<UserPage />}/>
+        <Route path="/user/:uId" element={<UserPage />}/>
         <Route path="/admin/user-exam-mapping" element={<UserExamMapping />} />
         <Route path="/admin/view-exam-topic/user-exam-mapping/:id/:value/:noq" element={<UserExamMapping />} />
         <Route path="/add-exam" element={<AddExam />} />

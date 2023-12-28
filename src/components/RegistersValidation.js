@@ -8,7 +8,7 @@ export const RegistersValidation = (key, value, setHasError) => {
                 document.getElementById("errorufname").classList.remove("d-none");
                 document.getElementById("errorufname").classList.add("d-block");
                 document.getElementById("errorufname").innerHTML =
-                    "PLEASE ENTER YOUR USER_NAME";
+                    "Please enter your user name";
                 setHasError(false);
             }
             else {
@@ -16,18 +16,17 @@ export const RegistersValidation = (key, value, setHasError) => {
                     document.getElementById("errorufname").classList.remove("d-none");
                     document.getElementById("errorufname").classList.add("d-block");
                     document.getElementById("errorufname").innerHTML =
-                        "ENTER VALID  USER_NAME";
+                        "Enter valid  user name";
                     setHasError(false);
                 }
             }
         } break;
         case "lastName": {
             if (value === "" || value === null) {
-                console.log(value)
                 document.getElementById("errorulname").classList.remove("d-none");
                 document.getElementById("errorulname").classList.add("d-block");
                 document.getElementById("errorulname").innerHTML =
-                    "PLEASE ENTER YOUR USER_NAME";
+                    "Please enter your user name";
                 setHasError(false);
             }
             else {
@@ -35,18 +34,17 @@ export const RegistersValidation = (key, value, setHasError) => {
                     document.getElementById("errorulname").classList.remove("d-none");
                     document.getElementById("errorulname").classList.add("d-block");
                     document.getElementById("errorulname").innerHTML =
-                        "ENTER VALID YOUR USER_NAME";
+                        "Enter valid your user name";
                     setHasError(false);
                 }
             }
         } break;
         case "userLoginId": {
             if (value === "" || value === null) {
-                console.log(value)
                 document.getElementById("erroremail").classList.remove("d-none");
                 document.getElementById("erroremail").classList.add("d-block");
                 document.getElementById("erroremail").innerHTML =
-                    "PLEASE ENTER YOUR USER_ID /EMAIL_ID";
+                    "Please enter your user id /email id";
                 setHasError(false);
             }
             else {
@@ -54,18 +52,17 @@ export const RegistersValidation = (key, value, setHasError) => {
                     document.getElementById("erroremail").classList.remove("d-none");
                     document.getElementById("erroremail").classList.add("d-block");
                     document.getElementById("erroremail").innerHTML =
-                        "ENTER VALID USER_ID /EMAIL_ID";
+                        "Enter valid user id /email id";
                     setHasError(false);
                 }
             }
         } break;
         case "Password": {
             if (value === "" || value === null) {
-                console.log(value)
                 document.getElementById("errorpassword").classList.remove("d-none");
                 document.getElementById("errorpassword").classList.add("d-block");
                 document.getElementById("errorpassword").innerHTML =
-                    "PLEASE ENTER YOUR PASSWORD";
+                    "Please enter your password";
                 setHasError(false);
             }
             else {
@@ -73,18 +70,17 @@ export const RegistersValidation = (key, value, setHasError) => {
                     document.getElementById("errorpassword").classList.remove("d-none");
                     document.getElementById("errorpassword").classList.add("d-block");
                     document.getElementById("errorpassword").innerHTML =
-                        "ENTER VALID PASSWORD";
+                        "Enter valid password";
                     setHasError(false);
                 }
             }
         } break;
         case "currentPasswordVerify": {
             if (value === "" || value === null) {
-                console.log(value)
                 document.getElementById("errorrepassword").classList.remove("d-none");
                 document.getElementById("errorrepassword").classList.add("d-block");
                 document.getElementById("errorrepassword").innerHTML =
-                    "PLEASE ENTER YOUR PASSWORD";
+                    "Please enter your password";
                 setHasError(false);
             }
             else {
@@ -92,13 +88,13 @@ export const RegistersValidation = (key, value, setHasError) => {
                     document.getElementById("errorrepassword").classList.remove("d-none");
                     document.getElementById("errorrepassword").classList.add("d-block");
                     document.getElementById("errorrepassword").innerHTML =
-                        "ENTER VALID PASSWORD";
+                        "Enter valid password";
                     setHasError(false);
                 }
             }
         } break;
         case "roleTypeId":{
-            if(value===""){
+            if(value===" "){
                 setHasError(false);
             }
         }break;

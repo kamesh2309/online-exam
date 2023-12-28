@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, } from "react-router-dom";
-
+import { PORT, PROTOCOL } from './ExamConstants';
 const ViewTopics = () => {
+  const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
   const { id, value, noq } = useParams();
   const [topicData, setTopicData] = useState([]);
   const [disable, setdisable] = useState(false);
@@ -9,7 +10,7 @@ const ViewTopics = () => {
     async function fetchData() {
       try {
         const response = await fetch(
-          "https://localhost:8443/exammodule/control/show-topic?showExamId=" + id
+          `${url}/exammodule/control/show-topic?showExamId=${id}`
           , { credentials: "include" });
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -28,7 +29,7 @@ const ViewTopics = () => {
 
     try {
       const response = await fetch(
-        `https://localhost:8443/exammodule/control/add-topic?deleteTopicId=${ID}&deleteExamId=${id}`, { credentials: "include" });
+        `${url}/exammodule/control/add-topic?deleteTopicId=${ID}&deleteExamId=${id}`, { credentials: "include" });
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -88,7 +89,7 @@ const ViewTopics = () => {
       <h4 className="textcolor fst-italic table fw-bold text-dark text-center ">
         List of Topics
       </h4>
-      <div className="row  justify-content-center mt-2 text-center textcolor ">
+      <div className="row justify-content-center mt-2 text-center textcolor ">
         <div className="col-md-11">
           <table className="table table-striped table-borderless fst-italic border border-3">
             <thead style={{ backgroundColor: "red" }} className="formHeaderColour">
@@ -118,7 +119,7 @@ const ViewTopics = () => {
                     <table className="table mb-0  table-borderless fst-italic table-hover">
                       <thead className="formHeaderColour">
                         <tr>
-                          <th scope="col">Topic-Name</th>
+                          <th scope="col">Topic-Id</th>
                           <th scope="col">percentage</th>
                           <th scope="col">Topic-Pass-Percentage</th>
                           <th scope="col">No-Of-Question</th>
