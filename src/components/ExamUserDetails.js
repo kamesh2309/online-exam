@@ -1,7 +1,7 @@
 import { Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-
+//ExamUserDetails
 const ExamUserDetails = () => {
     const { id, value, noq, pId, fName, lName } = useParams();
     const navigate=useNavigate();

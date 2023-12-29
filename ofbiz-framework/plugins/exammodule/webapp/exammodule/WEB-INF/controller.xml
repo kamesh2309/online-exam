@@ -30,6 +30,7 @@
 
 	<!-- Login Request Mappings -->
 
+	<!-- This is  Login Event -->
 	<request-map uri="logins">
 		<security https="true" auth="false" />
 		<event type="java" path="com.events.ExamLoginEvents"
