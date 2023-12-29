@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams, } from "react-router-dom";
+import { Link, useNavigate, useParams, } from "react-router-dom";
 import { PORT, PROTOCOL } from './ExamConstants';
 const ViewTopics = () => {
   const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
+  const navigate=useNavigate();
   const { id, value, noq } = useParams();
   const [topicData, setTopicData] = useState([]);
   const [disable, setdisable] = useState(false);
@@ -15,6 +16,9 @@ const ViewTopics = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const formData = await response.json();
+      if (formData.notLogin === "notLogin") {
+        navigate("/")
+      }
       setTopicData(formData.resultMap);
 
       formData.questionsPerExam >= 100 ? setdisable(true) : setdisable(false);

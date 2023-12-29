@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Paper } from '@mui/material';
 import { PORT, PROTOCOL } from './ExamConstants';
 
 const Question = () => {
     const { id, value, noq, tId, qId } = useParams();
+    const navigate=useNavigate();
     const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
     const [formDatas, setFormData] = useState({
         questionDetail: "",
@@ -25,21 +26,23 @@ const Question = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-            const response = await fetch(
-                `${url}/exammodule/control/show-question?editQuestionId=${qId}`
-                , { credentials: "include" });
+                const response = await fetch(
+                    `${url}/exammodule/control/show-question?editQuestionId=${qId}`
+                    , { credentials: "include" });
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
-            console.log("object", data)
-            setFormData(data.editQuestionMap);
-            console.log("object", formDatas)
-            }catch(error){
+                if (data.notLogin === "notLogin") {
+                    navigate("/")
+                }
+                setFormData(data.editQuestionMap);
+
+            } catch (error) {
                 console.error("Error fetching data:", error);
             }
-        
-    }
+
+        }
         fetchData();
 
     }, []);

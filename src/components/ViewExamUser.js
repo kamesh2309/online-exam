@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { PORT, PROTOCOL } from './ExamConstants';
 const ViewExamUser = () => {
     const [userExam, setUserExam] = useState([]);
+    const navigate=useNavigate();
     const { id, value, noq } = useParams();
     const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
 
@@ -14,6 +15,9 @@ const ViewExamUser = () => {
                 { credentials: "include" }
             );
             const data = await response.json();
+            if (data.notLogin === "notLogin") {
+                navigate("/")
+            }
             setUserExam(data.resultMap);
         }
         catch (error) {

@@ -51,6 +51,16 @@ const AddQuestion = () => {
         `/admin/view-exam-topic/add-question/${id}/${value}/${noq}/${tId}`
       );
   };
+  useEffect(()=>{
+    fetch(`${url}/exammodule/control/login-check`,{credentials: "include"})
+    .then((response) => {
+      return response.json();
+    }).then(data=>{
+      if (data.notLogin === "notLogin") {
+        navigate("/");
+      }
+    })
+  },[])
   const onSubmit = (e) => {
     e.preventDefault();
     if (selectedQuestionType === "QT_SC" || selectedQuestionType === "QT_MC") {

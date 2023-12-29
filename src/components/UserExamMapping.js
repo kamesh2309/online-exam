@@ -6,12 +6,22 @@ import { PORT, PROTOCOL } from './ExamConstants';
 
 const UserExamMapping = () => {
     const { id, value, noq, pId } = useParams();
-    const [hasError, setHasError, refHasError] = useStateRef(true);
+ const [hasError, setHasError, refHasError] = useStateRef(true);
     const navigate = useNavigate();
     const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
     const goToAnotherPage = (flags) => {
         flags ? navigate("/admin") : navigate("/admin/user-exam-mapping");
     };
+    useEffect(()=>{
+        fetch(`${url}/exammodule/control/login-check`,{credentials: "include"})
+        .then((response) => {
+          return response.json();
+        }).then(data=>{
+          if (data.notLogin === "notLogin") {
+            navigate("/");
+          }
+        })
+      },[])
     const handler = (e) => {
         e.preventDefault();
         document.getElementById("errorallowattemp").innerHTML = "";

@@ -1,9 +1,10 @@
 import { Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const ExamUserDetails = () => {
     const { id, value, noq, pId, fName, lName } = useParams();
+    const navigate=useNavigate();
     const [userExamValues, setUserExamValue] = useState([]);
     useEffect(() => {
         async function formData() {
@@ -14,6 +15,9 @@ const ExamUserDetails = () => {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
+                if (data.notLogin === "notLogin") {
+                    navigate("/")
+                  }
                 setUserExamValue(data.userExam)
             } catch (error) {
                 console.error("Error fetching data:", error);

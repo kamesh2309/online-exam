@@ -36,6 +36,16 @@ const AddTopic = () => {
       ? navigate(`/admin/view-exam-topic/${id}/${value}/${noq}`)
       : navigate("/admin/view-exam-topic/add-topic/:id/:noq");
   };
+  useEffect(()=>{
+    fetch(`${url}/exammodule/control/login-check`,{credentials: "include"})
+    .then((response) => {
+      return response.json();
+    }).then(data=>{
+      if (data.notLogin === "notLogin") {
+        navigate("/");
+      }
+    })
+  },[])
   const onSubmit = (e) => {
     e.preventDefault();
     document.getElementById("errorTopicName").innerHTML = "";

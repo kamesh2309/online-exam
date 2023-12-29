@@ -32,6 +32,16 @@ const AddExam = () => {
   const goToAnotherPage = (flags) => {
     flags ? navigate("/admin") : navigate("/add-exam");
   };
+  useEffect(()=>{
+    fetch(`${url}/exammodule/control/login-check`,{credentials: "include"})
+    .then((response) => {
+      return response.json();
+    }).then(data=>{
+      if (data.notLogin === "notLogin") {
+        navigate("/");
+      }
+    })
+  },[])
   const handler = (e) => {
     e.preventDefault();
 

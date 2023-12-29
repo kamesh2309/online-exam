@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PORT, PROTOCOL } from "./ExamConstants";
 
 const Admin = () => {
   const [examData, setExamData] = useState([]);
-
+  const navigate = useNavigate();
   const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
+
   async function fetchData() {
     try {
       const response = await fetch(
@@ -20,14 +21,16 @@ const Admin = () => {
       }
 
       const formData = await response.json();
-
+      if (formData.notLogin === "notLogin") {
+        navigate("/")
+      }
       setExamData(formData.examMap);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
   useEffect(() => {
-       fetchData();
+    fetchData();
   }, []);
   async function deleteExamId(ID) {
 

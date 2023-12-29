@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { PORT, PROTOCOL } from './ExamConstants';
 const ViewQuestion = () => {
   const { id, value, noq, tId } = useParams();
+  const navigate=useNavigate();
   const [questionData, setquestionData] = useState([]);
   const [topicName, setTopicName] = useState();
   const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
@@ -16,6 +17,9 @@ const ViewQuestion = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const formData = await response.json();
+      if (formData.notLogin === "notLogin") {
+        navigate("/")
+    }
       setTopicName(formData.topicName);
       setquestionData(formData.resultMap);
       
