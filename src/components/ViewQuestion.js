@@ -6,24 +6,28 @@ const ViewQuestion = () => {
   const [questionData, setquestionData] = useState([]);
   const [topicName, setTopicName] = useState();
   const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(
-          `${url}/exammodule/control/show-question?showTopicId=${tId}`, { credentials: "include" }
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const formData = await response.json();
-        setTopicName(formData.topicName);
-        setquestionData(formData.resultMap);
-        
-       
-      } catch (error) {
-        console.error("Error fetching data:", error);
+  
+  async function fetchData() {
+    try {
+      const response = await fetch(
+        `${url}/exammodule/control/show-question?showTopicId=${tId}`, { credentials: "include" }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      const formData = await response.json();
+      setTopicName(formData.topicName);
+      setquestionData(formData.resultMap);
+      
+     
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
+  }
+  
+  
+  useEffect(() => {
+    
     fetchData();
   }, []);
 
@@ -39,7 +43,7 @@ const ViewQuestion = () => {
 
       const deleteData = await response.json();
       if (deleteData.successDelete === "success") {
-        window.location.reload();
+        fetchData();
       }
     } catch (error) {
       console.error("Error fetching data:", error);

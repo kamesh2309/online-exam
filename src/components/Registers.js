@@ -3,9 +3,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ValidEmail, ValidPassword, ValidName } from './RegexValidation';
 import useStateRef from 'react-usestateref';
 import { RegistersValidation } from './RegistersValidation';
+import { PORT, PROTOCOL } from './ExamConstants';
 
 const Registers = () => {
     const [hasError, setHasError, refHasError] = useStateRef(true);
+    const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
     const navigate = useNavigate();
     const goToAnotherPage = (flags) => {
         flags ? navigate("/") : navigate("/registers");
@@ -39,7 +41,7 @@ const Registers = () => {
 
 
         if (refHasError.current) {
-            fetch("https://localhost:8443/exammodule/control/add-user", {
+            fetch(`${url}/exammodule/control/add-user`, {
                 method: "POST",
                 credentials: "include",
                 body: formDataValues,

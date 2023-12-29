@@ -7,28 +7,27 @@ const Admin = () => {
   const [examData, setExamData] = useState([]);
 
   const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(
-          `${url}/exammodule/control/show-exams`, {
-          credentials: "include",
-        }
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const formData = await response.json();
-
-        setExamData(formData.examMap);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+  async function fetchData() {
+    try {
+      const response = await fetch(
+        `${url}/exammodule/control/show-exams`, {
+        credentials: "include",
       }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const formData = await response.json();
+
+      setExamData(formData.examMap);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
-    fetchData();
+  }
+  useEffect(() => {
+       fetchData();
   }, []);
   async function deleteExamId(ID) {
 
@@ -47,7 +46,7 @@ const Admin = () => {
 
       const deleteData = await response.json();
       if (deleteData.successDelete === "success") {
-        window.location.reload();
+        fetchData();
       }
 
     } catch (error) {

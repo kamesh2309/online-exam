@@ -6,23 +6,23 @@ const ViewTopics = () => {
   const { id, value, noq } = useParams();
   const [topicData, setTopicData] = useState([]);
   const [disable, setdisable] = useState(false);
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(
-          `${url}/exammodule/control/show-topic?showExamId=${id}`
-          , { credentials: "include" });
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const formData = await response.json();
-        setTopicData(formData.resultMap);
-
-        formData.questionsPerExam >= 100 ? setdisable(true) : setdisable(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+  async function fetchData() {
+    try {
+      const response = await fetch(
+        `${url}/exammodule/control/show-topic?showExamId=${id}`
+        , { credentials: "include" });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      const formData = await response.json();
+      setTopicData(formData.resultMap);
+
+      formData.questionsPerExam >= 100 ? setdisable(true) : setdisable(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
+  }
+  useEffect(() => {
     fetchData();
   }, []);
   async function deleteTopicId(ID) {
@@ -36,7 +36,7 @@ const ViewTopics = () => {
       }
       const deleteData = await response.json();
       if (deleteData.successDelete === "success") {
-        window.location.reload();
+        fetchData();
       }
     } catch (error) {
       console.error("Error fetching data:", error);

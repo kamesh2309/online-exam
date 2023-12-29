@@ -5,20 +5,22 @@ const ViewExamUser = () => {
     const [userExam, setUserExam] = useState([]);
     const { id, value, noq } = useParams();
     const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetch(
-                    `${url}/exammodule/control/add-mapping?showExamId=${id}`,
-                    { credentials: "include" }
-                );
-                const data = await response.json();
-                setUserExam(data.resultMap);
-            }
-            catch (error) {
-                console.error("Error fetching data:", error);
-            }
+
+
+      async function fetchData() {
+        try {
+            const response = await fetch(
+                `${url}/exammodule/control/add-mapping?showExamId=${id}`,
+                { credentials: "include" }
+            );
+            const data = await response.json();
+            setUserExam(data.resultMap);
         }
+        catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+    useEffect(() => {
         fetchData();
     }, []
     )
@@ -33,7 +35,7 @@ const ViewExamUser = () => {
             }
             const deleteData = await response.json();
             if (deleteData.successDelete === "success") {
-                window.location.reload();
+                fetchData();
             }
         } catch (error) {
             console.error("Error fetching data:", error);

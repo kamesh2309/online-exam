@@ -25,8 +25,7 @@ const UserExamMapping = () => {
             formData.append(key, value);
         }
        
-    
-        if (refHasError.current) {
+    if (refHasError.current) {
             fetch(`${url}/exammodule/control/add-user-exam-mapping`, {
                 method: "POST",
                 credentials: "include",
