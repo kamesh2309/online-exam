@@ -14,7 +14,8 @@ import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.entity.util.EntityQuery;
 
-import com.constantName.ConstantNames;
+import com.constantname.ConstantNames;
+import com.utilhelpervastpro.LoginSessionChecker;
 
 public class ShowExamUserEvents {
 	public static final String module = ShowExamUserEvents.class.getName();
@@ -22,6 +23,9 @@ public class ShowExamUserEvents {
 	public static String showStudentsExam(HttpServletRequest request, HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute(ConstantNames.DELEGATOR);
 		Map<String, Object> studentExamMap = new HashMap<String, Object>();
+		if (LoginSessionChecker.sessionChecker(request, response)=="false") {
+			return ConstantNames.ERROR;
+		}
 		try {
 			GenericValue partyId = EntityQuery.use(delegator).from(ConstantNames.PARTY)
 					.where(ConstantNames.PARTY_ID, request.getParameter("partyId")).cache().queryOne();

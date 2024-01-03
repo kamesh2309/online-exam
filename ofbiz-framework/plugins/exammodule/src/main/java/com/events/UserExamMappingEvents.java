@@ -14,7 +14,7 @@ import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
 
-import com.constantName.ConstantNames;
+import com.constantname.ConstantNames;
 import com.utilhelpervastpro.LoginSessionChecker;
 
 public class UserExamMappingEvents{
@@ -25,7 +25,7 @@ public class UserExamMappingEvents{
 		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 		DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		
-		if(!LoginSessionChecker.sessionChecker(request, response)) {
+		if (LoginSessionChecker.sessionChecker(request, response)=="false") {
 			return ConstantNames.ERROR;
 		}
 		if (UtilValidate.isEmpty(request.getParameter("deleteExamId"))

@@ -14,7 +14,7 @@ import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.entity.util.EntityQuery;
 
-import com.constantName.ConstantNames;
+import com.constantname.ConstantNames;
 import com.utilhelpervastpro.LoginSessionChecker;
 
 public class StudentExamMappingEvents {
@@ -23,23 +23,42 @@ public class StudentExamMappingEvents {
 	public static String showStudents(HttpServletRequest request, HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute(ConstantNames.DELEGATOR);
 		Map<String, Object> studentIdMap = new HashMap<String, Object>();
-		if(!LoginSessionChecker.sessionChecker(request, response)) {
+		/**
+		 * Here checking that user is userLogin
+		 */
+		if (LoginSessionChecker.sessionChecker(request, response)=="false") {
 			return ConstantNames.ERROR;
 		}
 		try {
+			/**
+			 * Here checking the show_User_Exam_Id & show_User_Party_Id is Null
+			 */
 			if (UtilValidate.isEmpty(request.getParameter("showUserExamId"))
 					&& UtilValidate.isEmpty(request.getParameter("showUserPartyId"))) {
+				/**
+				 * Here checking the show_Exam_Id is Null
+				 */
 				if (UtilValidate.isEmpty(request.getParameter("showExamId"))) {
+					/**
+					 * Here Writing a EntityQuery to get the PartyId from the party_Role Where the
+					 * rollType is Student
+					 */
 					List<GenericValue> partyIds = EntityQuery.use(delegator).from(ConstantNames.PARTY_ROLE)
 							.where(ConstantNames.ROLE_TYPE_ID, "Student").cache().queryList();
+					/**
+					 * Checking the partyIds is Null
+					 */
 					if (UtilValidate.isEmpty(partyIds)) {
 						String errMsg = "currently No student are added";
 						studentIdMap.put("error_user", errMsg);
 						request.setAttribute(ConstantNames.RESULT_MAP, studentIdMap);
 						return ConstantNames.ERROR;
 					}
-					List<Map<String, Object>> studentsList = new ArrayList();
 
+					List<Map<String, Object>> studentsList = new ArrayList();
+					/**
+					 * Here we are getting the Party_Id from the partyIds
+					 */
 					for (GenericValue studentId : partyIds) {
 						Map<String, Object> studentInfo = new HashMap<>();
 						String partyId = studentId.getString(ConstantNames.PARTY_ID);
@@ -49,8 +68,13 @@ public class StudentExamMappingEvents {
 							request.setAttribute(ConstantNames.RESULT_MAP, studentIdMap);
 							return ConstantNames.ERROR;
 						}
+						/***
+						 * Here writing EntityQuery to get the user firstName & lastName from the person
+						 * Entity where party_Id
+						 */
 						GenericValue studentName = EntityQuery.use(delegator).from(ConstantNames.PERSON)
 								.where(ConstantNames.PARTY_ID, partyId).cache().queryOne();
+
 						studentInfo.put(ConstantNames.PARTY_ID, partyId);
 						studentInfo.put(ConstantNames.FIRST_NAME, studentName.getString(ConstantNames.FIRST_NAME));
 						studentInfo.put(ConstantNames.LAST_NAME, studentName.get(ConstantNames.LAST_NAME));
@@ -58,12 +82,22 @@ public class StudentExamMappingEvents {
 						studentsList.add(studentInfo);
 
 					}
+					/**
+					 * Here We are Setting the studentsList in the setAttribute
+					 */
 					request.setAttribute(ConstantNames.RESULT_MAP, studentsList);
 
 				} else {
+					/**
+					 * Here we are writing the EntityQuery to get the examList from
+					 * User_exam_mapping for particular examId
+					 */
 					List<GenericValue> examsList = EntityQuery.use(delegator).from(ConstantNames.USER_EXAM_MAPPING)
 							.where(ConstantNames.EXAM_ID, request.getParameter("showExamId")).cache().queryList();
 					List<Map<String, Object>> userExamsList = new ArrayList<Map<String, Object>>();
+                   /**
+                    * Here we are taking 
+                    */
 					for (GenericValue examList : examsList) {
 						String partyId = examList.getString(ConstantNames.PARTY_ID);
 						if (UtilValidate.isEmpty(partyId)) {
@@ -84,7 +118,6 @@ public class StudentExamMappingEvents {
 					}
 					request.setAttribute(ConstantNames.RESULT_MAP, userExamsList);
 				}
-				
 
 			} else {
 				/*-------------------Exam User Details-------------------*/

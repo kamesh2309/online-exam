@@ -18,7 +18,7 @@ import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
 
-import com.constantName.ConstantNames;
+import com.constantname.ConstantNames;
 import com.utilhelpervastpro.LoginSessionChecker;
 
 public class TopicEvents {
@@ -29,7 +29,7 @@ public class TopicEvents {
 		Delegator delegator = (Delegator) request.getAttribute(ConstantNames.DELEGATOR);
 		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 		Map<String, Object> topicResultMap = new HashMap<>();
-		if (!LoginSessionChecker.sessionChecker(request, response)) {
+		if (LoginSessionChecker.sessionChecker(request, response)=="false") {
 			return ConstantNames.ERROR;
 		}
 		try {
@@ -168,8 +168,8 @@ public class TopicEvents {
 	public static String getTopic(HttpServletRequest request, HttpServletResponse response) {
 
 		Delegator delegator = (Delegator) request.getAttribute(ConstantNames.DELEGATOR);
-       Map<String, Object> editResultMap = new HashMap<String, Object>();
-		if (!LoginSessionChecker.sessionChecker(request, response)) {
+		Map<String, Object> editResultMap = new HashMap<String, Object>();
+		if (LoginSessionChecker.sessionChecker(request, response)=="false") {
 			return ConstantNames.ERROR;
 		}
 		try {

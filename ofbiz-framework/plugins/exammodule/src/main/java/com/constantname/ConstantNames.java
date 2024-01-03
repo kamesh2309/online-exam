@@ -1,4 +1,4 @@
-package com.constantName;
+package com.constantname;
 
 public class ConstantNames {
 
@@ -17,6 +17,7 @@ public class ConstantNames {
 	public final static String ERROR = "error";
 	public final static String RESULT_MAP = "resultMap";
 	public final static String NOT_LOGIN = "notLogin";
+	public final static String LOGIN = "login";
 
 	/* -----------------Exam Master------------------------ */
 

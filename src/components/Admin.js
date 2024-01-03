@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link, useNavigate } from "react-router-dom";
 import { PORT, PROTOCOL } from "./ExamConstants";
+import { useHistory } from "react-router-dom"
 
 const Admin = () => {
   const [examData, setExamData] = useState([]);
   const navigate = useNavigate();
+  
   const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
 
   async function fetchData() {
@@ -21,6 +23,7 @@ const Admin = () => {
       }
 
       const formData = await response.json();
+      
       if (formData.notLogin === "notLogin") {
         navigate("/")
       }
@@ -39,14 +42,10 @@ const Admin = () => {
         `${url}/exammodule/control/examMaster?deleteExamId=${ID}`,
         {
           credentials: "include",
-        }
-
-      );
-
+        } );
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
       const deleteData = await response.json();
       if (deleteData.successDelete === "success") {
         fetchData();

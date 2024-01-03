@@ -29,8 +29,6 @@
 		invoke="test"/> </postprocessor> -->
 
 	<!-- Login Request Mappings -->
-
-	<!-- This is  Login Event -->
 	<request-map uri="logins">
 		<security https="true" auth="false" />
 		<event type="java" path="com.events.ExamLoginEvents"
@@ -38,12 +36,19 @@
 		<response name="success" type="request" value="json" />
 		<response name="error" type="request" value="json"></response>
 	</request-map>
-	<!-- Login Request Mappings -->
-
+	<!-- Login-checker Request Mappings -->
 	<request-map uri="login-check">
 		<security https="true" auth="false" />
 		<event type="java" path="com.utilhelpervastpro.LoginSessionChecker"
 			invoke="sessionChecker" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<!-- Logout Request Mappings -->
+        <request-map uri="logout">
+		<security https="true" auth="false" />
+		<event type="java" path="com.events.ExamLoginEvents"
+			invoke="logoutEvents" />
 		<response name="success" type="request" value="json" />
 		<response name="error" type="request" value="json"></response>
 	</request-map>

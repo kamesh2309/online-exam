@@ -9,7 +9,8 @@ const Login = (props) => {
   const navigate = useNavigate();
 
   const goToAnotherPage = (flags) => {
-    flags ? navigate("/admin") : navigate(`/user/${refPartyId.current}`);
+    
+    flags ?window.location.href="/admin" : window.location.href=`/user/${refPartyId.current}`;
   };
   const onSumbit = (e) => {
     e.preventDefault();

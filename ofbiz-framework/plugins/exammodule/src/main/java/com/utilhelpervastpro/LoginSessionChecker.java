@@ -6,17 +6,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.GenericValue;
 
-import com.constantName.ConstantNames;
+import com.constantname.ConstantNames;
 
 public class LoginSessionChecker {
-	public static boolean sessionChecker(HttpServletRequest request,HttpServletResponse response) {
+	public static String sessionChecker(HttpServletRequest request,HttpServletResponse response) {
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		if(UtilValidate.isEmpty(userLogin)) {
 			request.setAttribute(ConstantNames.NOT_LOGIN, ConstantNames.NOT_LOGIN);
-			return false;
+			return "false";
 		}
-		
-		return true;
+		request.setAttribute(ConstantNames.LOGIN, ConstantNames.LOGIN);
+		return "true";
 	}
 
 }
