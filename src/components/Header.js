@@ -47,7 +47,7 @@ const Header = () => {
           <div className="col-4">
             {refSetLogout.current ? (
               <div className="d-flex justify-content-end">
-                <button type="button" className="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#logoutBackdrop">
+                <button type="button" className="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#logoutBackdrop">
                   Logout
                 </button>
 

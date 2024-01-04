@@ -7,7 +7,8 @@ const ViewTopics = () => {
   const navigate = useNavigate();
   const { id, value, noq } = useParams();
   const [topicData, setTopicData] = useState([]);
-  const [disable, setdisable] = useState(false);
+  const [disable, setDisable] = useState(false);
+  const [disableAddUser, setDisableAddUser] = useState(false);
   async function fetchData() {
     try {
       const response = await fetch(
@@ -22,7 +23,8 @@ const ViewTopics = () => {
       }
       setTopicData(formData.resultMap);
 
-      formData.questionsPerExam >= 100 ? setdisable(true) : setdisable(false);
+      formData.questionsPerExam >= 100 ? setDisable(true) : setDisable(false);
+      formData.questionsPerExam < 100 ? setDisableAddUser(true) : setDisableAddUser(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -68,7 +70,7 @@ const ViewTopics = () => {
             </li>
           </ol>
         </nav>
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-between ">
           <button
             className={`${disable
               ? "disabled btn btn-outline-info  "
@@ -82,13 +84,14 @@ const ViewTopics = () => {
               Add Topic
             </Link>
           </button>
-          <button
-            type="button"
+          {disableAddUser ? <button className=" cursor-not text-muted  btn btn-outline-info fw-bold border-2 me-5 bread text-dark fst-italic">
+            Add-User
+          </button> : <button
             className=" btn btn-outline-info fw-bold border-2 me-5" >
-            <Link to={`/admin/view-exam-topic/user-exam-mapping/${id}/${value}/${noq}`} className="bread text-dark fst-italic  ">
+            <Link to={`/admin/view-exam-topic/user-exam-mapping/${id}/${value}/${noq}`} className="bread text-dark fst-italic">
               Add-User
             </Link>
-          </button>
+          </button>}
         </div>
       </div>
       <h4 className="textcolor fst-italic table fw-bold text-dark text-center ">
@@ -111,11 +114,17 @@ const ViewTopics = () => {
                 <td className="fw-bold">{value}</td>
                 <td className="fw-bold">{noq}</td>
                 <td>
-                  <Link to={`/admin/view-exam-topic/view-exam-user/${id}/${value}/${noq}`}>
-                    <i
-                      className="bi bi-people-fill text-primary"
-                      title="view-Exam-User"></i>
-                  </Link>
+                  {disableAddUser ?
+                    <div className="tooltips">
+                      <div className="bi bi-people-fill text-primary" >
+                      <span className="tooltiptext">Add Question 100% to Add-User</span>
+                      </div>
+                    </div>
+                    : <Link to={`/admin/view-exam-topic/view-exam-user/${id}/${value}/${noq}`}>
+                      <i
+                        className="bi bi-people-fill text-primary"
+                        title="view-Exam-User"></i>
+                    </Link>}
                 </td>
               </tr>
               <tr>
@@ -135,7 +144,7 @@ const ViewTopics = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {Object.entries(topicData).map(([key, values],index) => (
+                        {Object.entries(topicData).map(([key, values], index) => (
                           <tr className="align-middle" key={key}>
                             <th scope="row">{values.topicId}</th>
                             <td>{values.percentage}</td>
@@ -180,9 +189,9 @@ const ViewTopics = () => {
                                   className="bi bi-trash-fill text-danger" title="Delete-Topic"
                                 ></i>
                               </button>
-                              <DeleteModal index={`staticBackdrop${index}`} onClick={() => { deleteTopicId(values.topicId) }} name={"-"} id={values.topicId} type={"Topic"}/>
+                              <DeleteModal index={`staticBackdrop${index}`} onClick={() => { deleteTopicId(values.topicId) }} name={"-"} id={values.topicId} type={"Topic"} />
                             </td>
-                          </tr> 
+                          </tr>
                         ))}
                       </tbody>
                     </table>

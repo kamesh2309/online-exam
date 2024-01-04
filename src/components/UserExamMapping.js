@@ -97,7 +97,7 @@ const UserExamMapping = () => {
         if (id === undefined) {
             async function fetchdata1() {
                 try {
-                    const response = await fetch(`${url}/exammodule/control/show-exams`,
+                    const response = await fetch(`${url}/exammodule/control/show-exams?userExamMapping=${3}`,
                         { credentials: "include" })
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -105,9 +105,9 @@ const UserExamMapping = () => {
                     const data = await response.json();
                     const dropDown = document.getElementById('myDropdown1');
                     dropDown.innerHTML = "";
-                    console.log(data.examMap)
-                    if (data.examMap) {
-                        Object.entries(data.examMap).map(([key, value]) => {
+                    console.log("i am data",data.userExamMapping)
+                    if (data.userExamMapping) {
+                        Object.entries(data.userExamMapping).map(([key, value]) => {
                             const option = document.createElement('option');
                             option.value = value.examId;
                             option.text = value.examName;

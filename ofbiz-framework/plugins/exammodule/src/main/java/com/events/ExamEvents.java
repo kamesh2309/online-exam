@@ -3,6 +3,7 @@ package com.events;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class ExamEvents {
 		/**
 		 * Here checking that user is userLogin
 		 */
-		if (LoginSessionChecker.sessionChecker(request, response)=="false") {
+		if (LoginSessionChecker.sessionChecker(request, response) == "false") {
 			return ConstantNames.ERROR;
 		}
 
@@ -205,7 +206,7 @@ public class ExamEvents {
 		/**
 		 * Here checking that user is userLogin
 		 */
-		if (LoginSessionChecker.sessionChecker(request, response)=="false") {
+		if (LoginSessionChecker.sessionChecker(request, response) == "false") {
 			return ConstantNames.ERROR;
 		}
 		Map<String, Object> examsMap = new HashMap<>();
@@ -219,42 +220,70 @@ public class ExamEvents {
 				 * Using EntityQuery getting the Exam's List from the Exam_master where the thew
 				 * Date is null
 				 */
-				List<GenericValue> examsList = EntityQuery.use(delegator).from(ConstantNames.EXAM_MASTER)
+				List<GenericValue> examList = EntityQuery.use(delegator).from(ConstantNames.EXAM_MASTER)
 						.where(ConstantNames.THEW_DATE, null).cache().queryList();
 				/**
 				 * Here Checking that examList is Empty
 				 */
-				if (UtilValidate.isEmpty(examsList)) {
+				if (UtilValidate.isEmpty(examList)) {
 					String errMsg = "No exams are Added.";
 					examsMap.put("Exams", errMsg);
 					request.setAttribute(ConstantNames.RESULT_MAP, examsMap);
 					return ConstantNames.ERROR;
 				}
+				/***
+				 * 
+				 */
+				if (UtilValidate.isNotEmpty(request.getParameter("userExamMapping"))) {
+					List<Map<String, Object>> examTopicList = new ArrayList<Map<String, Object>>();
+
+					for (GenericValue exam : examList) {
+						String examId = exam.getString(ConstantNames.EXAM_ID);
+						String examName = exam.getString(ConstantNames.EXAM_NAME);
+						int numberOfQuestion = Integer.parseInt(exam.getString(ConstantNames.NO_OF_QUESTIONS));
+						List<GenericValue> topicList = EntityQuery.use(delegator).from(ConstantNames.Exam_Topic_Mapping)
+								.where(ConstantNames.EXAM_ID, examId).cache().queryList();
+						int count = 0;
+						for (GenericValue topic : topicList) {
+							int numberOfQuestionTopic = Integer
+									.parseInt(topic.getString(ConstantNames.QUESTIONS_PER_EXAM));
+							count += numberOfQuestionTopic;
+						}
+						Map<String, Object> examTopic = new HashMap<String, Object>();
+						if (count == numberOfQuestion) {
+							examTopic.put("examId", examId);
+							examTopic.put("examName", examName);
+							examTopicList.add(examTopic);
+						}
+
+					}
+					request.setAttribute("userExamMapping", examTopicList);
+				}
 				/**
 				 * Here setting the examList in the setAttribute
 				 */
-
-				request.setAttribute("examMap", examsList);
+				request.setAttribute("examMap", examList);
 			} else {
 				/**
 				 * Using EntityQuery getting the Exam from the Exam_master where the ExamId Date
 				 * is null
 				 */
-				List<GenericValue> idExamList = EntityQuery.use(delegator).from(ConstantNames.EXAM_MASTER)
+				List<GenericValue> examDetails = EntityQuery.use(delegator).from(ConstantNames.EXAM_MASTER)
 						.where(ConstantNames.EXAM_ID, request.getParameter("editExamId")).cache().queryList();
 				/**
 				 * Here Checking that idExamList is Empty
 				 */
-				if (UtilValidate.isEmpty(idExamList)) {
+				if (UtilValidate.isEmpty(examDetails)) {
 					String errMsg = "No are Added yet....";
 					examsMap.put("Exams", errMsg);
 					request.setAttribute(ConstantNames.RESULT_MAP, examsMap);
 					return ConstantNames.ERROR;
 				}
+	
 				/**
 				 * Here setting the idExamList in the setAttribute
 				 */
-				request.setAttribute("examList", idExamList);
+				request.setAttribute("examList", examDetails);
 			}
 
 		} catch (GenericEntityException e) {

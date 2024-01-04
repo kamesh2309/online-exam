@@ -29,7 +29,7 @@ public class TopicEvents {
 		Delegator delegator = (Delegator) request.getAttribute(ConstantNames.DELEGATOR);
 		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 		Map<String, Object> topicResultMap = new HashMap<>();
-		if (LoginSessionChecker.sessionChecker(request, response)=="false") {
+		if (LoginSessionChecker.sessionChecker(request, response) == "false") {
 			return ConstantNames.ERROR;
 		}
 		try {
@@ -169,7 +169,7 @@ public class TopicEvents {
 
 		Delegator delegator = (Delegator) request.getAttribute(ConstantNames.DELEGATOR);
 		Map<String, Object> editResultMap = new HashMap<String, Object>();
-		if (LoginSessionChecker.sessionChecker(request, response)=="false") {
+		if (LoginSessionChecker.sessionChecker(request, response) == "false") {
 			return ConstantNames.ERROR;
 		}
 		try {
@@ -180,17 +180,17 @@ public class TopicEvents {
 				return ConstantNames.ERROR;
 			}
 
-			GenericValue examList = EntityQuery.use(delegator).from(ConstantNames.EXAM_MASTER)
+			GenericValue examDetails = EntityQuery.use(delegator).from(ConstantNames.EXAM_MASTER)
 					.where(ConstantNames.EXAM_ID, request.getParameter("showExamId")).cache().queryOne();
 
-			if (UtilValidate.isEmpty(examList)) {
+			if (UtilValidate.isEmpty(examDetails)) {
 				String errMsg = "there is exam to be added.";
 				editResultMap.put("ERROR_MESSAGE", errMsg);
 				request.setAttribute(ConstantNames.RESULT_MAP, editResultMap);
 				return ConstantNames.ERROR;
 			}
 
-			request.setAttribute("examList", examList);
+			request.setAttribute("examList", examDetails);
 
 			List<GenericValue> topicList = EntityQuery.use(delegator).from(ConstantNames.Exam_Topic_Mapping)
 					.where(ConstantNames.EXAM_ID, request.getParameter("showExamId")).cache().queryList();
@@ -203,7 +203,7 @@ public class TopicEvents {
 			}
 			int numberOfQuestionAdded = 0;
 			for (GenericValue numberOfQuestion : topicList) {
-				int numberofQuestion = Integer.parseInt(numberOfQuestion.getString("questionsPerExam"));
+				int numberofQuestion = Integer.parseInt(numberOfQuestion.getString(ConstantNames.QUESTIONS_PER_EXAM));
 				numberOfQuestionAdded += numberofQuestion;
 			}
 			request.setAttribute("questionsPerExam", numberOfQuestionAdded);
