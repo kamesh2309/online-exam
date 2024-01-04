@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useStateRef from "react-usestateref";
 import { PORT, PROTOCOL } from "./ExamConstants";
 
-const Login = (props) => {
+const Login = () => {
   const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
   const [partyId, setPartyId, refPartyId] = useStateRef();
   const navigate = useNavigate();

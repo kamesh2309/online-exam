@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { PORT, PROTOCOL } from './ExamConstants';
+import DeleteModal from "./DeleteModal";
 const ViewQuestion = () => {
   const { id, value, noq, tId } = useParams();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [questionData, setquestionData] = useState([]);
   const [topicName, setTopicName] = useState();
   const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
-  
+
   async function fetchData() {
     try {
       const response = await fetch(
@@ -19,23 +20,23 @@ const ViewQuestion = () => {
       const formData = await response.json();
       if (formData.notLogin === "notLogin") {
         navigate("/")
-    }
+      }
       setTopicName(formData.topicName);
       setquestionData(formData.resultMap);
-      
-     
+
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
-  
-  
+
+
   useEffect(() => {
-    
+
     fetchData();
   }, []);
 
-  async function deleteExamId(ID) {
+  async function deleteQuestionId(ID) {
 
     try {
       const response = await fetch(
@@ -125,7 +126,7 @@ const ViewQuestion = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {Object.entries(questionData).map(([key, values]) => (
+                        {Object.entries(questionData).map(([key, values],index) => (
                           <tr className="align-middle" key={key}>
                             <th scope="row">{values.questionId}</th>
                             <th>{values.questionType}</th>
@@ -137,7 +138,7 @@ const ViewQuestion = () => {
                               >
                                 <i
                                   className="bi bi-pen-fill text-dark"
-                                  title="Edit"
+                                  title="Edit-Question"
                                 ></i>
                               </Link>
                             </td>
@@ -148,16 +149,17 @@ const ViewQuestion = () => {
                               >
                                 <i
                                   className=" bi bi-folder-symlink-fill  text-info"
-                                  title="View"
+                                  title="View-Question"
                                 ></i>
                               </Link>
                             </td>
                             <td>
-                              <button onClick={() => { deleteExamId(values.questionId) }} className="px-4 deleteLink">
+                              <button className="px-4 deleteLink" data-bs-toggle="modal" data-bs-target={`#staticBackdrop${index}`}>
                                 <i
-                                  className="bi bi-trash-fill text-danger " title="Delete"
+                                  className="bi bi-trash-fill text-danger" title="Delete-Question"
                                 ></i>
                               </button>
+                              <DeleteModal index={`staticBackdrop${index}`} onClick={() => { deleteQuestionId(values.questionId) } } name={""} id={values.questionId} type={"Question"}/>
                             </td>
                           </tr>
                         ))}

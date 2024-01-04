@@ -11,7 +11,7 @@ const Header = () => {
     const date = now.getDate();
     const Month = now.getMonth();
     const Year = now.getFullYear();
-    return `Date: ${date}-${Month}-${Year} `;
+    return `Date: ${date}-${Month+1}-${Year} `;
   }
   const logoutUser = async () => {
     const response = await fetch(`${url}/exammodule/control/logout`, { credentials: "include" });

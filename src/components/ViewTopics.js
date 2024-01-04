@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, } from "react-router-dom";
 import { PORT, PROTOCOL } from './ExamConstants';
+import DeleteModal from "./DeleteModal";
 const ViewTopics = () => {
   const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const { id, value, noq } = useParams();
   const [topicData, setTopicData] = useState([]);
   const [disable, setdisable] = useState(false);
@@ -113,7 +114,7 @@ const ViewTopics = () => {
                   <Link to={`/admin/view-exam-topic/view-exam-user/${id}/${value}/${noq}`}>
                     <i
                       className="bi bi-people-fill text-primary"
-                      title="viewExamUser"></i>
+                      title="view-Exam-User"></i>
                   </Link>
                 </td>
               </tr>
@@ -134,7 +135,7 @@ const ViewTopics = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {Object.entries(topicData).map(([key, values]) => (
+                        {Object.entries(topicData).map(([key, values],index) => (
                           <tr className="align-middle" key={key}>
                             <th scope="row">{values.topicId}</th>
                             <td>{values.percentage}</td>
@@ -148,7 +149,7 @@ const ViewTopics = () => {
                               >
                                 <i
                                   className="bi bi-plus-circle-fill  text-success"
-                                  title="Add"
+                                  title="Add-Question"
                                 ></i>
                               </Link>
                             </td>
@@ -158,7 +159,7 @@ const ViewTopics = () => {
                                 className=" justify-content-center d-flex" >
                                 <i
                                   className="bi bi-pen-fill text-dark"
-                                  title="Edit"
+                                  title="Edit-Topic"
                                 ></i>
                               </Link>
                             </td>
@@ -169,18 +170,19 @@ const ViewTopics = () => {
                               >
                                 <i
                                   className=" bi bi-folder-symlink-fill  text-info"
-                                  title="View"
+                                  title="View-Question"
                                 ></i>
                               </Link>
                             </td>
                             <td>
-                              <button onClick={() => { deleteTopicId(values.topicId) }} className="px-4 deleteLink">
+                              <button className="px-4 deleteLink" data-bs-toggle="modal" data-bs-target={`#staticBackdrop${index}`}>
                                 <i
-                                  className="bi bi-trash-fill text-danger" title="Delete"
+                                  className="bi bi-trash-fill text-danger" title="Delete-Topic"
                                 ></i>
                               </button>
+                              <DeleteModal index={`staticBackdrop${index}`} onClick={() => { deleteTopicId(values.topicId) }} name={"-"} id={values.topicId} type={"Topic"}/>
                             </td>
-                          </tr>
+                          </tr> 
                         ))}
                       </tbody>
                     </table>

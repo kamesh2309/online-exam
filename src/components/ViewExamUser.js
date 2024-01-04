@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { PORT, PROTOCOL } from './ExamConstants';
+import DeleteModal from './DeleteModal';
 const ViewExamUser = () => {
     const [userExam, setUserExam] = useState([]);
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const { id, value, noq } = useParams();
     const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
 
 
-      async function fetchData() {
+    async function fetchData() {
         try {
             const response = await fetch(
                 `${url}/exammodule/control/add-mapping?showExamId=${id}`,
@@ -102,7 +103,7 @@ const ViewExamUser = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {Object.entries(userExam).map(([key, values]) => (
+                                                {Object.entries(userExam).map(([key, values],index) => (
                                                     <tr className="align-middle" key={key}>
                                                         <th scope="row">{values.partyId}</th>
                                                         <th scope="row">{values.firstName}</th>
@@ -114,13 +115,16 @@ const ViewExamUser = () => {
                                                         </td> */}
                                                         <td>
                                                             <Link to={`/admin/view-exam-topic/view-exam-user/view-user-exam-details/${id}/${value}/${noq}/${values.partyId}/${values.firstName}/${values.lastName}`} className="justify-content-center d-flex">
-                                                                <i className=" bi bi-folder-symlink-fill text-info" title="View"></i>
+                                                                <i className=" bi bi-folder-symlink-fill text-info" title="View-User"></i>
                                                             </Link>
                                                         </td>
                                                         <td>
-                                                            <button className="px-4 deleteLink" onClick={() => { deleteUserExamId(id, values.partyId) }}>
-                                                                <i className="bi bi-trash-fill text-danger" title="Delete"></i>
+                                                            <button className="px-4 deleteLink" data-bs-toggle="modal" data-bs-target={`#staticBackdrop${index}`}>
+                                                                <i
+                                                                    className="bi bi-trash-fill text-danger" title="Delete-User"
+                                                                ></i>
                                                             </button>
+                                                            <DeleteModal index={`staticBackdrop${index}`} onClick={() => { deleteUserExamId(id, values.partyId) }} name={values.firstName } id={values.partyId} type={"User"}/>
                                                         </td>
                                                     </tr>
                                                 ))}

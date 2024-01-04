@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link, useNavigate } from "react-router-dom";
 import { PORT, PROTOCOL } from "./ExamConstants";
-import { useHistory } from "react-router-dom"
+import DeleteModal from "./DeleteModal";
 
 const Admin = () => {
   const [examData, setExamData] = useState([]);
   const navigate = useNavigate();
-  
+  const [deteleModal, setDeleteModal] = useState(false);
+
   const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
 
   async function fetchData() {
@@ -23,7 +24,7 @@ const Admin = () => {
       }
 
       const formData = await response.json();
-      
+
       if (formData.notLogin === "notLogin") {
         navigate("/")
       }
@@ -32,17 +33,18 @@ const Admin = () => {
       console.error("Error fetching data:", error);
     }
   }
+
   useEffect(() => {
+
     fetchData();
   }, []);
   async function deleteExamId(ID) {
-
     try {
       const response = await fetch(
         `${url}/exammodule/control/examMaster?deleteExamId=${ID}`,
         {
           credentials: "include",
-        } );
+        });
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -55,7 +57,6 @@ const Admin = () => {
       console.error("Error fetching data:", error);
     }
   }
-
 
   return (
     <div>
@@ -92,7 +93,7 @@ const Admin = () => {
           </div>
         </div>
         <div className="row justify-content-center pt-4 ">
-          {examData ? Object.entries(examData).map(([key, value]) => (
+          {examData ? Object.entries(examData).map(([key, value], index) => (
 
             <div className="col-lg-3 tile-height justify-content-center d-flex" key={key}>
               <div style={{ marginBottom: "50px" }}>
@@ -117,19 +118,20 @@ const Admin = () => {
                     <div className="position-absolute icons">
                       <Link to={`/edit-exam/${value.examId}/${value.fromDate}`} className="px-4">
                         <i
-                          className="bi bi-pencil-square text-dark" title="Edit"
+                          className="bi bi-pencil-square text-dark" title="Edit-Exam"
                         ></i>
                       </Link>
 
                       <Link to={`/admin/view-exam-topic/${value.examId}/${value.examName}/${value.noOfQuestions}`} className="px-3">
-                        <i className="bi bi-eye-fill text-success" title="View"></i>
+                        <i className="bi bi-eye-fill text-success" title="View-Topic"></i>
                       </Link>
 
-                      <button onClick={() => { deleteExamId(value.examId) }} className="px-4 deleteLink">
+                      <button className="px-4 deleteLink" data-bs-toggle="modal" data-bs-target={`#staticBackdrop${index}`}>
                         <i
-                          className="bi bi-trash-fill text-danger" title="Delete"
+                          className="bi bi-trash-fill text-danger" title="Delete-Exam"
                         ></i>
                       </button>
+                       <DeleteModal index={`staticBackdrop${index}`} onClick={() => { deleteExamId(value.examId) }} name={value.examName} id={value.examId} type={"Exam"} />
                     </div>
                   </div>
                 </div>
