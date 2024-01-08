@@ -74,7 +74,7 @@ const AddExam = () => {
         })
         .then((data) => {
           Object.entries(data.resultMap).map(([key, value]) => {
-            if (value === "success") {
+            if (value === "success") {  
               goToAnotherPage(true);
             }
           });

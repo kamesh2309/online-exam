@@ -15,17 +15,18 @@ import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
 
 import com.constantname.ConstantNames;
+import com.ctc.wstx.shaded.msv_core.driver.textui.Debug;
 import com.utilhelpervastpro.LoginSessionChecker;
 
-public class UserExamMappingEvents{
+public class UserExamMappingEvents {
 	public static final String module = UserExamMappingEvents.class.getName();
 
 	public static String addDeleteUserExamMapping(HttpServletRequest request, HttpServletResponse response) {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(ConstantNames.DISPATCHER);
 		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 		DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		
-		if (LoginSessionChecker.sessionChecker(request, response)=="false") {
+
+		if (LoginSessionChecker.sessionChecker(request, response) == "false") {
 			return ConstantNames.ERROR;
 		}
 		if (UtilValidate.isEmpty(request.getParameter("deleteExamId"))
@@ -46,38 +47,50 @@ public class UserExamMappingEvents{
 				return ConstantNames.ERROR;
 
 			}
-			String creationDate = request.getParameter("lastPerformanceDate");
-			LocalDateTime localDateTime = LocalDateTime.parse(creationDate, inputFormatter);
-			String creationDateAndTime = localDateTime.format(outputFormatter);
-			Map<String, Object> userExamMappingMapValues = new HashMap<>();
-			userExamMappingMapValues.put(ConstantNames.PARTY_ID, request.getParameter("partyId"));
-			userExamMappingMapValues.put(ConstantNames.EXAM_ID, request.getParameter("examId"));
-			userExamMappingMapValues.put(ConstantNames.ALLOWED_ATTEMPTS,
-					Long.parseLong(request.getParameter("allowedAttempts")));
-			userExamMappingMapValues.put(ConstantNames.NO_OF_ATTEMPTS,
-					Long.parseLong(request.getParameter("noOfAttempts")));
-			userExamMappingMapValues.put(ConstantNames.LAST_PERFORMANCE_DATE, creationDateAndTime);
-			userExamMappingMapValues.put(ConstantNames.TIME_OUT_DAYS,
-					Long.parseLong(request.getParameter("timeoutDays")));
-			userExamMappingMapValues.put(ConstantNames.PASSWORD_CHANGES_AUTO,
-					request.getParameter("passwordChangesAuto"));
-			userExamMappingMapValues.put(ConstantNames.CAN_SPLIT_EXAMS, request.getParameter("canSplitExams"));
-			userExamMappingMapValues.put(ConstantNames.CAN_SEE_DETAILED_RESULTS,
-					request.getParameter("canSeeDetailedResults"));
-			userExamMappingMapValues.put(ConstantNames.MAX_SPLIT_ATTEMPTS, request.getParameter("maxSplitAttempts"));
 
-			try {
-				Map<String, Object> adduserExam = dispatcher.runSync("AddUserExamMapping", userExamMappingMapValues);
-				if (ServiceUtil.isError(adduserExam)) {
-					String errMsg = "The Add_User_Exam_Mapping EntityQuery is not success .";
-					userExamMappingMap.put("topic", errMsg);
-					request.setAttribute("error_user", userExamMappingMap);
-					return ConstantNames.ERROR;
+			Map<String, Object> userExamMappingMapValues = new HashMap<>();
+
+			String requestPartyIds = request.getParameter("partyId");
+			String[] partyIds = requestPartyIds.split(",");
+			for (String partyId : partyIds) {
+
+				userExamMappingMapValues.put(ConstantNames.PARTY_ID, partyId);
+				userExamMappingMapValues.put(ConstantNames.EXAM_ID, request.getParameter("examId"));
+				userExamMappingMapValues.put(ConstantNames.ALLOWED_ATTEMPTS,
+						Long.parseLong(request.getParameter("allowedAttempts")));
+				userExamMappingMapValues.put(ConstantNames.NO_OF_ATTEMPTS,
+						Long.parseLong(request.getParameter("noOfAttempts")));
+				userExamMappingMapValues.put(ConstantNames.TIME_OUT_DAYS,
+						Long.parseLong(request.getParameter("timeoutDays")));
+				userExamMappingMapValues.put(ConstantNames.PASSWORD_CHANGES_AUTO,
+						request.getParameter("passwordChangesAuto"));
+				userExamMappingMapValues.put(ConstantNames.CAN_SPLIT_EXAMS, request.getParameter("canSplitExams"));
+				userExamMappingMapValues.put(ConstantNames.CAN_SEE_DETAILED_RESULTS,
+						request.getParameter("canSeeDetailedResults"));
+				userExamMappingMapValues.put(ConstantNames.MAX_SPLIT_ATTEMPTS,
+						request.getParameter("maxSplitAttempts"));
+				String creationDate = request.getParameter("lastPerformanceDate");
+				if (UtilValidate.isNotEmpty(creationDate)) {
+					LocalDateTime localDateTime = LocalDateTime.parse(creationDate, inputFormatter);
+					String creationDateAndTime = localDateTime.format(outputFormatter);
+					userExamMappingMapValues.put(ConstantNames.LAST_PERFORMANCE_DATE, creationDateAndTime);
 				}
-				request.setAttribute(ConstantNames.RESULT_MAP, ConstantNames.SUCCESS);
-			} catch (GenericServiceException e) {
-				e.printStackTrace();
+
+				try {
+					Map<String, Object> adduserExam = dispatcher.runSync("AddUserExamMapping",
+							userExamMappingMapValues);
+					if (ServiceUtil.isError(adduserExam)) {
+						String errMsg = "The Add_User_Exam_Mapping EntityQuery is not success.";
+						userExamMappingMap.put("topic", errMsg);
+						request.setAttribute("error_user", userExamMappingMap);
+						return ConstantNames.ERROR;
+					}
+
+				} catch (GenericServiceException e) {
+					e.printStackTrace();
+				}
 			}
+			request.setAttribute(ConstantNames.RESULT_MAP, ConstantNames.SUCCESS);
 		} else {
 			try {
 				Map<String, Object> deleteUserExam = dispatcher.runSync("DeleteUserExamMapping",
@@ -90,7 +103,7 @@ public class UserExamMappingEvents{
 				}
 				request.setAttribute("successDelete", ConstantNames.SUCCESS);
 			} catch (GenericServiceException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
