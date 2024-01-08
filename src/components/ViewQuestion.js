@@ -126,7 +126,7 @@ const ViewQuestion = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {Object.entries(questionData).map(([key, values],index) => (
+                        {Object.entries(questionData).map(([key, values], index) => (
                           <tr className="align-middle" key={key}>
                             <th scope="row">{values.questionId}</th>
                             <th>{values.questionType}</th>
@@ -159,7 +159,7 @@ const ViewQuestion = () => {
                                   className="bi bi-trash-fill text-danger" title="Delete-Question"
                                 ></i>
                               </button>
-                              <DeleteModal index={`staticBackdrop${index}`} onClick={() => { deleteQuestionId(values.questionId) } } name={""} id={values.questionId} type={"Question"}/>
+                              <DeleteModal index={`staticBackdrop${index}`} onClick={() => { deleteQuestionId(values.questionId) }} name={""} id={values.questionId} type={"Question"} />
                             </td>
                           </tr>
                         ))}

@@ -138,6 +138,7 @@ public class ExamEvents {
 					/**
 					 * Here setting value's List of Exam in the setAttribute
 					 */
+					examResultMap.put("success", "success");
 					request.setAttribute(ConstantNames.RESULT_MAP, examResultMap);
 				} else {
 					/**

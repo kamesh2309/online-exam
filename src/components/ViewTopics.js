@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, } from "react-router-dom";
 import { PORT, PROTOCOL } from './ExamConstants';
+import { components } from "react-select";
+
 import DeleteModal from "./DeleteModal";
 const ViewTopics = () => {
   const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
@@ -23,8 +25,8 @@ const ViewTopics = () => {
       }
       setTopicData(formData.resultMap);
 
-      formData.questionsPerExam >= 100 ? setDisable(true) : setDisable(false);
-      formData.questionsPerExam < 100 ? setDisableAddUser(true) : setDisableAddUser(false);
+      formData.questionsPerExam >= noq ? setDisable(true) : setDisable(false);
+      formData.questionsPerExam < noq ? setDisableAddUser(true) : setDisableAddUser(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -70,7 +72,7 @@ const ViewTopics = () => {
             </li>
           </ol>
         </nav>
-        <div className="d-flex justify-content-between ">
+        <div className="d-flex justify-content-between me-2 ">
           <button
             className={`${disable
               ? "disabled btn btn-outline-info  "
@@ -84,14 +86,18 @@ const ViewTopics = () => {
               Add Topic
             </Link>
           </button>
-          {disableAddUser ? <button className=" cursor-not text-muted  btn btn-outline-info fw-bold border-2 me-5 bread text-dark fst-italic">
-            Add-User
-          </button> : <button
-            className=" btn btn-outline-info fw-bold border-2 me-5" >
-            <Link to={`/admin/view-exam-topic/user-exam-mapping/${id}/${value}/${noq}`} className="bread text-dark fst-italic">
-              Add-User
-            </Link>
-          </button>}
+          {disableAddUser ?
+            <div className="tooltips">
+              <span className="tooltiptext">Add Question 100% to Add-User</span>
+              <button className=" cursor-not btn btn-secondary fw-bold border-2 me-5 bread text-dark fst-italic">
+                Add-User
+              </button>
+            </div> :
+            <button className=" btn btn-outline-info fw-bold border-2 me-5" >
+              <Link to={`/admin/view-exam-topic/user-exam-mapping/${id}/${value}/${noq}`} className="bread text-dark fst-italic">
+                Add-User
+              </Link>
+            </button>}
         </div>
       </div>
       <h4 className="textcolor fst-italic table fw-bold text-dark text-center ">
@@ -116,8 +122,8 @@ const ViewTopics = () => {
                 <td>
                   {disableAddUser ?
                     <div className="tooltips">
-                      <div className="bi bi-people-fill text-primary" >
-                      <span className="tooltiptext">Add Question 100% to Add-User</span>
+                      <div className="text-muted bi bi-people-fill " >
+                        <span className="tooltiptext">Add Question 100% to Add-User</span>
                       </div>
                     </div>
                     : <Link to={`/admin/view-exam-topic/view-exam-user/${id}/${value}/${noq}`}>
