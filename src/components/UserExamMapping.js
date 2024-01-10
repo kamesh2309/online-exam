@@ -8,6 +8,7 @@ const UserExamMapping = () => {
     const { id, value, noq, pId } = useParams();
     const [hasError, setHasError, refHasError] = useStateRef(true);
     const [selectPartyId, setSelectPartyId, refSelectPartyId] = useStateRef([])
+    const [alreadyAddedUser, setAlreadyAddedUser,refAlreadyAddedUser] = useStateRef([])
 
     const navigate = useNavigate();
     const [showCheckboxes, setShowCheckboxes, showCheckboxesRef] = useStateRef(false);
@@ -15,11 +16,11 @@ const UserExamMapping = () => {
     const goToAnotherPage = (flags) => {
         flags ? navigate("/admin") : navigate("/admin/user-exam-mapping");
     };
-    function SelectAll (source)  {
+    function SelectAll(source) {
         var checkedBox = document.getElementsByName("selectMe");
-         for (var i = 0, n = checkedBox.length; i < n; i++) {
+        for (var i = 0, n = checkedBox.length; i < n; i++) {
             checkedBox[i].checked = source.checked;
-          }
+        }
     }
     const handleCheckboxToggle = () => {
         setShowCheckboxes(!showCheckboxesRef.current);
@@ -41,7 +42,7 @@ const UserExamMapping = () => {
         document.getElementById("errortimeoutday").innerHTML = "";
         document.getElementById("errormaxsplit").innerHTML = "";
         const data = new FormData(e.target);
-      
+
         var selectedPartyId = []
         var partyId = null
         const formData = new URLSearchParams();
@@ -75,8 +76,16 @@ const UserExamMapping = () => {
                     return response.json();
                 })
                 .then((data) => {
+                    setAlreadyAddedUser(data.alreadyAddedUser);
                     if (data.resultMap === "success") {
-                        goToAnotherPage(true);
+                        document.getElementById("staticBackdropOpen").click()
+                        setTimeout(myStopFunction, 7000);
+                        function myStopFunction() {
+                            // clearTimeout(myTimeout);
+                            document.getElementById("staticBackdropClose").click()
+                            goToAnotherPage(true);
+                        }
+
                     }
                     return data;
                 })
@@ -87,40 +96,60 @@ const UserExamMapping = () => {
     };
 
     useEffect(() => {
+        if (id === undefined) {
+            async function fetchData() {
+                try {
+                    const response = await fetch(
+                        `${url}/exammodule/control/add-mapping`,
+                        { credentials: "include" }
+                    );
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    setSelectPartyId(data.resultMap);
+                    // const dropDown = document.getElementById('myDropdown');
+                    // dropDown.innerHTML = "";
+                    // if (data.resultMap) {
 
-        async function fetchData() {
-            try {
-                const response = await fetch(
-                    `${url}/exammodule/control/add-mapping`,
-                    { credentials: "include" }
-                );
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    //     Object.entries(data.resultMap).map(([key, value]) => {
+                    //         const option = document.createElement('option');
+                    //         option.value = value.partyId;
+                    //         option.text =value.partyId+" - "+value.firstName + " " + value.lastName;
+                    //         dropDown.appendChild(option);
+                    //     });
+                    // data.resultMap.forEach(value=>{
+                    //     const option = document.createElement('option');
+                    //    option.value = value.partyId;
+                    //     option.text = value.firstName;
+                    //     dropDown.appendChild(option);
+                    // })
+                    // }
+                } catch (error) {
+                    console.error("error in fetching data:", error);
                 }
-                const data = await response.json();
-                setSelectPartyId(data.resultMap);
-                // const dropDown = document.getElementById('myDropdown');
-                // dropDown.innerHTML = "";
-                // if (data.resultMap) {
-
-                //     Object.entries(data.resultMap).map(([key, value]) => {
-                //         const option = document.createElement('option');
-                //         option.value = value.partyId;
-                //         option.text =value.partyId+" - "+value.firstName + " " + value.lastName;
-                //         dropDown.appendChild(option);
-                //     });
-                // data.resultMap.forEach(value=>{
-                //     const option = document.createElement('option');
-                //    option.value = value.partyId;
-                //     option.text = value.firstName;
-                //     dropDown.appendChild(option);
-                // })
-                // }
-            } catch (error) {
-                console.error("error in fetching data:", error);
             }
+            fetchData();
         }
-        fetchData();
+        else {
+            async function fetchdata3() {
+                try {
+                    const response = await fetch(
+                        `${url}/exammodule/control/add-mapping?shownewuser=${id}`,
+                        { credentials: "include" }
+                    );
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    setSelectPartyId(data.resultMap);
+                }
+                catch (error) {
+                    console.error("error in fetching data:", error);
+                }
+            }
+            fetchdata3();
+        }
         if (id === undefined) {
             async function fetchdata1() {
                 try {
@@ -221,9 +250,32 @@ const UserExamMapping = () => {
                         </ol>
                     </nav>
                 </div>
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title textcolor text-center fw-bold fst-italic " id="staticBackdropLabel">Student-Not-Mapped</h5>
+                                </div>
+                                <div className="modal-body">
+                                    {refAlreadyAddedUser.current && Object.entries(refAlreadyAddedUser.current).map(([key, value]) => {
+                                       return(
+                                       <div className='textcolor text-danger fw-bold fst-italic'>
+                                            <p >PartyId-{value.partyId}</p>
+                                            <p >Name-{value.firstName}" "{value.lastName}</p>
+                                          </div>
+                                    )})}
+                                     <p className='textcolor fw-bold fst-italic'> These Student are Already Added to this Exam </p>
+                                </div>
+                                <div className="modal-footer">
+                                    <p id="staticBackdropClose" data-bs-dismiss="modal"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div className="row justify-content-center app py-5 textcolor">
-
                 <div className="col-8 pb-5">
                     <div className="card">
                         <div className="head head card-header text-center w-10  formHeaderColour">
@@ -241,7 +293,7 @@ const UserExamMapping = () => {
                                             </select>
                                             <div className="overSelect"></div>
                                         </div>
-                                         {showCheckboxesRef.current && 
+                                        {showCheckboxesRef.current &&
 
                                             Object.entries(refSelectPartyId.current).map(([key, values]) => {
                                                 return (
@@ -323,11 +375,11 @@ const UserExamMapping = () => {
                                             Submit
                                         </button>
                                     </div>
-
                                 </div>
                             </form>
                         </div>
                     </div>
+                    <p type="hidden" id="staticBackdropOpen" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></p>
                 </div>
             </div>
         </div>

@@ -2,7 +2,9 @@ package com.events;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
+import org.apache.ofbiz.entity.Delegator;
+import org.apache.ofbiz.entity.GenericEntityException;
+import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
@@ -22,6 +28,7 @@ public class UserExamMappingEvents {
 	public static final String module = UserExamMappingEvents.class.getName();
 
 	public static String addDeleteUserExamMapping(HttpServletRequest request, HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute(ConstantNames.DELEGATOR);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(ConstantNames.DISPATCHER);
 		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 		DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -49,47 +56,62 @@ public class UserExamMappingEvents {
 			}
 
 			Map<String, Object> userExamMappingMapValues = new HashMap<>();
-
+			List<Map<String, Object>> alreadyAddedUser = new ArrayList<>();
 			String requestPartyIds = request.getParameter("partyId");
 			String[] partyIds = requestPartyIds.split(",");
 			for (String partyId : partyIds) {
-
-				userExamMappingMapValues.put(ConstantNames.PARTY_ID, partyId);
-				userExamMappingMapValues.put(ConstantNames.EXAM_ID, request.getParameter("examId"));
-				userExamMappingMapValues.put(ConstantNames.ALLOWED_ATTEMPTS,
-						Long.parseLong(request.getParameter("allowedAttempts")));
-				userExamMappingMapValues.put(ConstantNames.NO_OF_ATTEMPTS,
-						Long.parseLong(request.getParameter("noOfAttempts")));
-				userExamMappingMapValues.put(ConstantNames.TIME_OUT_DAYS,
-						Long.parseLong(request.getParameter("timeoutDays")));
-				userExamMappingMapValues.put(ConstantNames.PASSWORD_CHANGES_AUTO,
-						request.getParameter("passwordChangesAuto"));
-				userExamMappingMapValues.put(ConstantNames.CAN_SPLIT_EXAMS, request.getParameter("canSplitExams"));
-				userExamMappingMapValues.put(ConstantNames.CAN_SEE_DETAILED_RESULTS,
-						request.getParameter("canSeeDetailedResults"));
-				userExamMappingMapValues.put(ConstantNames.MAX_SPLIT_ATTEMPTS,
-						request.getParameter("maxSplitAttempts"));
-				String creationDate = request.getParameter("lastPerformanceDate");
-				if (UtilValidate.isNotEmpty(creationDate)) {
-					LocalDateTime localDateTime = LocalDateTime.parse(creationDate, inputFormatter);
-					String creationDateAndTime = localDateTime.format(outputFormatter);
-					userExamMappingMapValues.put(ConstantNames.LAST_PERFORMANCE_DATE, creationDateAndTime);
-				}
-
 				try {
-					Map<String, Object> adduserExam = dispatcher.runSync("AddUserExamMapping",
-							userExamMappingMapValues);
-					if (ServiceUtil.isError(adduserExam)) {
-						String errMsg = "The Add_User_Exam_Mapping EntityQuery is not success.";
-						userExamMappingMap.put("topic", errMsg);
-						request.setAttribute("error_user", userExamMappingMap);
-						return ConstantNames.ERROR;
-					}
+					GenericValue userExamDetails = EntityQuery.use(delegator).from(ConstantNames.USER_EXAM_MAPPING)
+							.where(ConstantNames.EXAM_ID, request.getParameter("examId"), ConstantNames.PARTY_ID,
+									partyId)
+							.cache().queryOne();
+					if (UtilValidate.isEmpty(userExamDetails)) {
+						userExamMappingMapValues.put(ConstantNames.PARTY_ID, partyId);
+						userExamMappingMapValues.put(ConstantNames.EXAM_ID, request.getParameter("examId"));
+						userExamMappingMapValues.put(ConstantNames.ALLOWED_ATTEMPTS,
+								Long.parseLong(request.getParameter("allowedAttempts")));
+						userExamMappingMapValues.put(ConstantNames.NO_OF_ATTEMPTS,
+								Long.parseLong(request.getParameter("noOfAttempts")));
+						userExamMappingMapValues.put(ConstantNames.TIME_OUT_DAYS,
+								Long.parseLong(request.getParameter("timeoutDays")));
+						userExamMappingMapValues.put(ConstantNames.PASSWORD_CHANGES_AUTO,
+								request.getParameter("passwordChangesAuto"));
+						userExamMappingMapValues.put(ConstantNames.CAN_SPLIT_EXAMS,
+								request.getParameter("canSplitExams"));
+						userExamMappingMapValues.put(ConstantNames.CAN_SEE_DETAILED_RESULTS,
+								request.getParameter("canSeeDetailedResults"));
+						userExamMappingMapValues.put(ConstantNames.MAX_SPLIT_ATTEMPTS,
+								request.getParameter("maxSplitAttempts"));
+						String creationDate = request.getParameter("lastPerformanceDate");
+						if (UtilValidate.isNotEmpty(creationDate)) {
+							LocalDateTime localDateTime = LocalDateTime.parse(creationDate, inputFormatter);
+							String creationDateAndTime = localDateTime.format(outputFormatter);
+							userExamMappingMapValues.put(ConstantNames.LAST_PERFORMANCE_DATE, creationDateAndTime);
+						}
+						Map<String, Object> adduserExam = dispatcher.runSync("AddUserExamMapping",
+								userExamMappingMapValues);
+						if (ServiceUtil.isError(adduserExam)) {
+							String errMsg = "The Add_User_Exam_Mapping EntityQuery is not success.";
+							userExamMappingMap.put("topic", errMsg);
+							request.setAttribute("error_user", userExamMappingMap);
+							return ConstantNames.ERROR;
+						}
 
-				} catch (GenericServiceException e) {
+					} else {
+						Map<String, Object> alreadyMappedUsers = new HashMap<String, Object>();
+						alreadyMappedUsers.put(ConstantNames.PARTY_ID, partyId);
+						GenericValue studentName = EntityQuery.use(delegator).from(ConstantNames.PERSON)
+								.where(ConstantNames.PARTY_ID, partyId).cache().queryOne();
+						alreadyMappedUsers.put(ConstantNames.FIRST_NAME, studentName.getString(ConstantNames.FIRST_NAME));
+						alreadyMappedUsers.put(ConstantNames.LAST_NAME, studentName.getString(ConstantNames.LAST_NAME));
+						alreadyAddedUser.add(alreadyMappedUsers);
+					}
+				} catch (GenericEntityException | GenericServiceException e) {
 					e.printStackTrace();
 				}
+
 			}
+			request.setAttribute("alreadyAddedUser", alreadyAddedUser);
 			request.setAttribute(ConstantNames.RESULT_MAP, ConstantNames.SUCCESS);
 		} else {
 			try {
