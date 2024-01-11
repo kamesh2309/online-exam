@@ -8,20 +8,14 @@ const UserExamMapping = () => {
     const { id, value, noq, pId } = useParams();
     const [hasError, setHasError, refHasError] = useStateRef(true);
     const [selectPartyId, setSelectPartyId, refSelectPartyId] = useStateRef([])
-    const [alreadyAddedUser, setAlreadyAddedUser,refAlreadyAddedUser] = useStateRef([])
-
+    const [alreadyAddedUser, setAlreadyAddedUser, refAlreadyAddedUser] = useStateRef([])
     const navigate = useNavigate();
     const [showCheckboxes, setShowCheckboxes, showCheckboxesRef] = useStateRef(false);
     const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
     const goToAnotherPage = (flags) => {
         flags ? navigate("/admin") : navigate("/admin/user-exam-mapping");
     };
-    function SelectAll(source) {
-        var checkedBox = document.getElementsByName("selectMe");
-        for (var i = 0, n = checkedBox.length; i < n; i++) {
-            checkedBox[i].checked = source.checked;
-        }
-    }
+
     const handleCheckboxToggle = () => {
         setShowCheckboxes(!showCheckboxesRef.current);
     };
@@ -94,42 +88,46 @@ const UserExamMapping = () => {
                 });
         }
     };
+    function checkedPartyId(e) {
 
+        fetchData(e.currentTarget.value);
+
+    }
+    async function fetchData(value) {
+        try {
+            const response = await fetch(
+                `${url}/exammodule/control/add-mapping?selectedExam=${value}`,
+                { credentials: "include" }
+            );
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            setSelectPartyId(data.resultMap);
+            // const dropDown = document.getElementById('myDropdown');
+            // dropDown.innerHTML = "";
+            // if (data.resultMap) {
+
+            //     Object.entries(data.resultMap).map(([key, value]) => {
+            //         const option = document.createElement('option');
+            //         option.value = value.partyId;
+            //         option.text =value.partyId+" - "+value.firstName + " " + value.lastName;
+            //         dropDown.appendChild(option);
+            //     });
+            // data.resultMap.forEach(value=>{
+            //     const option = document.createElement('option');
+            //    option.value = value.partyId;
+            //     option.text = value.firstName;
+            //     dropDown.appendChild(option);
+            // })
+            // }
+        } catch (error) {
+            console.error("error in fetching data:", error);
+        }
+    }
     useEffect(() => {
         if (id === undefined) {
-            async function fetchData() {
-                try {
-                    const response = await fetch(
-                        `${url}/exammodule/control/add-mapping`,
-                        { credentials: "include" }
-                    );
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    const data = await response.json();
-                    setSelectPartyId(data.resultMap);
-                    // const dropDown = document.getElementById('myDropdown');
-                    // dropDown.innerHTML = "";
-                    // if (data.resultMap) {
-
-                    //     Object.entries(data.resultMap).map(([key, value]) => {
-                    //         const option = document.createElement('option');
-                    //         option.value = value.partyId;
-                    //         option.text =value.partyId+" - "+value.firstName + " " + value.lastName;
-                    //         dropDown.appendChild(option);
-                    //     });
-                    // data.resultMap.forEach(value=>{
-                    //     const option = document.createElement('option');
-                    //    option.value = value.partyId;
-                    //     option.text = value.firstName;
-                    //     dropDown.appendChild(option);
-                    // })
-                    // }
-                } catch (error) {
-                    console.error("error in fetching data:", error);
-                }
-            }
-            fetchData();
+            // fetchData();
         }
         else {
             async function fetchdata3() {
@@ -163,6 +161,9 @@ const UserExamMapping = () => {
                     dropDown.innerHTML = "";
 
                     if (data.userExamMapping) {
+                        const option1 = document.createElement('option');
+                        option1.text = "Select the Exam";
+                        dropDown.appendChild(option1);
                         Object.entries(data.userExamMapping).map(([key, value]) => {
                             const option = document.createElement('option');
                             option.value = value.examId;
@@ -258,14 +259,15 @@ const UserExamMapping = () => {
                                     <h5 className="modal-title textcolor text-center fw-bold fst-italic " id="staticBackdropLabel">Student-Not-Mapped</h5>
                                 </div>
                                 <div className="modal-body">
-                                    {refAlreadyAddedUser.current && Object.entries(refAlreadyAddedUser.current).map(([key, value]) => {
-                                       return(
-                                       <div className='textcolor text-danger fw-bold fst-italic'>
-                                            <p >PartyId-{value.partyId}</p>
-                                            <p >Name-{value.firstName}" "{value.lastName}</p>
-                                          </div>
-                                    )})}
-                                     <p className='textcolor fw-bold fst-italic'> These Student are Already Added to this Exam </p>
+                                    {/* {refAlreadyAddedUser.current && Object.entries(refAlreadyAddedUser.current).map(([key, value]) => {
+                                        return (
+                                            <div className='textcolor text-danger fw-bold fst-italic'>
+                                                <p >PartyId-{value.partyId}</p>
+                                                <p >Name-{value.firstName}" "{value.lastName}</p>
+                                            </div>
+                                        )
+                                    })} */}
+                                    <p className='textcolor fw-bold fst-italic text-success'> These Student are Sucessfully Added to this Exam </p>
                                 </div>
                                 <div className="modal-footer">
                                     <p id="staticBackdropClose" data-bs-dismiss="modal"></p>
@@ -293,25 +295,25 @@ const UserExamMapping = () => {
                                             </select>
                                             <div className="overSelect"></div>
                                         </div>
-                                        {showCheckboxesRef.current &&
-
-                                            Object.entries(refSelectPartyId.current).map(([key, values]) => {
-                                                return (
-                                                    <>
-                                                        <div className="checkBoxes">
-                                                            <label >
-                                                                <input className='textcolor' id="selectMe" type="checkbox" name='partyId' value={values.partyId} />
-                                                                {values.partyId + " - " + values.firstName + " " + values.lastName}
-                                                            </label>
-                                                        </div>
-                                                    </>)
-                                            })
+                                        {showCheckboxesRef.current && Object.entries(refSelectPartyId.current).map(([key, values]) => {
+                                            return (
+                                                <>
+                                                    <div className="checkBoxes"  >
+                                                        <label >
+                                                             {values.examId ? (<input className='textcolor' id="selectMe" type="checkbox" checked="true" name='partyId' value={values.partyId} />) :
+                                                                (<input className='textcolor' id="selectMe" type="checkbox" name='partyId' value={values.partyId} />)}
+                                                            {values.partyId + " - " + values.firstName + " " + values.lastName}
+                                                        </label>
+                                                    </div>
+                                                </>)
+                                        })
                                         }
                                     </div>
                                 </div>
                                 <div className="form-group">
                                     <label >Exam Id</label>
-                                    <select type="text" className="form-control" name="examId" id='myDropdown1' >
+                                    <select type="text" className="form-control" name="examId" onChange={checkedPartyId} id='myDropdown1' >
+
                                     </select></div>
                                 <div className="form-group">
                                     <label >Allowed Attempts</label>

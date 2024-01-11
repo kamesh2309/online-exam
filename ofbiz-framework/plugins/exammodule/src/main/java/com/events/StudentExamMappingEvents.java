@@ -77,6 +77,14 @@ public class StudentExamMappingEvents {
 							 */
 							GenericValue studentName = EntityQuery.use(delegator).from(ConstantNames.PERSON)
 									.where(ConstantNames.PARTY_ID, partyId).cache().queryOne();
+							GenericValue alreadyMapped = EntityQuery.use(delegator).from(ConstantNames.USER_EXAM_MAPPING).where(ConstantNames.PARTY_ID,
+											partyId, ConstantNames.EXAM_ID, request.getParameter("selectedExam"))
+									.cache().queryOne();
+							if(UtilValidate.isEmpty(alreadyMapped)) {
+								studentInfo.put(ConstantNames.EXAM_ID, false);
+							}else {
+								studentInfo.put(ConstantNames.EXAM_ID, true);
+							}
 
 							studentInfo.put(ConstantNames.PARTY_ID, partyId);
 							studentInfo.put(ConstantNames.FIRST_NAME, studentName.getString(ConstantNames.FIRST_NAME));
@@ -182,24 +190,24 @@ public class StudentExamMappingEvents {
 //						 * Here comparing the partyId from person and partyId from userExamMapping
 //						 */
 //						if (personPartyId != examPartyId) {
-							/**
-							 * Here i'm Querying the Person Details which is not assign for this exam
-							 */
-							GenericValue studentName = EntityQuery.use(delegator).from(ConstantNames.PERSON)
-									.where(ConstantNames.PARTY_ID, personPartyId).cache().queryOne();
-							/***
-							 * Here i'm add the details into the map
-							 */
-							userExamList.put(ConstantNames.PARTY_ID, personPartyId);
-							userExamList.put(ConstantNames.FIRST_NAME, studentName.getString(ConstantNames.FIRST_NAME));
-							userExamList.put(ConstantNames.LAST_NAME, studentName.getString(ConstantNames.LAST_NAME));
-							/**
-							 * Here i'm adding the map into List
-							 */
-							userExamsList.add(userExamList);
-						}
-
+						/**
+						 * Here i'm Querying the Person Details which is not assign for this exam
+						 */
+						GenericValue studentName = EntityQuery.use(delegator).from(ConstantNames.PERSON)
+								.where(ConstantNames.PARTY_ID, personPartyId).cache().queryOne();
+						/***
+						 * Here i'm add the details into the map
+						 */
+						userExamList.put(ConstantNames.PARTY_ID, personPartyId);
+						userExamList.put(ConstantNames.FIRST_NAME, studentName.getString(ConstantNames.FIRST_NAME));
+						userExamList.put(ConstantNames.LAST_NAME, studentName.getString(ConstantNames.LAST_NAME));
+						/**
+						 * Here i'm adding the map into List
+						 */
+						userExamsList.add(userExamList);
 					}
+
+				}
 //
 //				}
 				/**
