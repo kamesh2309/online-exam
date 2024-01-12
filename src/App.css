@@ -168,7 +168,7 @@
   transition: opacity 0.3s;
 }
 
-.tooltips .tooltiptext::after {
+.tooltips  .tooltiptext::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -206,4 +206,15 @@
 
 .checkBoxes label:hover { 
   background-color: azure; 
+}
+
+
+/* --------------------------userPage---------------------------------- */
+.tile-size{
+  font-size: 13px;
+  color: #333;
+  font-weight: bolder;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-style: italic;
+
 }

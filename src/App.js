@@ -16,7 +16,7 @@ import UserPage from "./components/userModule/UserPage";
 
 const App = () => {
   return (
-    <div>
+    <>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/registers" element={<Registers />} />
@@ -38,7 +38,7 @@ const App = () => {
         <Route path="/admin/view-exam-topic/question/:id/:value/:noq/:tId/:qId" element={<Question />} />
 
       </Routes>
-    </div>
+    </>
   );
 };
 export default App;

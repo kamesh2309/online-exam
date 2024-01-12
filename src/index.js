@@ -15,15 +15,13 @@ import Footer from "./components/Footer";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <div className="container-fluid">
-    <div className="row">
-      <Header />
-      {/* <React.StrictMode> */}
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      {/* </React.StrictMode> */}
-      <Footer/>
-    </div>
+    <Header />
+    {/* <React.StrictMode> */}
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+    {/* </React.StrictMode> */}
+    <Footer />
   </div>
 );
 

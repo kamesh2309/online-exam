@@ -133,7 +133,7 @@ const AddExam = () => {
         </nav>
       </div>
       <div className="row justify-content-center app py-5">
-        <div className="col-6 pb-5">
+        <div className="col-8 pb-5">
           <div className="card ">
             <div className="head card-header text-center w-10 textcolor formHeaderColour">
               <h2 className="card-title ">{examName}</h2>

@@ -37,7 +37,7 @@ const Header = () => {
   }, [])
 
   return (
-    <div>
+    <>
       <div className="row">
         <nav className="navbar navbar expand-lg bg-header">
           <div className="col-4">
@@ -50,7 +50,6 @@ const Header = () => {
                 <button type="button" className="btn btn-outline-light text-dark fw-bold border-2 textcolor" data-bs-toggle="modal" data-bs-target="#logoutBackdrop">
                   Logout
                 </button>
-
                 <div className="modal fade" id="logoutBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                   <div className="modal-dialog">
                     <div className="modal-content">
@@ -71,7 +70,7 @@ const Header = () => {
           </div>
         </nav>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,8 @@
 package com.user.events;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +16,7 @@ import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.entity.util.EntityQuery;
+import org.apache.poi.hwpf.usermodel.DateAndTime;
 
 import com.constantname.ConstantNames;
 import com.utilhelpervastpro.LoginSessionChecker;
@@ -23,9 +27,10 @@ public class ShowExamUserEvents {
 	public static String showStudentsExam(HttpServletRequest request, HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute(ConstantNames.DELEGATOR);
 		Map<String, Object> studentExamMap = new HashMap<String, Object>();
-		if (LoginSessionChecker.sessionChecker(request, response)=="false") {
+		if (LoginSessionChecker.sessionChecker(request, response) == "false") {
 			return ConstantNames.ERROR;
 		}
+		
 		try {
 			GenericValue partyId = EntityQuery.use(delegator).from(ConstantNames.PARTY)
 					.where(ConstantNames.PARTY_ID, request.getParameter("partyId")).cache().queryOne();
@@ -49,10 +54,17 @@ public class ShowExamUserEvents {
 				String examId = userExam.getString(ConstantNames.EXAM_ID);
 				GenericValue examName = EntityQuery.use(delegator).from(ConstantNames.EXAM_MASTER)
 						.where(ConstantNames.EXAM_ID, examId).cache().queryOne();
+
+				boolean showExamToUser = checkExamValidation(examName.getString(ConstantNames.EXPIRATION_DATE),
+						examName.getString(ConstantNames.EXPIRATION_DATE));
 				Map<String, Object> examList = new HashMap<String, Object>();
-				
+				examList.put("showExamToUser", showExamToUser);
 				examList.put(ConstantNames.EXAM_ID, examName.getString(ConstantNames.EXAM_ID));
 				examList.put(ConstantNames.EXAM_NAME, examName.getString(ConstantNames.EXAM_NAME));
+				String[] startDate = examName.getString(ConstantNames.CREATION_DATE).split(" ");
+				examList.put(ConstantNames.CREATION_DATE, startDate[0]);
+				String[] endDate = examName.getString(ConstantNames.EXPIRATION_DATE).split(" ");
+				examList.put(ConstantNames.EXPIRATION_DATE,endDate[0] );
 				userExamList.add(examList);
 
 			}
@@ -66,8 +78,8 @@ public class ShowExamUserEvents {
 				return ConstantNames.ERROR;
 			}
 
-			String userName = userNameDetails.getString(ConstantNames.FIRST_NAME)
-					+" "+userNameDetails.getString(ConstantNames.LAST_NAME);
+			String userName = userNameDetails.getString(ConstantNames.FIRST_NAME) + " "
+					+ userNameDetails.getString(ConstantNames.LAST_NAME);
 
 			request.setAttribute("userName", userName);
 			request.setAttribute("userExamList", userExamList);
@@ -77,7 +89,21 @@ public class ShowExamUserEvents {
 			e.printStackTrace();
 		}
 
-		return null;
+		return ConstantNames.SUCCESS;
+
+	}
+
+	public static boolean checkExamValidation(String startDate, String expireDate) {
+		Timestamp timeStampStartDate = Timestamp.valueOf(startDate);
+		LocalDateTime start = timeStampStartDate.toLocalDateTime();
+		Timestamp timeStampExpireDate = Timestamp.valueOf(startDate);
+		LocalDateTime expire = timeStampExpireDate.toLocalDateTime();
+		LocalDateTime now = LocalDateTime.now();
+		boolean startExam = false;
+		if ((start.isAfter(now) || start.isEqual(now)) && (now.isBefore(expire) || now.isEqual(expire))) {
+			startExam = true;
+		}
+		return startExam;
 
 	}
 

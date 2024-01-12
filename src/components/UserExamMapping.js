@@ -73,7 +73,7 @@ const UserExamMapping = () => {
                     setAlreadyAddedUser(data.alreadyAddedUser);
                     if (data.resultMap === "success") {
                         document.getElementById("staticBackdropOpen").click()
-                        setTimeout(myStopFunction, 7000);
+                        setTimeout(myStopFunction, 5000);
                         function myStopFunction() {
                             // clearTimeout(myTimeout);
                             document.getElementById("staticBackdropClose").click()
