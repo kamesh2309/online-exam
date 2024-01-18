@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Router } from "react-router-dom";
 import Login from "./components/Login";
 import AddExam from "./components/AddExam";
 import Admin from "./components/Admin";
@@ -13,6 +13,7 @@ import Registers from "./components/Registers";
 import ViewExamUser from "./components/ViewExamUser";
 import ExamUserDetails from "./components/ExamUserDetails";
 import UserPage from "./components/userModule/UserPage";
+import ViewExamInformation from "./components/userModule/ViewExamInformation";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
         <Route path="/admin/view-exam-topic/edit-question/:id/:value/:noq/:tId/:qId/:fD" element={<AddQuestion />} />
         <Route path="/admin/view-exam-topic/question/:id/:value/:noq/:tId/:qId" element={<Question />} />
 
+        <Route path="/user/:uId/exam-details/:eId" element={<ViewExamInformation/>}></Route>
       </Routes>
     </>
   );

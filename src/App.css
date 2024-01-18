@@ -102,7 +102,6 @@
 .disabled.cursor-opacity {
   cursor: not-allowed;
   color: white !important;
-
   border-radius: 6px;
 }
 
@@ -120,12 +119,13 @@
 }
 
 .questionbg-color {
-   border: 3px solid #374f82 !important;
+  border: 3px solid #374f82 !important;
   border-radius: 20px !important;
   background-color: #f0f0f5 !important;
 
 }
-.questiontext-color{
+
+.questiontext-color {
   color: #374f82;
   font-weight: bold;
   font-size: large;
@@ -134,15 +134,20 @@
 }
 
 /* ---------------------user Admin------------------- */
-.view-icon{
+.view-icon {
   right: 40%;
 }
+
 /* --------------------------Delete Modal------------------- */
-.delete-modal{
+.delete-modal {
   right: 40%;
 }
-.cursor-not{
+
+.cursor-not {
   cursor: not-allowed !important;
+}
+.cursor-pointer{
+  cursor: pointer;
 }
 /* ---------------------toolTip-------------------------- */
 .tooltips {
@@ -168,7 +173,7 @@
   transition: opacity 0.3s;
 }
 
-.tooltips  .tooltiptext::after {
+.tooltips .tooltiptext::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -176,45 +181,52 @@
   margin-left: -5px;
   border-width: 10px;
   border-style: solid;
-  border-color:  #e8d891 transparent transparent ;
+  border-color: #e8d891 transparent transparent;
 }
 
 .tooltips:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
 }
+
 /* ----------------------Check Box userExam-Mapping--------------- */
 
 
-.selectBox { 
-  position: relative; 
-} 
+.selectBox {
+  position: relative;
+}
 
-.selectBox select { 
-  width: 100%; 
-  font-weight: bold; 
-} 
+.selectBox select {
+  width: 100%;
+  font-weight: bold;
+}
 
-.overSelect { 
-  position: absolute; 
-  left: 0; 
-  right: 0; 
-  top: 0; 
-  bottom: 0; 
-} 
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
 
 
-.checkBoxes label:hover { 
-  background-color: azure; 
+.checkBoxes label:hover {
+  background-color: azure;
 }
 
 
 /* --------------------------userPage---------------------------------- */
-.tile-size{
+.tile-size {
   font-size: 13px;
   color: #333;
   font-weight: bolder;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-style: italic;
 
+}
+.broder-colour{
+ border:1.5px solid #d5b263;
+}
+.text-colour{
+  color: #d5b263;
 }

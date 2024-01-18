@@ -103,7 +103,7 @@ const ViewTopics = () => {
       <h4 className="textcolor fst-italic table fw-bold text-dark text-center ">
         List of Topics
       </h4>
-      <div className="row justify-content-center mt-2 text-center textcolor ">
+      <div className="row justify-content-center mt-2 text-center textcolor">
         <div className="col-md-11">
           <table className="table table-striped table-borderless fst-italic border border-3">
             <thead style={{ backgroundColor: "red" }} className="formHeaderColour">
