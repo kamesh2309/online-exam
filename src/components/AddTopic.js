@@ -103,8 +103,8 @@ const AddTopic = () => {
 
   return (
     <div className="row justify-content-center mb-5">
-      <div className="ps-5">
-        <nav className="myStyle">
+      <div className="px-lg-5 px-3">
+        <nav className="myStyle small-content-text">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
               <Link to="/" className="text-muted">
@@ -130,14 +130,14 @@ const AddTopic = () => {
         </nav>
       </div>
 
-      <div className="col-7">
+      <div className="col-lg-8 col-12 py-5">
         <div className="card textcolor">
           <div className="topic">
-            <div className="card-header text-center formHeaderColour ">
+            <div className="card-header text-center formHeaderColour small-heading-text">
               <h2>{titleName}</h2>
             </div>
           </div>
-          <div className="card-body">
+          <div className="card-body small-content-text">
             <form onSubmit={onSubmit}>
               <div className="form-group">
                 <label>Exam Id</label>

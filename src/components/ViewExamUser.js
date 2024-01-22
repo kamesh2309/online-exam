@@ -48,41 +48,45 @@ const ViewExamUser = () => {
     }
     return (
         <div>
-            <nav className="myStyle">
-                <ol className="breadcrumb">
-                    <li className="breadcrumb-item">
-                        <Link to="/" className="text-muted">
-                            Home
-                        </Link>
-                    </li>
-                    <li className="breadcrumb-item">
-                        <Link to="/admin" className="text-muted">
-                            Admin
-                        </Link>
-                    </li>
-                    <li className="breadcrumb-item">
-                        <Link to={`/admin/view-exam-topic/${id}/${value}/${noq}`}
-                            className="text-muted">Topics</Link>
-                    </li>
-                    <li className="breadcrumb-item">
-                        <Link to="#"
-                        >view-exam-user</Link>
-                    </li>
-                </ol>
-            </nav>
-            <h4 className="textcolor fst-italic table fw-bold text-dark text-center ">
+            <div className="row justify-content-center mb-5">
+                <div className="px-lg-5 px-3">
+                    <nav className="myStyle small-content-text">
+                        <ol className="breadcrumb">
+                            <li className="breadcrumb-item">
+                                <Link to="/" className="text-muted">
+                                    Home
+                                </Link>
+                            </li>
+                            <li className="breadcrumb-item">
+                                <Link to="/admin" className="text-muted">
+                                    Admin
+                                </Link>
+                            </li>
+                            <li className="breadcrumb-item">
+                                <Link to={`/admin/view-exam-topic/${id}/${value}/${noq}`}
+                                    className="text-muted">Topics</Link>
+                            </li>
+                            <li className="breadcrumb-item">
+                                <Link to="#"
+                                >view-exam-user</Link>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <h4 className="textcolor fst-italic table fw-bold text-dark text-center small-heading-text ">
                 List of User_Exam_Mapping
             </h4>
             <div className="row  justify-content-center mt-2 text-center textcolor ">
-                <div className="col-md-11">
+                <div className="col-md-11 table-responsive">
                     <table className="table table-striped table-borderless fst-italic border border-3">
-                        <thead style={{ backgroundColor: "red" }} className="formHeaderColour">
+                        <thead style={{ backgroundColor: "red" }} className="formHeaderColour small-content-text">
                             <tr>
                                 <th scope="col">Exam-Id</th>
                                 <th scope="col">Exam-Name</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className='small-content-text'>
                             <tr className="align-middle">
                                 <td scope="row">{id}</td>
                                 <td className="fw-bold">{value}</td>
@@ -92,8 +96,8 @@ const ViewExamUser = () => {
                                 <td colSpan="4">
                                     {userExam.length > 0 ? (
                                         <table className="table mb-0  table-borderless fst-italic table-hover">
-                                            <thead className="formHeaderColour">
-                                                <tr>
+                                            <thead className="formHeaderColour small-content-text ">
+                                                <tr >
                                                     <th scope="col">Student-Id</th>
                                                     <th scope="col">FirstName</th>
                                                     <th scope="col">LastName</th>
@@ -103,8 +107,8 @@ const ViewExamUser = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {Object.entries(userExam).map(([key, values],index) => (
-                                                    <tr className="align-middle" key={key}>
+                                                {Object.entries(userExam).map(([key, values], index) => (
+                                                    <tr className="align-middle small-content-text fst-italic " key={key}>
                                                         <th scope="row">{values.partyId}</th>
                                                         <th scope="row">{values.firstName}</th>
                                                         <th scope="row">{values.lastName}</th>
@@ -124,7 +128,7 @@ const ViewExamUser = () => {
                                                                     className="bi bi-trash-fill text-danger" title="Delete-User"
                                                                 ></i>
                                                             </button>
-                                                            <DeleteModal index={`staticBackdrop${index}`} onClick={() => { deleteUserExamId(id, values.partyId) }} name={values.firstName } id={values.partyId} type={"User"}/>
+                                                            <DeleteModal index={`staticBackdrop${index}`} onClick={() => { deleteUserExamId(id, values.partyId) }} name={values.firstName} id={values.partyId} type={"User"} />
                                                         </td>
                                                     </tr>
                                                 ))}

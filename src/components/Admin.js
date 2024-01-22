@@ -59,10 +59,10 @@ const Admin = () => {
   }
 
   return (
-    <div>
+    <>
       <div className="row">
-        <div className="ps-5">
-          <nav className="myStyle">
+        <div className="px-lg-5 px-3 ">
+          <nav className="myStyle small-content-text">
             <ol className="breadcrumb">
               <li className="breadcrumb-item ">
                 <Link to="/" className="text-muted">Home</Link>
@@ -77,14 +77,14 @@ const Admin = () => {
           <div className="d-flex justify-content-between">
             <button
               type="button"
-              className=" btn btn-outline-info fw-bold border-2 " >
+              className=" btn btn-outline-info fw-bold border-2 small-button" >
               <Link to="/add-exam" className="bread text-dark fst-italic">
                 Add-Exam
               </Link>
             </button>
             <button
               type="button"
-              className=" btn btn-outline-info fw-bold border-2 me-5" >
+              className=" btn btn-outline-info fw-bold border-2 small-button " >
               <Link to="/admin/user-exam-mapping" className="bread text-dark fst-italic  ">
                 Add-User
               </Link>
@@ -92,10 +92,10 @@ const Admin = () => {
 
           </div>
         </div>
-        <div className="row justify-content-center pt-4 ">
+        <div className="row justify-content-center pt-4 gx-0">
           {examData ? Object.entries(examData).map(([key, value], index) => (
 
-            <div className="col-lg-3 tile-height justify-content-center d-flex" key={key}>
+            <div className="col-lg-3 tile-height justify-content-center d-flex " key={key}>
               <div style={{ marginBottom: "50px" }}>
                 <div
                   className="card border border-1 rounded cardModal"
@@ -106,7 +106,7 @@ const Admin = () => {
                     style={{ backgroundColor: "#e6f7ff" }}
                   >
                     <h4
-                      className="text-center fw-bold"
+                      className="text-center fw-bold small-heading-text"
                       style={{ fontFamily: "Times New Roman" }}
                     >
                       {value.examId} - {value.examName}
@@ -140,7 +140,7 @@ const Admin = () => {
           )) : <p className="myStyle text-center fs-2">No Exam To Be Added For This Topic</p>}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

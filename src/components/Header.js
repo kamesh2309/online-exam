@@ -39,7 +39,7 @@ const Header = () => {
   return (
     <>
       <div className="row">
-        <nav className="navbar navbar expand-lg bg-header">
+        <nav className="navbar navbar  bg-header">
           <div className="col-4">
             <img src={myimg} alt="Logo" className="logo"></img>
           </div>
@@ -47,7 +47,7 @@ const Header = () => {
           <div className="col-4">
             {refSetLogout.current ? (
               <div className="d-flex justify-content-end">
-                <button type="button" className="btn btn-outline-light text-dark fw-bold border-2 textcolor" data-bs-toggle="modal" data-bs-target="#logoutBackdrop">
+                <button type="button" className="btn btn-outline-light text-dark fw-bold border-2 textcolor small-button" data-bs-toggle="modal" data-bs-target="#logoutBackdrop">
                   Logout
                 </button>
                 <div className="modal fade" id="logoutBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -61,12 +61,12 @@ const Header = () => {
                         Are you sure u want to Logout..
                       </div>
                       <div className="modal-footer ">
-                        <button type="button" className="btn btn-outline-info fw-bold fst-italic" onClick={logoutUser} data-bs-dismiss="modal">Logout</button>
+                        <button type="button" className="btn btn-outline-info fw-bold fst-italic small-button" onClick={logoutUser} data-bs-dismiss="modal">Logout</button>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>) : (<p className="dateheader">{getDate()}</p>)}
+              </div>) : (<p className="dateheader small-content-text">{getDate()}</p>)}
           </div>
         </nav>
       </div>

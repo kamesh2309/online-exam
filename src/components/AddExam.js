@@ -113,8 +113,8 @@ const AddExam = () => {
 
   return (
     <div>
-      <div className="ps-5">
-        <nav className="myStyle">
+      <div className="px-lg-5 px-1">
+        <nav className="myStyle small-content-text">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
               <Link to="/" className="text-muted">
@@ -133,12 +133,12 @@ const AddExam = () => {
         </nav>
       </div>
       <div className="row justify-content-center app py-5">
-        <div className="col-8 pb-5">
+        <div className="col-lg-8 col-12 pb-5">
           <div className="card ">
-            <div className="head card-header text-center w-10 textcolor formHeaderColour">
-              <h2 className="card-title ">{examName}</h2>
+            <div className="head card-header text-center w-10 textcolor formHeaderColour ">
+              <h2 className="card-title fw-bold small-heading-text">{examName}</h2>
             </div>
-            <div className="card-body">
+            <div className="card-body small-content-text">
               <form onSubmit={handler} className="textcolor">
                 <div className="form-group ">
                   <label>Exam Id</label>
@@ -282,7 +282,7 @@ const AddExam = () => {
                 </div>
                 <div className="form-group d-flex">
                   <div className="mx-4">
-                    <button type="submit" className="btn btn-outline-success">
+                    <button type="submit" className="btn btn-outline-success small-button ">
                       Submit
                     </button>
                   </div>

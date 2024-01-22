@@ -119,7 +119,7 @@ const Login = () => {
               value="Login"
             />
           </div>
-          <span>If you are Student...?<Link to={`/registers`}>Register</Link></span>
+          <span className="small-content-text textcolor fw-bold fs-fst-italic">If you are Student...?<Link to={`/registers`}>Register</Link></span>
         </form>
       </div>
     </div>

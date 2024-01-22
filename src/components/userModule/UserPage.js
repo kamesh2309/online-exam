@@ -11,7 +11,6 @@ const UserPage = () => {
   const [showExpireExam, setShowExpireExam, refShowExpireExam] = useStateRef(true);
   const [showExpireToUser, setExpireToUser, refShowExpireToUser] = useStateRef(false);
 
-  console.log(refShowExpireExam.current)
   // console.log( Date().toLocaleString()); date we can use 
   // const showUser =()=> {
   //   if(data ==1){
@@ -35,10 +34,10 @@ const UserPage = () => {
         const formData = await response.json();
         setUserName(formData.userName)
         setUserExam(formData.userExamList);
-        console.log("i am value from the backend..." + formData.userExamList)
         if (formData.notLogin === "notLogin") {
           navigate("/")
         }
+        console.log(formData.userExamList)
 
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -52,7 +51,7 @@ const UserPage = () => {
     <>
       <div className="row pt-2">
         <div className='col-8'>
-          <div className="ps-5">
+          <div className="px-lg-5 px-3">
             <nav className="myStyle">
               <ol className="breadcrumb">
                 <li className="breadcrumb-item ">
@@ -68,7 +67,7 @@ const UserPage = () => {
           </div>
         </div>
         <div className='col-4' id="mydiv">
-          <h5 className='text-end myStyle text-colour'>{userName}</h5>
+          <h5 className='text-end myStyle fw-bold  text-colour'>{userName}</h5>
         </div>
       </div>
       <div className='row'>
@@ -116,7 +115,7 @@ const UserPage = () => {
                           </h4>
 
                           <div className="position-absolute icons view-icon">
-                            <Link to={`/user/${uId}/exam-details/${value.examId}`} className="px-3">
+                            <Link to={`/user/${uId}/exam-details/${value.examId}/${value.examExpired}/${value.showExamToUser}`} className="px-3">
                               <i className="bi bi-box-arrow-in-right text-success " title="Attend-Exam"></i>
                             </Link>
                           </div>
@@ -147,7 +146,7 @@ const UserPage = () => {
                             </h4>
 
                             <div className="position-absolute icons view-icon">
-                              <Link to={`/user/${uId}/exam-details/${value.examId}`} className="px-3">
+                              <Link to={`/user/${uId}/exam-details/${value.examId}/${value.examExpired}/${value.showExamToUser}`} className="px-3">
                                 <i className="bi bi-sign-do-not-enter text-muted  " title="Not-Yet-Exam-Started"></i>
                               </Link>
                             </div>
@@ -177,7 +176,7 @@ const UserPage = () => {
                             </h4>
 
                             <div className="position-absolute icons view-icon">
-                              <Link to={`/user/${uId}/exam-details/${value.examId}`} className="px-3">
+                              <Link to={`/user/${uId}/exam-details/${value.examId}/${value.examExpired}/${value.showExamToUser}`} className="px-3">
                                 <i className="bi bi-sign-do-not-enter text-danger cursor-not" title="Exam-Already-Finished"></i>
                               </Link>
                             </div>
@@ -202,7 +201,6 @@ const UserPage = () => {
               <button type="button" className='btn btn-outline-info btn-sm textcolor fw-bold  fw-light' onClick={showUser => { return setShowExpireExam(true), setExpireToUser(true) }}> Expired-Exam </button>
             </div>
           </div>
-
         </div>
       </div>
     </>

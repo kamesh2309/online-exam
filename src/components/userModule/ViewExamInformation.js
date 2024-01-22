@@ -3,32 +3,32 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { PORT, PROTOCOL } from "../ExamConstants";
 
 const ViewExamInformation = () => {
-  const { uId, eId } = useParams();
+  const { uId, eId, eDate, sDate } = useParams();
   const [examDetails, setExamDeatils] = useState([]);
   const [topicDetails, setTopicDetails] = useState([]);
-  const navigate = useNavigate();
-  useEffect(() => {
-    const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
-    async function fetchData() {
-      const response = await fetch(`${url}/exammodule/control/show-exam-user?partyInfo=${uId}&examInfo=${eId}`,
-        { credentials: "include" });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const formData = await response.json();
-      if (formData.notLogin === "notLogin") {
-        navigate("/")
-      }
-      setExamDeatils(formData.examDetails);
-      setTopicDetails(formData.topicDetails);
-console.log("topicvalues=================>",topicDetails)
 
+  const navigate = useNavigate();
+  const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
+  async function fetchData() {
+    const response = await fetch(`${url}/exammodule/control/show-exam-user?partyInfo=${uId}&examInfo=${eId}`,
+      { credentials: "include" });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
+    const formData = await response.json();
+    if (formData.notLogin === "notLogin") {
+      navigate("/")
+    }
+    setExamDeatils(formData.examDetails);
+    setTopicDetails(formData.topicDetails);
+
+  }
+  useEffect(() => {
     fetchData();
   }, [])
   return (
     <div>
-      <div className="ps-5">
+      <div className="px-lg-5 px-3">
         <nav className="myStyle">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -60,6 +60,7 @@ console.log("topicvalues=================>",topicDetails)
                 <th scope="col">No-Of-Questions</th>
                 <th scope="col">Exam-Duration</th>
                 <th scope="col">Negative-Mark</th>
+                <th scope="col">Status</th>
 
               </tr>
             </thead>
@@ -69,11 +70,12 @@ console.log("topicvalues=================>",topicDetails)
                 <td className="fw-bold">{examDetails.examName}</td>
                 <td className="fw-bold">{examDetails.noOfQuestions}</td>
                 <td className="fw-bold">{examDetails.durationMinutes} min</td>
-                <td className="fw-bold">{examDetails.negativeMarkValue}/Question</td>
+                <td className="fw-bold">{examDetails.negativeMarkValue}</td>
+                <td className="fw-bold colour-box">{ }</td>
 
               </tr>
               <tr>
-                <td colSpan="5">
+                <td colSpan="6">
                   <table className="table mb-0  table-borderless fst-italic table-hover">
                     <thead className="formHeaderColour">
                       <tr>
@@ -86,22 +88,25 @@ console.log("topicvalues=================>",topicDetails)
                     </thead>
                     <tbody>
                       {Object.entries(topicDetails).map(([key, value]) => (
-                      <tr className="align-middle" key={key} >
-                        <th scope="row">{value.topicId}</th>
-                        <td>{value.topicName}</td>
-                        <td>{value.percentage}%</td>
-                        <td>{value.topicPassPercentage}%</td>
-                        <td>{value.questionsPerExam}</td>
-                      </tr>
+                        <tr className="align-middle" key={key} >
+                          <th scope="row">{value.topicId}</th>
+                          <td>{value.topicName}</td>
+                          <td>{value.percentage}%</td>
+                          <td>{value.topicPassPercentage}%</td>
+                          <td>{value.questionsPerExam}</td>
+                        </tr>
                       ))
-                    }
-
-                    </tbody>
+                      }</tbody>
                   </table>
                 </td>
               </tr>
             </tbody>
           </table>
+          <div>
+
+            {eDate == "true" ? <button className="btn btn-danger fw-bold fst-italic border-2 me-5" disabled >Exam-Expired</button> : sDate == "true" ? <button className="btn btn-outline-success fw-bold fst-italic border-2 me-5">Start-Exam</button>
+              : <button className="btn btn-outline-warning fw-bold fst-italic border-2 me-5" disabled >Exam-Not-Started</button>}
+          </div>
         </div>
       </div>
     </div>

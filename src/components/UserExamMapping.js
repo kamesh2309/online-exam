@@ -209,8 +209,8 @@ const UserExamMapping = () => {
     return (
         <div>
             <div className="row">
-                <div className="ps-5">
-                    <nav className="myStyle">
+                <div className="px-lg-5 px-3">
+                    <nav className="myStyle small-content-text">
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item ">
                                 <Link to="/" className="text-muted">Home</Link>
@@ -256,7 +256,7 @@ const UserExamMapping = () => {
                         <div className="modal-dialog">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                    <h5 className="modal-title textcolor text-center fw-bold fst-italic " id="staticBackdropLabel">Student-Not-Mapped</h5>
+                                    <h5 className="modal-title textcolor text-center fw-bold fst-italic small-content-text " id="staticBackdropLabel">Student-Not-Mapped</h5>
                                 </div>
                                 <div className="modal-body">
                                     {/* {refAlreadyAddedUser.current && Object.entries(refAlreadyAddedUser.current).map(([key, value]) => {
@@ -267,7 +267,7 @@ const UserExamMapping = () => {
                                             </div>
                                         )
                                     })} */}
-                                    <p className='textcolor fw-bold fst-italic text-success'> These Student are Sucessfully Added to this Exam </p>
+                                    <p className='textcolor fw-bold fst-italic text-success small-content-text'> These Student are Sucessfully Added to this Exam </p>
                                 </div>
                                 <div className="modal-footer">
                                     <p id="staticBackdropClose" data-bs-dismiss="modal"></p>
@@ -278,12 +278,12 @@ const UserExamMapping = () => {
                 </div>
             </div>
             <div className="row justify-content-center app py-5 textcolor">
-                <div className="col-8 pb-5">
+                <div className="col-lg-8 col-12 pb-5">
                     <div className="card">
                         <div className="head head card-header text-center w-10  formHeaderColour">
-                            <h2 className="card-title">User-Exam-Mapping</h2>
+                            <h2 className="card-title small-heading-text fw-bold ">User-Exam-Mapping</h2>
                         </div>
-                        <div className="card-body">
+                        <div className="card-body small-content-text">
                             <form onSubmit={handler}>
                                 <div className="form-group">
                                     <label>Party Id</label>
@@ -373,7 +373,7 @@ const UserExamMapping = () => {
                                 </div>
                                 <div className="form-group d-flex">
                                     <div className="ps-5">
-                                        <button type="submit" className="btn btn-outline-success">
+                                        <button type="submit" className="btn btn-outline-success small-button">
                                             Submit
                                         </button>
                                     </div>

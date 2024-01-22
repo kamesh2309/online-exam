@@ -38,7 +38,7 @@ const App = () => {
         <Route path="/admin/view-exam-topic/edit-question/:id/:value/:noq/:tId/:qId/:fD" element={<AddQuestion />} />
         <Route path="/admin/view-exam-topic/question/:id/:value/:noq/:tId/:qId" element={<Question />} />
 
-        <Route path="/user/:uId/exam-details/:eId" element={<ViewExamInformation/>}></Route>
+        <Route path="/user/:uId/exam-details/:eId/:eDate/:sDate" element={<ViewExamInformation/>}></Route>
       </Routes>
     </>
   );

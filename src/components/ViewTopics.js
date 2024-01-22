@@ -54,8 +54,8 @@ const ViewTopics = () => {
 
   return (
     <div>
-      <div className="ps-5">
-        <nav className="myStyle">
+      <div className="px-lg-5 px-1">
+        <nav className="myStyle small-content-text">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
               <Link to="/" className="text-muted">
@@ -72,11 +72,11 @@ const ViewTopics = () => {
             </li>
           </ol>
         </nav>
-        <div className="d-flex justify-content-between me-2 ">
+        <div className="d-flex justify-content-between">
           <button
             className={`${disable
-              ? "disabled btn btn-outline-info  "
-              : "btn btn-outline-info fw-bold border-2"
+              ? "disabled btn btn-outline-info small-button"
+              : "btn btn-outline-info fw-bold border-2 small-button "
               }`}
           >
             <Link
@@ -89,24 +89,24 @@ const ViewTopics = () => {
           {disableAddUser ?
             <div className="tooltips">
               <span className="tooltiptext">Add Question 100% to Add-User</span>
-              <button className=" cursor-not btn btn-secondary fw-bold border-2 me-5 bread text-dark fst-italic">
+              <button className=" cursor-not btn btn-secondary fw-bold border-2 bread text-dark fst-italic small-button ">
                 Add-User
               </button>
             </div> :
-            <button className=" btn btn-outline-info fw-bold border-2 me-5" >
+            <button className=" btn btn-outline-info fw-bold border-2 small-button " >
               <Link to={`/admin/view-exam-topic/user-exam-mapping/${id}/${value}/${noq}`} className="bread text-dark fst-italic">
                 Add-User
               </Link>
             </button>}
         </div>
       </div>
-      <h4 className="textcolor fst-italic table fw-bold text-dark text-center ">
+      <h4 className="textcolor fst-italic table fw-bold text-dark text-center small-heading-text">
         List of Topics
       </h4>
       <div className="row justify-content-center mt-2 text-center textcolor">
-        <div className="col-md-11">
+        <div className="col-md-11 table-responsive">
           <table className="table table-striped table-borderless fst-italic border border-3">
-            <thead style={{ backgroundColor: "red" }} className="formHeaderColour">
+            <thead style={{ backgroundColor: "red" }} className="formHeaderColour small-content-text fst-italic">
               <tr>
                 <th scope="col">Exam-Id</th>
                 <th scope="col">Exam-Name</th>
@@ -115,7 +115,7 @@ const ViewTopics = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="align-middle">
+              <tr className="align-middle small-content-text">
                 <th scope="row">{id}</th>
                 <td className="fw-bold">{value}</td>
                 <td className="fw-bold">{noq}</td>
@@ -137,11 +137,11 @@ const ViewTopics = () => {
                 <td colSpan="4">
                   {topicData.length > 0 ? (
                     <table className="table mb-0  table-borderless fst-italic table-hover">
-                      <thead className="formHeaderColour">
+                      <thead className="formHeaderColour small-content-text">
                         <tr>
                           <th scope="col">Topic-Id</th>
                           <th scope="col">percentage</th>
-                          <th scope="col">Topic-Pass-Percentage</th>
+                          <th scope="col">Pass-Percentage</th>
                           <th scope="col">No-Of-Question</th>
                           <th scope="col">Add</th>
                           <th scope="col">Edit</th>
@@ -151,7 +151,7 @@ const ViewTopics = () => {
                       </thead>
                       <tbody>
                         {Object.entries(topicData).map(([key, values], index) => (
-                          <tr className="align-middle" key={key}>
+                          <tr className="align-middle small-content-text" key={key}>
                             <th scope="row">{values.topicId}</th>
                             <td>{values.percentage}</td>
                             <td>{values.topicPassPercentage}</td>

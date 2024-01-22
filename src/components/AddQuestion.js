@@ -130,8 +130,8 @@ const AddQuestion = () => {
 
   return (
     <div className="row justify-content-center mt-2">
-      <div className="ps-5">
-        <nav className="myStyle">
+      <div className="ps-lg-5 ps-0">
+        <nav className="myStyle small-content-text">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
               <Link to="/" className="text-muted">
@@ -165,14 +165,14 @@ const AddQuestion = () => {
           </ol>
         </nav>
       </div>
-      <div className="col-8 mb-5">
+      <div className="col-lg-8 col-12 mb-5 py-5">
         <div className="card textcolor">
           <div className=" formHeaderColour">
-            <div className="card-header text-center text-dark ">
-              <h2>{titleName}</h2>
+            <div className="card-header text-center">
+              <h2 className="fw-bold small-heading-text ">{titleName}</h2>
             </div>
           </div>
-          <div className="card-body">
+          <div className="card-body small-content-text">
             <form onSubmit={onSubmit}>
               <div className="form-group">
                 <label>Question Id</label>
@@ -373,7 +373,7 @@ const AddQuestion = () => {
 
               <div className="form-group d-flex mx-4">
                 <div className="mx-4">
-                  <button type="submit" className="btn btn-outline-success">
+                  <button type="submit" className="btn btn-outline-success small-button">
                     Submit
                   </button>
                 </div>

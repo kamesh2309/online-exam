@@ -57,49 +57,51 @@ const ViewQuestion = () => {
 
   return (
     <div>
-      <div className="ps-5">
-        <nav className="myStyle">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <Link to="/" className="text-muted">
-                Home
-              </Link>
-            </li>
-            <li className="breadcrumb-item">
-              <Link to="/admin" className="text-muted">
-                Admin
-              </Link>
-            </li>
-            <li className="breadcrumb-item">
-              <Link
-                to={`/admin/view-exam-topic/${id}/${value}/${noq}`}
-                className="text-muted"
-              >
-                Topics
-              </Link>
-            </li>
-            <li className="breadcrumb-item">
-              <Link to="#">Question</Link>
-            </li>
-          </ol>
-        </nav>
-        <button
-          className="btn btn-outline-info fw-bold border-2">
-          <Link
-            to={`/admin/view-exam-topic/add-question/${id}/${value}/${noq}/${tId}`}
-            className="bread text-dark fst-italic"
-          >
-            Add Question
-          </Link>
-        </button>
+      <div className="row justify-content-center mb-5">
+        <div className="px-lg-5 px-3">
+          <nav className="myStyle small-content-text">
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item">
+                <Link to="/" className="text-muted">
+                  Home
+                </Link>
+              </li>
+              <li className="breadcrumb-item">
+                <Link to="/admin" className="text-muted">
+                  Admin
+                </Link>
+              </li>
+              <li className="breadcrumb-item">
+                <Link
+                  to={`/admin/view-exam-topic/${id}/${value}/${noq}`}
+                  className="text-muted"
+                >
+                  Topics
+                </Link>
+              </li>
+              <li className="breadcrumb-item">
+                <Link to="#">Question</Link>
+              </li>
+            </ol>
+          </nav>
+          <button
+            className="btn btn-outline-info fw-bold border-2 small-button">
+            <Link
+              to={`/admin/view-exam-topic/add-question/${id}/${value}/${noq}/${tId}`}
+              className="bread text-dark fst-italic"
+            >
+              Add Question
+            </Link>
+          </button>
+        </div>
       </div>
-      <h4 className="textcolor fst-italic table fw-bold text-dark text-center ">
+      <h4 className="textcolor fst-italic table fw-bold text-dark text-center small-heading-text ">
         List of Question
       </h4>
       <div className="row  justify-content-center mt-2 text-center textcolor ">
         <div className="col-md-11">
           <table className="table table-striped table-borderless fst-italic border border-3">
-            <thead className="formHeaderColour ">
+            <thead className="formHeaderColour small-content-text">
               <tr>
                 <th scope="col">Exam-Name</th>
                 <th scope="col">Topic-Id</th>
@@ -107,7 +109,7 @@ const ViewQuestion = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="align-middle">
+              <tr className="align-middle small-content-text">
                 <th scope="row">{value}</th>
                 <th scope="row">{tId}</th>
                 <td className="fw-bold">{topicName}</td>
@@ -116,7 +118,7 @@ const ViewQuestion = () => {
                 <td colSpan="4">
                   {questionData.length > 0 ? (
                     <table className="table mb-0  table-borderless fst-italic table-hover">
-                      <thead className="formHeaderColour">
+                      <thead className="formHeaderColour small-content-text">
                         <tr>
                           <th scope="col">Question-Id</th>
                           <th scope="col">Question-Type</th>
@@ -127,7 +129,7 @@ const ViewQuestion = () => {
                       </thead>
                       <tbody>
                         {Object.entries(questionData).map(([key, values], index) => (
-                          <tr className="align-middle" key={key}>
+                          <tr className="align-middle small-content-text" key={key}>
                             <th scope="row">{values.questionId}</th>
                             <th>{values.questionType}</th>
 

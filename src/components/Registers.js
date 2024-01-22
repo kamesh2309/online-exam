@@ -62,7 +62,7 @@ const Registers = () => {
     return (
         <div>
             <div className="row">
-                <div className="ps-5">
+                <div className="px-lg-5 px-3">
                     <nav className="myStyle">
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item ">
@@ -78,7 +78,7 @@ const Registers = () => {
                 </div>
             </div>
             <div className="row justify-content-center app py-5 textcolor">
-                <div className="col-7 pb-5">
+                <div className="col-lg-8 col-12 pb-5">
                     <div className="card ">
                         <div className="head card-header text-center w-10 textcolor formHeaderColour">
                             <h2 className="card-title ">Register</h2>
