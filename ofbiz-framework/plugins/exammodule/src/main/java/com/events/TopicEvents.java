@@ -211,11 +211,13 @@ public class TopicEvents {
 				String errMsg = "there is no topic to be added.";
 				editResultMap.put("ERROR_MESSAGE", errMsg);
 				request.setAttribute(ConstantNames.RESULT_MAP, editResultMap);
+				request.setAttribute("TopicNotAdded", true);
+				
 				return ConstantNames.ERROR;
 			}
 			int numberOfQuestionAdded = 0;
-			int numberOfTopicQuestionAdded = 0;
-			boolean questionAdded = true;
+			
+			int questionNotAddFully=0;
 			/***
 			 * From the topicList we are iterating to get the each Topic Question that
 			 * assign for that Exam
@@ -232,27 +234,29 @@ public class TopicEvents {
 				 * Here i'm writing the EntityQuery to get the Question from the Question_Master
 				 */
 				List<GenericValue> questionList = EntityQuery.use(delegator).from(ConstantNames.QUESTION_MASTER)
-						.where(ConstantNames.TOPIC_ID, numberOfQuestionTopic.getString(ConstantNames.TOPIC_ID)).cache()
+						.where(ConstantNames.TOPIC_ID, numberOfQuestionTopic.getString(ConstantNames.TOPIC_ID),ConstantNames.THEW_DATE,null).cache()
 						.queryList();
 				/**
 				 * Here i'm Checking that questionList is not empty
 				 */
+				int numberOfTopicQuestionAdded = 0;
 				if (UtilValidate.isNotEmpty(questionList)) {
 
 					int questionContainsInTopic = questionList.size();
 					numberOfTopicQuestionAdded += questionContainsInTopic;
 					if (numberOfTopicQuestionAdded < numberofQuestion) {
-						questionAdded = false;
+						questionNotAddFully++;
 						request.setAttribute(ConstantNames.TOPIC_ID,
 								numberOfQuestionTopic.getString(ConstantNames.TOPIC_ID));
 					}
-				} else {
-					request.setAttribute("questionsPerTopic", 0);
+				} 
+				else {
+					request.setAttribute("questionNotAddedToTopic", true);
 				}
 
 			}
 
-			request.setAttribute("questionAdded", questionAdded);
+			request.setAttribute("questionNotAddFully", questionNotAddFully);
 			request.setAttribute("questionsPerExam", numberOfQuestionAdded);
 
 			/* ---------------------------Edit-topics Values---------------------------- */

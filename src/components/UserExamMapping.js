@@ -290,15 +290,15 @@ const UserExamMapping = () => {
                                     {/* <select type="text" className="form-control " id='myDropdown' name='partyId'> </select> */}
                                     <div className="multipleSelection form-control textcolor">
                                         <div className="selectBox" onClick={handleCheckboxToggle}>
-                                            <select className='bg-white border-0 textcolor fw-light'>
-                                                <option>Select the Student </option>
+                                            <select className='bg-white border-0 textcolor fw-light small-content-text'>
+                                                <option >Select the Student </option>
                                             </select>
                                             <div className="overSelect"></div>
                                         </div>
                                         {showCheckboxesRef.current && Object.entries(refSelectPartyId.current).map(([key, values]) => {
                                             return (
                                                 <>
-                                                    <div className="checkBoxes"  >
+                                                    <div className="checkBoxes small-content-text"  >
                                                         <label >
                                                              {values.examId ? (<input className='textcolor' id="selectMe" type="checkbox" checked="true" name='partyId' value={values.partyId} />) :
                                                                 (<input className='textcolor' id="selectMe" type="checkbox" name='partyId' value={values.partyId} />)}
@@ -312,7 +312,7 @@ const UserExamMapping = () => {
                                 </div>
                                 <div className="form-group">
                                     <label >Exam Id</label>
-                                    <select type="text" className="form-control" name="examId" onChange={checkedPartyId} id='myDropdown1' >
+                                    <select type="text" className="form-control small-content-text" name="examId" onChange={checkedPartyId} id='myDropdown1' >
 
                                     </select></div>
                                 <div className="form-group">
@@ -330,7 +330,7 @@ const UserExamMapping = () => {
                                     <div className="col-sm-6">
                                         <div className="form-group">
                                             <label >Last Performance Date</label>
-                                            <input name="lastPerformanceDate" type="datetime-local" className="form-control" />
+                                            <input name="lastPerformanceDate" type="datetime-local" className="form-control small-content-text" />
                                         </div>
                                     </div>
                                 </div>
@@ -345,7 +345,7 @@ const UserExamMapping = () => {
                                     <div className="col-sm-6">
                                         <div className="form-group">
                                             <label >Password Changes Auto</label>
-                                            <select type="text" name="passwordChangesAuto" className="form-control" >
+                                            <select type="text" name="passwordChangesAuto" className="form-control small-content-text" >
                                                 <option value="y">Yes</option>
                                                 <option value="n">No</option>
                                             </select>
@@ -354,14 +354,14 @@ const UserExamMapping = () => {
                                 </div>
                                 <div className="form-group">
                                     <label >Can Split Exams</label>
-                                    <select type="text" name="canSplitExams" className="form-control" placeholder="Enter your passPercentage" >
+                                    <select type="text" name="canSplitExams" className="form-control small-content-text" placeholder="Enter your passPercentage" >
                                         <option value="y">Yes</option>
                                         <option value="n">No</option>
                                     </select>
                                 </div>
                                 <div className="form-group">
                                     <label >Can See Detailed Results</label>
-                                    <select type="text" name="canSeeDetailedResults" className="form-control"  >
+                                    <select type="text" name="canSeeDetailedResults" className="form-control small-content-text"  >
                                         <option value="y">Yes</option>
                                         <option value="n">No</option>
                                     </select>

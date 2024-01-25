@@ -24,9 +24,9 @@ const ViewTopics = () => {
         navigate("/")
       }
       setTopicData(formData.resultMap);
-     console.log(formData.questionAdded,"...........")
-      formData.questionsPerExam >= noq  ? setDisable(true) : setDisable(false);
-      formData.questionsPerExam < noq ? setDisableAddUser(true) : setDisableAddUser(false);
+     
+      formData.questionsPerExam >= noq ? setDisable(true) : setDisable(false);
+      ((formData.questionsPerExam < noq) || (formData.TopicNotAdded == true) || (formData.questionNotAddedToTopic == true) || (formData.questionNotAddFully != 0)) ? setDisableAddUser(true) : setDisableAddUser(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
