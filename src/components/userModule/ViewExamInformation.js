@@ -9,6 +9,10 @@ const ViewExamInformation = () => {
 
   const navigate = useNavigate();
   const url = `${PROTOCOL}://${window.location.hostname}:${PORT}`;
+  function startExam() {
+    navigate(`/user/${uId}/exam-details/${eId}/exam`)
+  }
+
   async function fetchData() {
     const response = await fetch(`${url}/exammodule/control/show-exam-user?partyInfo=${uId}&examInfo=${eId}`,
       { credentials: "include" });
@@ -29,7 +33,7 @@ const ViewExamInformation = () => {
   return (
     <div>
       <div className="px-lg-5 px-3">
-        <nav className="myStyle">
+        <nav className="myStyle small-content-text">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
               <Link to="/" className="text-muted">
@@ -51,8 +55,8 @@ const ViewExamInformation = () => {
         Exam details
       </h4>
       <div className="row justify-content-center mt-2 text-center textcolor">
-        <div className="col-md-11">
-          <table className="table table-striped table-borderless fst-italic border border-3">
+        <div className="col-lg-11 col-12">
+          <table className="table table-striped table-borderless fst-italic border border-3  small-content-text ">
             <thead style={{ backgroundColor: "red" }} className="formHeaderColour">
               <tr>
                 <th scope="col">Exam-Id</th>
@@ -83,7 +87,7 @@ const ViewExamInformation = () => {
                         <th scope="col">Topic-Name</th>
                         <th scope="col">percentage</th>
                         <th scope="col">Topic-Pass-Percentage</th>
-                        <th scope="col">No-Of-Question-Topic</th>
+                        <th scope="col">No-Of -Question</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -103,9 +107,8 @@ const ViewExamInformation = () => {
             </tbody>
           </table>
           <div>
-
-            {eDate == "true" ? <button className="btn btn-danger fw-bold fst-italic border-2 me-5" disabled >Exam-Expired</button> : sDate == "true" ? <button className="btn btn-outline-success fw-bold fst-italic border-2 me-5">Start-Exam</button>
-              : <button className="btn btn-outline-warning fw-bold fst-italic border-2 me-5" disabled >Exam-Not-Started</button>}
+             {eDate == "true" ? <button className="btn btn-danger fw-bold fst-italic border-2 me-5 small-button" disabled >Exam-Expired</button> : sDate == "true" ? <button className="btn btn-outline-success fw-bold fst-italic border-2 me-5 small-button" onClick={startExam}>Start-Exam</button>
+              : <button className="btn btn-outline-warning fw-bold fst-italic border-2 me-5 small-button" disabled >Exam-Not-Started</button>}
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ const Header = () => {
     const date = now.getDate();
     const Month = now.getMonth();
     const Year = now.getFullYear();
-    return `Date: ${date}-${Month+1}-${Year} `;
+    return `Date:${date}-${Month+1}-${Year} `;
   }
   const logoutUser = async () => {
     const response = await fetch(`${url}/exammodule/control/logout`, { credentials: "include" });
@@ -55,9 +55,9 @@ const Header = () => {
                     <div className="modal-content">
                       <div className="modal-header">
                         {/* <h5 className="modal-title" id="staticBackdropLabel">Modal title</h5> */}
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close small-button" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div className="modal-body fw-bold fst-italic textcolor" >
+                      <div className="modal-body fw-bold fst-italic textcolor small-content-text" >
                         Are you sure u want to Logout..
                       </div>
                       <div className="modal-footer ">

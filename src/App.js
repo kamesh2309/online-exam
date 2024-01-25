@@ -14,6 +14,7 @@ import ViewExamUser from "./components/ViewExamUser";
 import ExamUserDetails from "./components/ExamUserDetails";
 import UserPage from "./components/userModule/UserPage";
 import ViewExamInformation from "./components/userModule/ViewExamInformation";
+import ExamPage from "./components/userModule/ExamPage";
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="/admin/view-exam-topic/question/:id/:value/:noq/:tId/:qId" element={<Question />} />
 
         <Route path="/user/:uId/exam-details/:eId/:eDate/:sDate" element={<ViewExamInformation/>}></Route>
+        <Route path="/user/:uId/exam-details/:eId/exam" element={<ExamPage/>}></Route>
       </Routes>
     </>
   );

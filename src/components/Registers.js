@@ -62,7 +62,7 @@ const Registers = () => {
     return (
         <div>
             <div className="row">
-                <div className="px-lg-5 px-3">
+                <div className="px-lg-5 px-3 small-content-text">
                     <nav className="myStyle">
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item ">
@@ -81,10 +81,10 @@ const Registers = () => {
                 <div className="col-lg-8 col-12 pb-5">
                     <div className="card ">
                         <div className="head card-header text-center w-10 textcolor formHeaderColour">
-                            <h2 className="card-title ">Register</h2>
+                            <h2 className="card-title small-heading-text fw-bold ">Register</h2>
                         </div>
                         <div className="card-body"></div>
-                        <form className='px-4' onSubmit={onSumbit}>
+                        <form className='px-4 small-content-text' onSubmit={onSumbit}>
                             <div className='row '>
                                 <div className="col-md-6">
                                     <label className="form-label">First Name</label>
@@ -125,7 +125,7 @@ const Registers = () => {
                             </div>
                             <div className="form-group d-flex mb-3">
                                 <div className="ps-5">
-                                    <button type="submit" className="btn btn-outline-success">
+                                    <button type="submit" className="btn btn-outline-success small-button ">
                                         Submit
                                     </button>
                                 </div>

@@ -173,16 +173,23 @@ public class TopicEvents {
 			return ConstantNames.ERROR;
 		}
 		try {
+			/**
+			 * Here i'm checking that showExamId in not empty from the request
+			 */
 			if (UtilValidate.isEmpty(request.getParameter("showExamId"))) {
 				String errMsg = "showExamId required fields on the form and can't be empty.";
 				editResultMap.put("ERROR_MESSAGE", errMsg);
 				request.setAttribute(ConstantNames.RESULT_MAP, editResultMap);
 				return ConstantNames.ERROR;
 			}
-
+			/**
+			 * Here i'm getting the Exam Details from the Exam Master Entity
+			 */
 			GenericValue examDetails = EntityQuery.use(delegator).from(ConstantNames.EXAM_MASTER)
 					.where(ConstantNames.EXAM_ID, request.getParameter("showExamId")).cache().queryOne();
-
+			/**
+			 * Here i'm checking that examDetails is empty
+			 */
 			if (UtilValidate.isEmpty(examDetails)) {
 				String errMsg = "there is exam to be added.";
 				editResultMap.put("ERROR_MESSAGE", errMsg);
@@ -191,10 +198,15 @@ public class TopicEvents {
 			}
 
 			request.setAttribute("examList", examDetails);
-
+			/**
+			 * Here i'm writing the Entity Query to get the list of topic which is assign
+			 * for that exam
+			 */
 			List<GenericValue> topicList = EntityQuery.use(delegator).from(ConstantNames.Exam_Topic_Mapping)
 					.where(ConstantNames.EXAM_ID, request.getParameter("showExamId")).cache().queryList();
-
+			/**
+			 * Here i'm checking that topicList is empty
+			 */
 			if (UtilValidate.isEmpty(topicList)) {
 				String errMsg = "there is no topic to be added.";
 				editResultMap.put("ERROR_MESSAGE", errMsg);
@@ -202,10 +214,45 @@ public class TopicEvents {
 				return ConstantNames.ERROR;
 			}
 			int numberOfQuestionAdded = 0;
-			for (GenericValue numberOfQuestion : topicList) {
-				int numberofQuestion = Integer.parseInt(numberOfQuestion.getString(ConstantNames.QUESTIONS_PER_EXAM));
+			int numberOfTopicQuestionAdded = 0;
+			boolean questionAdded = true;
+			/***
+			 * From the topicList we are iterating to get the each Topic Question that
+			 * assign for that Exam
+			 */
+			for (GenericValue numberOfQuestionTopic : topicList) {
+
+				int numberofQuestion = Integer
+						.parseInt(numberOfQuestionTopic.getString(ConstantNames.QUESTIONS_PER_EXAM));
+				/***
+				 * Adding All the Question_per_Exam from the topicList
+				 */
 				numberOfQuestionAdded += numberofQuestion;
+				/**
+				 * Here i'm writing the EntityQuery to get the Question from the Question_Master
+				 */
+				List<GenericValue> questionList = EntityQuery.use(delegator).from(ConstantNames.QUESTION_MASTER)
+						.where(ConstantNames.TOPIC_ID, numberOfQuestionTopic.getString(ConstantNames.TOPIC_ID)).cache()
+						.queryList();
+				/**
+				 * Here i'm Checking that questionList is not empty
+				 */
+				if (UtilValidate.isNotEmpty(questionList)) {
+
+					int questionContainsInTopic = questionList.size();
+					numberOfTopicQuestionAdded += questionContainsInTopic;
+					if (numberOfTopicQuestionAdded < numberofQuestion) {
+						questionAdded = false;
+						request.setAttribute(ConstantNames.TOPIC_ID,
+								numberOfQuestionTopic.getString(ConstantNames.TOPIC_ID));
+					}
+				} else {
+					request.setAttribute("questionsPerTopic", 0);
+				}
+
 			}
+
+			request.setAttribute("questionAdded", questionAdded);
 			request.setAttribute("questionsPerExam", numberOfQuestionAdded);
 
 			/* ---------------------------Edit-topics Values---------------------------- */

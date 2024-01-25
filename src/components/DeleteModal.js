@@ -1,5 +1,6 @@
 
 const DeleteModal = ({onClick,name,id,type,index}) => {
+    
     return (
         <div>
             <div className="modal fade" id={index} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

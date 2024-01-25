@@ -51,8 +51,8 @@ const UserPage = () => {
     <>
       <div className="row pt-2">
         <div className='col-8'>
-          <div className="px-lg-5 px-3">
-            <nav className="myStyle">
+          <div className="px-lg-5 px-2">
+            <nav className="myStyle small-content-text">
               <ol className="breadcrumb">
                 <li className="breadcrumb-item ">
                   <Link to="/" className="text-muted">Home</Link>
@@ -67,48 +67,46 @@ const UserPage = () => {
           </div>
         </div>
         <div className='col-4' id="mydiv">
-          <h5 className='text-end myStyle fw-bold  text-colour'>{userName}</h5>
-        </div>
+          <h5 className='text-end myStyle fw-bold  text-colour  small-content-text'>{userName}</h5>
+        </div>  
       </div>
       <div className='row'>
-        <div className='col-2 mt-5'>
+        <div className='col-lg-2 col-3 mt-5'>
           <div className=' rounded-3 broder-colour'>
             <div className='justify-content-center d-flex pt-2'>
-              <button type="button" className='btn btn-outline-info btn-sm textcolor fw-bold  fw-light' onClick={showUser => { return setShowExpireExam(true), setExpireToUser(false) }}> Current-Exam </button>
+              <button type="button" className='btn btn-outline-dark text-decoration-underline  btn-sm textcolor fw-bold small-button border-0' onClick={showUser => { return setShowExpireExam(true), setExpireToUser(false) }}> Current-Exam </button>
             </div>
             <br />
             <div className='justify-content-center d-flex '>
-              <button type="button" className='btn btn-outline-info btn-sm textcolor fw-bold fw-light' onClick={showUser => { return setShowExpireExam(false), setExpireToUser(false) }}> Upcoming-Exam </button>
+              <button type="button" className='btn btn-outline-dark btn-sm textcolor fw-bold text-decoration-underline  small-button border-0' onClick={showUser => { return setShowExpireExam(false), setExpireToUser(false) }}> Upcoming-Exam </button>
             </div>
             <br />
             <div className='justify-content-center d-flex pb-2 '>
-              <button type="button" className='btn btn-outline-info btn-sm textcolor fw-bold  fw-light' onClick={showUser => { return setShowExpireExam(true), setExpireToUser(true) }}> Expired-Exam </button>
+              <button type="button" className='btn btn-outline-dark btn-sm textcolor fw-bold text-decoration-underline small-button border-0' onClick={showUser => { return setShowExpireExam(true), setExpireToUser(true) }}> Expired-Exam </button>
             </div>
           </div>
         </div>
         {/* </div> */}
-        <div className="col-8 justify-content-center pt-4 ">
+        <div className="col-lg-8 col-6 justify-content-center pt-4 scroll-card">
           <div className='row'>
             {userExam ? Object.entries(userExam).map(([key, value]) => (
               (
                 (value.showExamToUser && refShowExpireExam.current && !refShowExpireToUser.current) ?
-                  <div className="col-4 tile-height justify-content-center d-flex" key={key}>
-                    <div style={{ marginBottom: "50px" }}>
-                      <div
-                        className="card border border-1 rounded cardModal"
-                        style={{ width: "13rem", height: "9rem" }}
-                      >
+                  <div className="col-lg-4 col-12 tile-height justify-content-center d-flex" key={key}>
+                    <div className='card-distance'>
+                      <div 
+                        className="card border border-1 rounded cardModal tiles-size" >
                         <div
                           className="card-body"
                           style={{ backgroundColor: "#e6f7ff" }}
                         >
                           <h4
-                            className="text-center fw-bold textcolor" >
+                            className="text-center fw-bold textcolor  small-heading-text" >
                             {value.examId} - {value.examName}
                           </h4>
                           <br />
                           <h4
-                            className="text-center  tile-size">
+                            className="text-center  tile-size  small-content-text">
                             Start Date-{value.creationDate}
                             <br />
                             End Date-{value.expirationDate}
@@ -123,23 +121,21 @@ const UserPage = () => {
                       </div>
                     </div>
                   </div> : (!value.showExamToUser && !refShowExpireExam.current && !value.examExpired) ?
-                    <div className="col-4 tile-height justify-content-center d-flex" key={key}>
-                      <div style={{ marginBottom: "50px" }}>
+                    <div className="col-lg-4 col-12  tile-height justify-content-center d-flex" key={key}>
+                      <div className='card-distance'>
                         <div
-                          className="card border border-1 rounded cardModal"
-                          style={{ width: "13rem", height: "9rem" }}
-                        >
-                          <div
+                          className="card border border-1 rounded cardModal tiles-size" >
+                          <div 
                             className="card-body"
                             style={{ backgroundColor: "#e6f7ff" }}
                           >
                             <h4
-                              className="text-center fw-bold textcolor" >
+                              className="text-center fw-bold textcolor small-heading-text" >
                               {value.examId} - {value.examName}
                             </h4>
                             <br />
                             <h4
-                              className="text-center  tile-size">
+                              className="text-center tile-size small-content-text">
                               Start Date-{value.creationDate}
                               <br />
                               End Date-{value.expirationDate}
@@ -153,23 +149,21 @@ const UserPage = () => {
                           </div>
                         </div>
                       </div>
-                    </div> : (value.examExpired && refShowExpireToUser.current) && <div className="col-4 tile-height justify-content-center d-flex" key={key}>
-                      <div style={{ marginBottom: "50px" }}>
+                    </div> : (value.examExpired && refShowExpireToUser.current) && <div className="col-lg-4 col-12  tile-height justify-content-center d-flex" key={key}>
+                      <div className='card-distance'>
                         <div
-                          className="card border border-1 rounded cardModal"
-                          style={{ width: "13rem", height: "9rem" }}
-                        >
+                          className="card border border-1 rounded cardModal tiles-size" >
                           <div
                             className="card-body"
                             style={{ backgroundColor: "#e6f7ff" }}
                           >
                             <h4
-                              className="text-center fw-bold textcolor" >
+                              className="text-center fw-bold textcolor small-heading-text" >
                               {value.examId} - {value.examName}
                             </h4>
                             <br />
                             <h4
-                              className="text-center  tile-size">
+                              className="text-center  tile-size  small-content-text">
                               Start Date-{value.creationDate}
                               <br />
                               End Date-{value.expirationDate}
@@ -187,18 +181,18 @@ const UserPage = () => {
               ))) : <p className="myStyle text-center fs-2 textcolor">No Exam To Be Assign to this User</p>}
           </div>
         </div>
-        <div className='col-2 mt-5'>
+        <div className='col-lg-2 col-3 mt-5'>
           <div className=' rounded-3 broder-colour'>
             <div className='justify-content-center d-flex pt-2'>
-              <button type="button" className='btn btn-outline-info btn-sm textcolor fw-bold  fw-light' onClick={showUser => { return setShowExpireExam(true), setExpireToUser(false) }}> Current-Exam </button>
+              <button type="button" className='btn btn-outline-info btn-sm textcolor fw-bold small-button border-0' onClick={showUser => { return setShowExpireExam(true), setExpireToUser(false) }}> Current-Exam </button>
             </div>
             <br />
             <div className='justify-content-center d-flex '>
-              <button type="button" className='btn btn-outline-info btn-sm textcolor fw-bold fw-light' onClick={showUser => { return setShowExpireExam(false), setExpireToUser(false) }}> Upcoming-Exam </button>
+              <button type="button" className='btn btn-outline-info btn-sm textcolor fw-bold small-button border-0' onClick={showUser => { return setShowExpireExam(false), setExpireToUser(false) }}> Upcoming-Exam </button>
             </div>
             <br />
             <div className='justify-content-center d-flex pb-2 '>
-              <button type="button" className='btn btn-outline-info btn-sm textcolor fw-bold  fw-light' onClick={showUser => { return setShowExpireExam(true), setExpireToUser(true) }}> Expired-Exam </button>
+              <button type="button" className='btn btn-outline-info btn-sm textcolor fw-bold  small-button border-0' onClick={showUser => { return setShowExpireExam(true), setExpireToUser(true) }}> Expired-Exam </button>
             </div>
           </div>
         </div>

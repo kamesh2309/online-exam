@@ -135,6 +135,14 @@
 		<response name="success" type="request" value="json" />
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+	<!-- show Question to User for Exam -->
+	<request-map uri="start-exam">
+		<security https="true" auth="false" />
+		<event type="java" path="com.user.events.RandomQuestionToExam"
+			invoke="randomQuestion" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json"></response>
+	</request-map>
 
 	<!-- View Mappings -->
 	<view-map name="main" type="screen"

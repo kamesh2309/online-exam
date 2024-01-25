@@ -81,11 +81,11 @@ const Login = () => {
       <div className="col-md-4">
         <form id="sumbit" onSubmit={onSumbit} className="textcolor">
           <div className="mb-3 ">
-            <h2 className="text-center fw-bold">LOGIN</h2>
+            <h2 className="text-center small-heading-text fw-bold">LOGIN</h2>
             <div>
               <span className="text-success d-none" id="flag"></span>
             </div>
-            <label htmlFor="uname" className="form-label">
+            <label htmlFor="uname" className="form-label small-content-text">
               UserName
             </label>
             <div>
@@ -97,7 +97,7 @@ const Login = () => {
             <input type="text" className="form-control border-3" name="uname" />
           </div>
           <div className="mb-3 input_box">
-            <label htmlFor="Password" className="form-label">
+            <label htmlFor="Password" className="form-label small-content-text">
               Password
             </label>
             <div>
