@@ -23,7 +23,7 @@
 .dateheader {
   color: #d5b263;
   text-align: end;
-  padding-right: 59px;
+  padding-right: 50px;
   font-weight: bold;
   font-size: large;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
@@ -107,6 +107,15 @@
   background-color: transparent !important;
 }
 
+.tiles-size {
+  width: 13rem;
+  height: 9rem;
+}
+
+.card-distance {
+  margin-bottom: 50px;
+}
+
 /* -----------------------view-topics------------------------- */
 .disabled.cursor-opacity {
   cursor: not-allowed;
@@ -143,6 +152,11 @@
 /* ---------------------user Admin------------------- */
 .view-icon {
   right: 40%;
+}
+
+.scroll-card {
+  overflow: auto;
+  height: 400px;
 }
 
 /* --------------------------Delete Modal------------------- */
@@ -244,30 +258,69 @@
   color: #d5b263;
 }
 
+.fill-up {
+  display: inline-block;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: dotted;
+  outline: none;
+}
+
+.userInput {
+  width: 500px;
+  height: 100px;
+  resize: none;
+  outline: none;
+  border: double;
+  padding-left: 13px;
+
+}
+
 /* -----------------Media Query------------------------ */
 
-@media (width< 830px) {
+@media (width < 809px) {
   .small-button {
     padding: .275rem .40rem !important;
-    font-size: .85rem !important;
+    font-size: .80rem !important;
   }
-}
-@media (width< 830px) {
+
   .small-content-text {
-    font-size: 14px !important;
+    font-size: 11px !important;
   }
-}
-@media (width< 830px) {
+
   .small-heading-text {
-    /* font-size: large;
-     */
-     font-size: 18.5px !important;
+    font-size: 17px !important;
   }
-}
-@media (width< 830px) {
+
   .center-text {
     text-align: center;
+  }
 
-     
+  .dateheader {
+    padding: 0px;
+  }
+
+  .broder-colour {
+    border: none !important;
+  }
+
+  .card-distance {
+    margin-bottom: 30px;
+  }
+
+  .tiles-size {
+    width: 10rem;
+    height: 8rem;
+  }
+
+  .scroll-card {
+    overflow: auto;
+    height: 500px;
+  }
+
+  .userInput {
+    width: 200px;
+    height: 80px;
   }
 }
